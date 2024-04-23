@@ -1,5 +1,5 @@
 package components;
 
-public class Pipe {
+public class Pipe extends Component {
     
 }
