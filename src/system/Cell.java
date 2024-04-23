@@ -10,6 +10,7 @@ public class Cell {
     boolean isPlayerOn;
     int rows;
     int column;
+    Map map;
 
     public Component getComponent() {
         return component;

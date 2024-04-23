@@ -11,6 +11,8 @@ public class Map {
     Cell[][] cells = new Cell[rows][columns];
     List<Cistern> cisterns;
     List<Spring> springs;
+    String size;
+    
     public void initializeMap(){
 
     }
