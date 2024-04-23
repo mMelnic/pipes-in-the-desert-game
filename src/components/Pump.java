@@ -1,5 +1,5 @@
 package components;
 
-public class Pump {
+public class Pump extends Component {
     
 }
