@@ -10,9 +10,10 @@ public class Pipe extends Component implements ILeakage {
     private boolean isWaterFlowing;
     private long leakStartTime;
     private boolean isLeaking;
+    private boolean isFull;
     private boolean isBroken;
     private boolean isPlayerOn;
-    
+
     public Pipe(Cell location) {
         super(location);
         this.shape = Shapes.HORIZONTAL;
@@ -28,20 +29,30 @@ public class Pipe extends Component implements ILeakage {
         if (!isLeaking) {
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            stopFlow(); 
+            stopFlow();
         }
     }
+
 
     @Override
     public long stopLeaking() {
         if (isLeaking) {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
-           undoStopFlow();
+            undoStopFlow();
             return duration;
         }
         return 0;
     }
+
+    public boolean isFull() {
+
+        return isFull;
+    }
+    public void isWaterFlowing(boolean set){
+        isWaterFlowing = set;
+    }
+
     private void undoStopFlow() {
         Component currentPipe = this;
         for (Direction direction : Direction.values()) {
@@ -55,25 +66,28 @@ public class Pipe extends Component implements ILeakage {
             }
         }
     }
+
     public void stopFlow() {
         isWaterFlowing = false;
         for (Direction direction : Direction.values()) {
             stopFlowRecursive(connectedComponents.get(direction));
         }
     }
-    
+
     private void stopFlowRecursive(Component component) {
         if (component == null || component instanceof Cistern) {
+            return;
         }
         if (component instanceof Pipe) {
-            ((Pipe) component).isWaterFlowing = false; 
+            ((Pipe) component).isWaterFlowing = false;
             for (Direction direction : Direction.values()) {
                 stopFlowRecursive(component.connectedComponents.get(direction));
             }
         }
     }
+
     public void changeShape() {
-      
+
     }
 
 }
