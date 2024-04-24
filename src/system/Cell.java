@@ -10,6 +10,7 @@ public class Cell {
     boolean isPlayerOn;
     int rows;
     int column;
+    Map map;
 
     public Component getComponent() {
         return component;
@@ -27,5 +28,9 @@ public class Cell {
         } else {
             return new boolean[]{false, false};
         }
+    }
+
+    public Map getMap() {
+        return map;
     }
 }
