@@ -12,7 +12,7 @@ public class Map {
     List<Cistern> cisterns;
     List<Spring> springs;
     String size;
-    
+
     public void initializeMap(){
 
     }
@@ -28,5 +28,9 @@ public class Map {
     }
     public Cell getRightwardCell(Cell currentCell){
 
+    }
+
+    public String getSize() {
+        return size;
     }
 }

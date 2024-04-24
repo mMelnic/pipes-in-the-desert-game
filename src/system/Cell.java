@@ -29,4 +29,8 @@ public class Cell {
             return new boolean[]{false, false};
         }
     }
+
+    public Map getMap() {
+        return map;
+    }
 }
