@@ -86,8 +86,44 @@ public class Pipe extends Component implements ILeakage {
         }
     }
 
+  
+    
     public void changeShape() {
-
+        // Check if there is only one connected component
+        int connectedCount = 0;
+        Direction singleDirection = null;
+        for (Direction direction : Direction.values()) {
+            if (connectedComponents.get(direction) != null) {
+                connectedCount++;
+                singleDirection = direction;
+            }
+        }
+        if (connectedCount == 1) {
+            if (singleDirection == Direction.UP || singleDirection == Direction.DOWN ) {
+                shape = Shapes.VERTICAL;
+            } else if (singleDirection == Direction.LEFT || singleDirection == Direction.RIGHT ){
+                shape = Shapes.HORIZONTAL;
+            }
+        } else {
+            boolean upConnected = connectedComponents.get(Direction.UP) != null;
+            boolean downConnected = connectedComponents.get(Direction.DOWN) != null;
+            boolean leftConnected = connectedComponents.get(Direction.LEFT) != null;
+            boolean rightConnected = connectedComponents.get(Direction.RIGHT) != null;
+    
+            if (upConnected && downConnected) {
+                shape = Shapes.VERTICAL;
+            } else if (upConnected && rightConnected) {
+                shape = Shapes.CORNER_LEFT_DOWN;
+            } else if (rightConnected && downConnected) {
+                shape = Shapes.CORNER_LEFT_UP;
+            } else if (downConnected && leftConnected) {
+                shape = Shapes.CORNER_RIGHT_UP;
+            } else if (leftConnected && upConnected) {
+                shape = Shapes.CORNER_RIGHT_DOWN;
+            } else {
+                shape = Shapes.HORIZONTAL;
+            }
+        }
     }
-
+    
 }

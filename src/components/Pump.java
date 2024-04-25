@@ -60,18 +60,18 @@ public class Pump extends Component implements ILeakage {
     }
     public void stopFlow() {
         if (outgoingPipe != null) {
-            stopFlowRecursive(outgoingPipe);
+            stopOrStartFlowRecursive(outgoingPipe, false);
         }
     }
 
-    private void stopFlowRecursive(Component component) {
+    private void stopOrStartFlowRecursive(Component component, boolean stopOrStart) {
         if (component == null || component instanceof Cistern) {
             return;
         }
         if (component instanceof Pipe) {
-            ((Pipe) component).isWaterFlowing(false); 
+            ((Pipe) component).isWaterFlowing(stopOrStart); 
             for (Direction direction : Direction.values()) {
-                stopFlowRecursive(component.connectedComponents.get(direction));
+                stopFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
             }
         }
     }
@@ -83,6 +83,7 @@ public class Pump extends Component implements ILeakage {
             long leakDuration = System.currentTimeMillis() - leakStartTime;
             leakStartTime = 0; 
             saboteursScore.updateScore(leakDuration); 
+            stopOrStartFlowRecursive(outgoingPipe, true);
         }
     }
 }

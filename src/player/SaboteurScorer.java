@@ -5,6 +5,9 @@ import interfaces.IScorer;
 public class SaboteurScorer implements IScorer{
     private int score;
 
+    public SaboteurScorer(){
+        this.score = 0;
+    }
 
     /**
      * Retrieves the current score of the saboteurs team.
