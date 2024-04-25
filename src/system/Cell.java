@@ -26,6 +26,8 @@ public class Cell {
      */
     public int column;
 
+    Map map;
+
     /**
      * Retrieves the component currently occupying the cell for further interaction. [Component]
      * @return Component
@@ -57,4 +59,7 @@ public class Cell {
         }
     }
 
+    public Map getMap() {
+        return map;
+    }
 }

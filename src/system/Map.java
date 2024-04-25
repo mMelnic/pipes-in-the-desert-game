@@ -16,6 +16,7 @@ public class Map {
     private List<Cistern> cisterns;
     private List<Spring> springs;
     private int percentThatSomethingWillSpawn = 0;
+    String size;
 
     public Map(int sizeN, int sizeM){
         rows = sizeN;
@@ -75,5 +76,9 @@ public class Map {
     }
     public void checkForFreeEnds(){
 
+    }
+
+    public String getSize() {
+        return size;
     }
 }
