@@ -1,0 +1,11 @@
+
+l
+java:S1104"OMake row a static final constant or non-public and provide accessors if needed.(²¤÷”8èµñ1
+o
+java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(‰¹´8‚èµñ1
+™
+java:S1450"VRemove the "isEmpty" field and declare it as a local variable in the relevant methods.(ÉĞîÌ8™´Ê³ñ1J$a46619d1-0d05-4507-9e54-ced04e4e7e40
+n
+java:S1068"+Remove this unused "isEmpty" private field.(ÉĞîÌ8´Ê³ñ1J$453561e8-77be-4bcc-90db-a2ad892b747b
+q
+java:S1068".Remove this unused "isPlayerOn" private field.(Âğæä8´Ê³ñ1J$053c4042-acef-415c-bc8a-96bc65bc38d9
