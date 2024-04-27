@@ -1,5 +1,5 @@
 package components;
 
-public class Spring {
+public class Spring extends Component {
     
 }
