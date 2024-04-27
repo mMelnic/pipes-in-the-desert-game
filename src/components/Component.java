@@ -66,14 +66,10 @@ public class Component {
             throw new CellOccupiedException("the cell is not null!");
             return false;
         } else {
-            /*if(this instanceof Pipe){
-                if(this.connectedComponents.size() < 4){
-                    this.connectedComponents.put(d, c);
-                } else {
-                    throw new Exception("the Pipe has already connected to 4 components.");
-                }
-            } */
-            if(this instanceof Pump) {
+            if(this instanceof Pipe){
+                this.connectedComponents.put(d, c);
+            } 
+            else if(this instanceof Pump) {
                 if(this.connectedComponents.size() < this.getConnectablePipesNumber()){
                     this.connectedComponents.put(d, c);
                     return true;
