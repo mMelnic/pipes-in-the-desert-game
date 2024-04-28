@@ -1,0 +1,22 @@
+
+t
+java:S3776z"RRefactor this method to reduce its Cognitive Complexity from 37 to the 15 allowed.(½ÍÕŠûÿÿÿÿ8³Ÿ¹²ò1
+P
+java:S1135›"2Complete the task associated to this TODO comment.(›ò²¸8·Ÿ¹²ò1
+H	java:S106ž"+Replace this use of System.out by a logger.(¶åËÇ8¸Ÿ¹²ò1
+U
+java:S1135·"2Complete the task associated to this TODO comment.(®¶¿ïýÿÿÿÿ8¹Ÿ¹²ò1
+H	java:S106Å"+Replace this use of System.out by a logger.(¶åËÇ8¹Ÿ¹²ò1
+U
+java:S1135Ò"2Complete the task associated to this TODO comment.(½ü° ýÿÿÿÿ8¹Ÿ¹²ò1
+H	java:S106ÿ"+Replace this use of System.out by a logger.(®Û¡†8»Ÿ¹²ò1
+u
+java:S3776–"RRefactor this method to reduce its Cognitive Complexity from 44 to the 15 allowed.(¤¡ Ïÿÿÿÿÿ8»Ÿ¹²ò1
+U
+java:S1135ƒ"2Complete the task associated to this TODO comment.(œïŠÍúÿÿÿÿ8¼Ÿ¹²ò1
+P
+java:S1135²"2Complete the task associated to this TODO comment.(ÒïÒÏ8½Ÿ¹²ò1
+H	java:S106ã"+Replace this use of System.out by a logger.(öŽ®ß8¾Ÿ¹²ò1
+H	java:S106Ž"+Replace this use of System.out by a logger.(Ùï·…8ÀŸ¹²ò1
+è
+java:S6541z"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 78 to 64, Complexity from 20 to 14, Nesting Level from 4 to 2, Number of Variables from 11 to 6.(½ÍÕŠûÿÿÿÿ8ÂŸ¹²ò1

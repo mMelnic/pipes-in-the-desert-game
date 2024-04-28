@@ -13,3 +13,7 @@ H
 src/player/Saboteur.java,e/e/eec137aa62783f265d4e39f24b9f5f058d8099a2
 M
 src/player/MovablePlayer.java,9/f/9f15b749f5d0e4845898730c1c8104acb07f18af
+G
+src/player/Plumber.java,5/4/54651e8e6873e7c1f2805ee2ce026ecc40b5068f
+M
+src/player/PlumberScorer.java,4/7/47a9e1ae8221e5f0e72356a195a8a9b447303b26
