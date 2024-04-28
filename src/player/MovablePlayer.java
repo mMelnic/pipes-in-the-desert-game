@@ -141,8 +141,8 @@ public abstract class MovablePlayer {
     public void redirectWaterFlow(Pipe newIncomingPipe, Pipe newOutgoingPipe, String filePath) {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
-                throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
                 handleOutput("Incoming and outgoing pipes should be different.", filePath);
+                throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
             }
 
             Pump pump = (Pump) currentCell.getComponent();
@@ -151,8 +151,8 @@ public abstract class MovablePlayer {
             currentCell.getMap().updateWaterFlow();
             handleOutput("The direction changed.", filePath);
         } else {
-            throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
             handleOutput("You are not standing on a pump.", filePath);
+            throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
     }
 
