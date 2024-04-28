@@ -14,10 +14,10 @@ public class Team {
         this.teamScore = teamScore;
     }
 
-    public void assignPlayer(Player player) {
+    public void assignPlayer(MovablePlayer player) {
         if (player != null) {
             players.add(player);
-            System.out.println(player.getName() + " has been assigned to the team.");
+            System.out.println(player.getPlayerID() + " has been assigned to the team.");
         } else {
             System.out.println("Invalid player. Cannot assign to the team.");
         }
