@@ -8,6 +8,10 @@ import enumerations.*;
 import interfaces.*;
 import system.*;
 import exceptions.*;
+import java.io.Console;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import player.*;
 
@@ -62,41 +66,45 @@ public class Component {
         catch(Exception e){
             return false;
         }
-        if(this.location.getMap().getCells(newRow, newColumn).getIsEmpty() == false){
-            throw new CellOccupiedException("the cell is not null!");
+        try {
+            if(this.location.getMap().getCells(newRow, newColumn).isEmpty() == false){
+                throw new CellOccupiedException("the cell is not empty!");
+            } else {
+                if(this instanceof Pipe){
+                    this.connectedComponents.put(d, c);
+                    writeMessageToCMD("component successfully added.");
+                } 
+                else if(this instanceof Pump) {
+                    if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
+                        this.connectedComponents.put(d, c);
+                        writeMessageToCMD("component successfully added.");
+                        return true;
+                    }
+                    else{
+                        throw new PumpConnectablePipeNumberExceedException("the pump is connected to max number of pipes already.");
+                    }
+                }
+                else if(this instanceof Cistern) {
+                    if(this.connectedComponents.size() < 1){
+                        this.connectedComponents.put(d, c);
+                        writeMessageToCMD("component successfully added.");
+                        return true;
+                    } else {
+                        throw new CisternMultipleComponentsConnectedException("the cistern is already connected to a component.");
+                    }
+                }
+                else if(this instanceof Spring){
+                    if(this.connectedComponents.size() < 1){
+                        this.connectedComponents.put(d ,c);
+                        writeMessageToCMD("component successfully added.");
+                        return true;
+                    } else {
+                        throw new SpringMultipleComponensConnectedException("the Spring is already connected to a component.");
+                    }
+                }
+            }
+        } catch (CellOccupiedException e) {
             return false;
-        } else {
-            if(this instanceof Pipe){
-                this.connectedComponents.put(d, c);
-            } 
-            else if(this instanceof Pump) {
-                if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
-                    this.connectedComponents.put(d, c);
-                    return true;
-                }
-                else{
-                    throw new PumpConnectablePipeNumberExceedException("the pump is connected to max number of pipes already.");
-                    return false;
-                }
-            }
-            else if(this instanceof Cistern) {
-                if(this.connectedComponents.size() < 1){
-                    this.connectedComponents.put(d, c);
-                    return true;
-                } else {
-                    throw new CisternMultipleComponentsConnectedException("the cistern is already connected to a component.");
-                    return false;
-                }
-            }
-            else if(this instanceof Spring){
-                if(this.connectedComponents.size() < 1){
-                    this.connectedComponents.put(d ,c);
-                    return true;
-                } else {
-                    throw new SpringMultipleComponensConnectedException("the Spring is already connected to a component.");
-                    return false;
-                }
-            }
         }
         return false;
     }
@@ -107,11 +115,26 @@ public class Component {
             Map.Entry<Direction, Component> entry = iterator.next();
             if (entry.getValue() == c) {
                 iterator.remove();
+                writeMessageToCMD("component successfully removed.");
                 return true;
             }
         }
         return false;
     }
 
+    public void writeMessageToCMD(String string){
+        System.out.println(string);
+    }
 
+    public void writeMessageToFile(String string, File file){
+        try {
+            FileWriter fileWriter = new FileWriter(file, true);
+
+            fileWriter.write(string);
+            fileWriter.close();
+        } catch (IOException e) {
+            System.out.println("An error occurred while appending to the file: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
 }
