@@ -32,8 +32,6 @@ public class Plumber extends MovablePlayer {
         }
         return false;
     }
-    // TODO do something if the pipe has a free end so that it leaks if water is
-    // flowing
 
     public boolean repairPump() {
         if (currentCell.getComponent() instanceof Pump) {
@@ -108,7 +106,7 @@ public class Plumber extends MovablePlayer {
                     if (currentCellPump.getIncomingPipe() == null) {
                         currentCellPump.setIncomingPipe(pipe);
                     }
-                    // Theoretically there should be no scenario when there is no incoming and outgoing pipe
+                    // Theoretically there should be no scenario when there is no incoming and no outgoing pipe
                 }
 
                 currentCell.getMap().checkForFreeEnds(); // TODO add method in the Map class
