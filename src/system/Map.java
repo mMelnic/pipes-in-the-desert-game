@@ -79,4 +79,8 @@ public class Map {
     public String getSize() {
         return size;
     }
+
+    public Cell getCells(int row, int column){
+        return cells[row][column];
+    }
 }
