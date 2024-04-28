@@ -74,7 +74,7 @@ public abstract class MovablePlayer {
      * @throws IllegalArgumentException If an invalid direction is specified.
      */
 
-    public void move(Direction direction, String filePath) {
+    public void move(Direction direction) {
         Cell targetCell;
 
         switch (direction) {
@@ -110,14 +110,14 @@ public abstract class MovablePlayer {
                             "Above is " + targetCell.getMap().getUpwardCell(targetCell).getComponent().getClass().getSimpleName() + "\n" +
                             "To the right is " + targetCell.getMap().getRightwardCell(targetCell).getComponent().getClass()
                             .getSimpleName() + "\n";
-                    handleOutput(message, filePath);
+                    handleOutput(message);
                 } else {
-                    handleOutput("You cannot move there.", filePath);
+                    handleOutput("You cannot move there.");
                 }
             } else if (targetCell.getComponent() instanceof Pump) {
                 currentCell = targetCell;
             } else {
-                handleOutput("You cannot move there.", filePath);
+                handleOutput("You cannot move there.");
             }
         }
     }
@@ -138,10 +138,10 @@ public abstract class MovablePlayer {
      * @throws IllegalStateException    If the current cell does not contain a pump.
      */
 
-    public void redirectWaterFlow(Pipe newIncomingPipe, Pipe newOutgoingPipe, String filePath) {
+    public void redirectWaterFlow(Pipe newIncomingPipe, Pipe newOutgoingPipe) {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
-                handleOutput("Incoming and outgoing pipes should be different.", filePath);
+                handleOutput("Incoming and outgoing pipes should be different.");
                 throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
             }
 
@@ -149,9 +149,9 @@ public abstract class MovablePlayer {
             pump.setIncomingPipe(newIncomingPipe);
             pump.setOutgoingPipe(newOutgoingPipe);
             currentCell.getMap().updateWaterFlow();
-            handleOutput("The direction changed.", filePath);
+            handleOutput("The direction changed.");
         } else {
-            handleOutput("You are not standing on a pump.", filePath);
+            handleOutput("You are not standing on a pump.");
             throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
     }
@@ -162,10 +162,10 @@ public abstract class MovablePlayer {
      * @param message  The message to be printed and appended.
      * @param filePath The path to the file where the message will be appended.
      */
-    protected void handleOutput(String message, String filePath) {
+    protected void handleOutput(String message) {
         System.out.println(message);
         try {
-            FileWriter writer = new FileWriter(filePath, true);
+            FileWriter writer = new FileWriter("output.txt", true);
             writer.write(message + "\n");
             writer.close();
         } catch (IOException e) {
