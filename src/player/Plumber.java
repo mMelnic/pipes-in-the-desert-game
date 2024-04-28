@@ -75,18 +75,18 @@ public class Plumber extends MovablePlayer {
             Component componentInCurrentCell = currentCell.getComponent();
             Component componentInTargetCell = targetCell.getComponent();
 
-            try {
-                componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
-                // TODO add a getOppositeDirection method to Direction
-                carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
-            } catch (Exception e) {
-                System.out.println("Could not connect the components.");
-                return false;
-            }
-
             if (carriedComponent instanceof Pipe && componentInTargetCell == null) {
                 Pipe pipe = (Pipe) carriedComponent;
                 pipe.changeShape();
+
+                try {
+                    componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
+                    // TODO add a getOppositeDirection method to Direction
+                    carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
+                } catch (Exception e) {
+                    System.out.println("Could not connect the components.");
+                    return false;
+                }
 
                 if (componentInCurrentCell instanceof Pipe) {
                     Pipe currentCellPipe = ((Pipe) componentInCurrentCell);
@@ -117,6 +117,14 @@ public class Plumber extends MovablePlayer {
             } else if (carriedComponent instanceof Pump
                     && (componentInTargetCell == null || componentInTargetCell instanceof Pipe)) {
                 Pump pump = (Pump) carriedComponent;
+
+                try {
+                    componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
+                    carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
+                } catch (Exception e) {
+                    System.out.println("Could not connect the components.");
+                    return false;
+                }
 
                 if (componentInCurrentCell instanceof Pipe) {
                     ((Pipe) componentInCurrentCell).changeShape();
@@ -170,7 +178,7 @@ public class Plumber extends MovablePlayer {
             Pipe pipe = (Pipe) currentCell.getComponent();
 
             try {
-                if (pipe.getConnectedComponents().contains(oldComponent) &&
+                if (pipe.getConnectedComponents().containsValue(oldComponent) &&
                         currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation())) {
 
                     // TODO: Add a new method in the Map class
