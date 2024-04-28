@@ -14,7 +14,7 @@ public abstract class MovablePlayer {
     protected UUID playerID;
     protected Team team;
     protected Cell currentCell;
-    protected Direction facingDirection = DOWN;
+    protected Direction facingDirection = Direction.DOWN;
 
     protected MovablePlayer(Team team) {
         this.playerID = UUID.randomUUID();
@@ -45,19 +45,19 @@ public abstract class MovablePlayer {
         switch (direction) {
             case UP:
                 targetCell = currentCell.getMap().getUpwardCell(currentCell);
-                facingDirection = UP;
+                facingDirection = Direction.UP;
                 break;
             case DOWN:
                 targetCell = currentCell.getMap().getDownwardCell(currentCell) ;
-                facingDirection = DOWN;
+                facingDirection = Direction.DOWN;
                 break;
             case LEFT:
                 targetCell = currentCell.getMap().getLeftwardCell(currentCell);
-                facingDirection = LEFT;
+                facingDirection = Direction.LEFT;
                 break;
             case RIGHT:
                 targetCell = currentCell.getMap().getRightwardCell(currentCell);
-                facingDirection = RIGHT;
+                facingDirection = Direction.RIGHT;
                 break;
             default:
                 throw new IllegalArgumentException("Invalid direction");
@@ -88,6 +88,7 @@ public abstract class MovablePlayer {
             Pump pump = (Pump) currentCell.getComponent();
             pump.setIncomingPipe(newIncomingPipe);
             pump.setOutgoingPipe(newOutgoingPipe);
+            currentCell.getMap().updateWaterFlow();
         } else {
             throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
