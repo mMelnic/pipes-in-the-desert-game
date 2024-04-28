@@ -19,9 +19,15 @@ public class Pump extends Component implements ILeakage {
     private boolean isBroken;
     private SaboteurScorer saboteursScore;
 
-    public Pump(UUID componentID, int connectablePipesNumber) {
-        super(componentID);
+    public Pump(int connectablePipesNumber) {
+        super();
         this.connectablePipesNumber = connectablePipesNumber;
+    }
+    public Pump() {
+        super();
+        this.isReservoirFull = false;
+        this.leakStartTime = 0;
+        this.isLeaking = false;
     }
 
     public void connectPipe(Pipe newPipe) {
@@ -72,7 +78,7 @@ public class Pump extends Component implements ILeakage {
         if (component instanceof Pipe) {
             ((Pipe) component).isWaterFlowing(stopOrStart); 
             for (Direction direction : Direction.values()) {
-                stopFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
+                stopOrStartFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
             }
         }
     }
