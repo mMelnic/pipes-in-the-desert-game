@@ -1,7 +1,9 @@
 package player;
 
 import java.util.Map;
-
+import components.Pipe;
+import components.Pump;
+import enumerations.Direction;
 import system.Cell;
 
 public class Plumber extends MovablePlayer {
