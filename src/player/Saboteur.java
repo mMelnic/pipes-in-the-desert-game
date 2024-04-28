@@ -15,11 +15,10 @@ public class Saboteur extends MovablePlayer {
         if (!currentCell.isEmpty){
             if (currentCell.getComponent() instanceof Pipe){
                 Pipe pipe = (Pipe) currentCell.getComponent();
-                if (!pipe.isBroken){
-                    pipe.isLeaking = true;
-                    pipe.isBroken = true;
-                    pipe.isWaterFlowing = false;
-                    pipe.startLeakTime = System.currentTimeMillis();
+                if (!pipe.isBroken()){
+                    pipe.startLeaking();
+                    pipe.setBroken(true);
+                    pipe.setWaterFlowing(true);
                     return true;
                 }else {return false;}
             }else {return false;}
