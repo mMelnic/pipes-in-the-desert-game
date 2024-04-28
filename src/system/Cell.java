@@ -12,7 +12,7 @@ public class Cell {
     /**
      * Indicates whether the cell is currently unoccupied. [boolean, private, false]
      */
-    private boolean isEmpty;
+    public boolean isEmpty = true;
     /**
      * racks whether a player is currently occupying the cell. [boolean, private, false]
      */

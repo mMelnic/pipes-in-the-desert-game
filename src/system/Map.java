@@ -70,14 +70,12 @@ public class Map {
         }
         else {return false;}
     }
-
     public void updateWaterFlow(){
 
     }
     public void checkForFreeEnds(){
 
     }
-
     public String getSize() {
         return size;
     }
