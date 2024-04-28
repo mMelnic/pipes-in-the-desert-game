@@ -1,0 +1,13 @@
+
+~	java:S125"<This block of commented-out lines of code should be removed.(Ó”È†8ùİÎ±ò1J$67457b7a-2d5a-44fc-a63a-7db4b364fbff
+…
+java:S6201G"BReplace this instanceof check and cast with 'instanceof Pipe pipe'(ù†ì¶8şİÎ±ò1J$cd4a6105-25b9-432c-b6cd-757158779a82
+Š
+java:S6201["BReplace this instanceof check and cast with 'instanceof Pipe pipe'(›ãïûÿÿÿÿÿ8ÿİÎ±ò1J$bfad70ea-7ce4-44ec-a2b9-d16860ef690e
+•
+java:S3776e"RRefactor this method to reduce its Cognitive Complexity from 22 to the 15 allowed.(¼àîš8ŞÎ±ò1J$6720e8b9-5bc6-4982-a3a1-5e9c3e502127
+l
+java:S1068
+")Remove this unused "shape" private field.(Šªñ¥8…ŞÎ±ò1J$50480685-e8a9-4c9a-8b6e-e0ce682106e6
+q
+java:S1068".Remove this unused "isPlayerOn" private field.(Âğæä8…ŞÎ±ò1J$80257683-e1a3-4e2c-9520-d10684a9fc3d
