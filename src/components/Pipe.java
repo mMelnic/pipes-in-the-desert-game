@@ -6,6 +6,10 @@ import interfaces.ILeakage;
 import player.PlumberScorer;
 import system.Cell;
 
+/**
+ * Represents a pipe component in the game.
+ */
+
 public class Pipe extends Component implements ILeakage {
     private Shapes shape;
     private boolean isWaterFlowing;
@@ -26,6 +30,10 @@ public class Pipe extends Component implements ILeakage {
     //     this.isBroken = false;
     //     this.isPlayerOn = false;
     // }
+
+     /**
+     * Constructs a new Pipe object with default values.
+     */
     public Pipe() {
         super();
         this.shape = Shapes.HORIZONTAL;
@@ -34,6 +42,9 @@ public class Pipe extends Component implements ILeakage {
         this.isLeaking = false;
     }
 
+    /**
+     * Starts the leaking of the pipe.
+     */
     @Override
     public void startLeaking() {
         if (!isLeaking) {
@@ -44,6 +55,9 @@ public class Pipe extends Component implements ILeakage {
     }
 
 
+    /**
+     * Stops the leaking of the pipe.
+     */
     @Override
     public void stopLeaking() {
         if (isLeaking) {
@@ -55,14 +69,25 @@ public class Pipe extends Component implements ILeakage {
         
     }
 
+    /**
+     * Checks if the pipe is full.
+     * @return true if the pipe is full, false otherwise.
+     */
     public boolean isFull() {
 
         return isFull;
     }
+     /**
+     * Sets whether water is flowing through the pipe.
+     * @param set true to set water flowing, false otherwise.
+     */
     public void isWaterFlowing(boolean set){
         isWaterFlowing = set;
     }
 
+    /**
+     * Undoes the stoppage of water flow.
+     */
     private void undoStopFlow() {
         Component currentPipe = this;
         for (Direction direction : Direction.values()) {
@@ -77,6 +102,9 @@ public class Pipe extends Component implements ILeakage {
         }
     }
 
+    /**
+     * Stops the water flow in the pipe.
+     */
     public void stopFlow() {
         isWaterFlowing = false;
         for (Direction direction : Direction.values()) {
@@ -84,6 +112,10 @@ public class Pipe extends Component implements ILeakage {
         }
     }
 
+    /**
+     * Recursively stops the water flow in connected components.
+     * @param component the component to stop the flow.
+     */
     private void stopFlowRecursive(Component component) {
         if (component == null || component instanceof Cistern) {
             return;
@@ -97,7 +129,9 @@ public class Pipe extends Component implements ILeakage {
     }
 
   
-    
+    /**
+     * Changes the shape of the pipe based on connected components.
+     */
     public void changeShape() {
         // Check if there is only one connected component
         int connectedCount = 0;
@@ -135,21 +169,45 @@ public class Pipe extends Component implements ILeakage {
             }
         }
     }
+    /**
+     * Checks if the pipe is broken.
+     * @return true if the pipe is broken, false otherwise.
+     */
     public boolean isBroken(){
         return isBroken;
     }
+     /**
+     * Sets whether the pipe is broken.
+     * @param set true to set the pipe as broken, false otherwise.
+     */
     public void setBroken(boolean set){
         isBroken = set;
     }
+      /**
+     * Checks if the pipe is leaking.
+     * @return true if the pipe is leaking, false otherwise.
+     */
     public boolean isLeaking(){
         return isLeaking;
     }
+     /**
+     * Sets whether the pipe is leaking.
+     * @param set true to set the pipe as leaking, false otherwise.
+     */
     public void setLeaking(boolean set){
         isLeaking = set;
     }
+     /**
+     * Checks if water is flowing through the pipe.
+     * @return true if water is flowing, false otherwise.
+     */
     public boolean isWaterFlowing(){
         return isWaterFlowing;
     }
+    /**
+     * Sets whether water is flowing through the pipe.
+     * @param set true to set water flowing, false otherwise.
+     */
     public void setWaterFlowing(boolean set){
         isWaterFlowing = set;
     }

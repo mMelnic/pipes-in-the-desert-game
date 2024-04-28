@@ -26,7 +26,6 @@ public class Cell {
      * Represents the column coordinate of the cell within the map grid. [int, private]
      */
     public int column;
-
     Map map;
 
     /**
