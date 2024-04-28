@@ -10,17 +10,35 @@ import enumerations.Direction;
 import system.Cell;
 import system.Map;
 
+/**
+ * Abstract class representing a movable player in a game.
+ */
 public abstract class MovablePlayer {
     protected UUID playerID;
     protected Team team;
     protected Cell currentCell;
     protected Direction facingDirection = Direction.DOWN;
 
+    /**
+     * Constructs a new MovablePlayer with a unique player ID and assigned to a
+     * team.
+     * 
+     * @param team The team to which the player belongs.
+     */
     protected MovablePlayer(Team team) {
         this.playerID = UUID.randomUUID();
         this.team = team;
     }
 
+    /**
+     * Allows the player to choose a map from a list of available maps based on
+     * size.
+     * 
+     * @param maps A list of available maps to choose from.
+     * @return The chosen map.
+     * @throws IllegalArgumentException If no maps are available or if an invalid
+     *                                  map size choice is made.
+     */
     public Map chooseMap(List<Map> maps) {
         if (maps == null || maps.isEmpty()) {
             throw new IllegalArgumentException("No maps available");
@@ -38,6 +56,21 @@ public abstract class MovablePlayer {
 
         throw new IllegalArgumentException("Invalid map size choice");
     }
+
+    /**
+     * Moves the player in the specified direction.
+     * This method calculates the target cell based on the current cell and the
+     * specified direction.
+     * It checks if the target cell contains a Pipe or a Pump. If it's a Pipe and
+     * not occupied by another player,
+     * the player moves to that cell and updates their current cell and facing
+     * direction.
+     * If the target cell contains a Pump, the player moves to that cell without any
+     * checks.
+     *
+     * @param direction The direction in which to move the player.
+     * @throws IllegalArgumentException If an invalid direction is specified.
+     */
 
     public void move(Direction direction) {
         Cell targetCell;
@@ -78,6 +111,22 @@ public abstract class MovablePlayer {
         }
     }
 
+    /**
+     * Redirects the water flow of a pump to different incoming and outgoing pipes.
+     * This method updates the water flow configuration of a pump by assigning new
+     * incoming and outgoing pipes.
+     * If the pump is connected to the same pipe for both incoming and outgoing
+     * flow, an IllegalArgumentException is thrown.
+     * If the current cell does not contain a pump, an IllegalStateException is
+     * thrown.
+     *
+     * @param newIncomingPipe The new incoming pipe.
+     * @param newOutgoingPipe The new outgoing pipe.
+     * @throws IllegalArgumentException If the incoming and outgoing pipes are the
+     *                                  same.
+     * @throws IllegalStateException    If the current cell does not contain a pump.
+     */
+
     public void redirectWaterFlow(Pipe newIncomingPipe, Pipe newOutgoingPipe) {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
@@ -93,22 +142,47 @@ public abstract class MovablePlayer {
         }
     }
 
+    /**
+     * Gets the current cell of the player.
+     * 
+     * @return The current cell.
+     */
     public Cell getCurrentCell() {
         return currentCell;
     }
 
+    /**
+     * Sets the current cell of the player.
+     * 
+     * @param currentCell The new current cell.
+     */
     public void setCurrentCell(Cell currentCell) {
         this.currentCell = currentCell;
     }
 
+    /**
+     * Gets the facing direction of the player.
+     * 
+     * @return The facing direction.
+     */
     public Direction getFacingDirection() {
         return facingDirection;
     }
 
+    /**
+     * Sets the facing direction of the player.
+     * 
+     * @param facingDirection The new facing direction.
+     */
     public void setFacingDirection(Direction facingDirection) {
         this.facingDirection = facingDirection;
     }
 
+    /**
+     * Gets the ID of the player.
+     * 
+     * @return The player ID.
+     */
     public UUID getPlayerID() {
         return playerID;
     }
