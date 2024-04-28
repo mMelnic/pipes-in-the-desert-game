@@ -38,17 +38,25 @@ public class Plumber extends MovablePlayer {
      * 
      * @return True if the repair is successful, false otherwise.
      */
-    public boolean repairPipe() {
+    public boolean repairPipe(String filePath) {
         if (currentCell.getComponent() instanceof Pipe) {
             Pipe pipe = (Pipe) currentCell.getComponent();
             if (pipe.isBroken()) {
                 pipe.setBroken(false);
+                handleOutput("The pipe is repaired.", filePath);
                 // Check if the pipe is leaking and stop the leaking
                 if (pipe.isLeaking()) {
                     pipe.stopLeaking();
+                    handleOutput("The pipe is repaired and stopped leaking.", filePath);
                 }
                 return true;
             }
+            else if(!pipe.isBroken()) {
+                handleOutput("The pipe is not broken.", filePath);
+            }
+        }
+        else {
+            handleOutput("You are not standing on a pipe.", filePath);
         }
         return false;
     }
@@ -63,20 +71,29 @@ public class Plumber extends MovablePlayer {
      * 
      * @return True if the repair is successful, false otherwise.
      */
-    public boolean repairPump() {
+    public boolean repairPump(String filePath) {
         if (currentCell.getComponent() instanceof Pump) {
             Pump pump = (Pump) currentCell.getComponent();
             if (pump.isBroken()) {
                 pump.setBroken(false);
+                handleOutput("The pump is repaired.", filePath);
                 if (pump.isLeaking()) {
                     pump.stopLeaking();
+                    handleOutput("The pump is repaired and stopped leaking.", filePath);
                     if (pump.isReservoirFull()) {
                         pump.setReservoirFull(false);
                         pump.stopFlow();
+                        handleOutput("The reservoir emptied.", filePath);
                     }
                 }
                 return true;
             }
+            else {
+                handleOutput("The pump is not broken.", filePath);
+            }
+        }
+        else {
+            handleOutput("You are not standing on a pump.", filePath);
         }
         return false;
     }
@@ -103,7 +120,7 @@ public class Plumber extends MovablePlayer {
      * @throws IllegalArgumentException if an invalid direction is specified.
      */
 
-    public boolean installComponent(Direction direction) {
+    public boolean installComponent(Direction direction, String filePath) {
         Cell targetCell;
 
         switch (direction) {
@@ -126,6 +143,9 @@ public class Plumber extends MovablePlayer {
         if (carriedComponent != null && targetCell != null) {
             Component componentInCurrentCell = currentCell.getComponent();
             Component componentInTargetCell = targetCell.getComponent();
+            if (componentInTargetCell != null) {
+                handleOutput("The cell is not empty, you cannot install here.", filePath);
+            }
 
             if (carriedComponent instanceof Pipe && componentInTargetCell == null) {
                 Pipe pipe = (Pipe) carriedComponent;
@@ -164,6 +184,7 @@ public class Plumber extends MovablePlayer {
                 currentCell.getMap().checkForFreeEnds(); // TODO add method in the Map class
                 targetCell.placeComponent(pipe);
                 carriedComponent = null;
+                handleOutput("You have successfully installed a Pipe.", filePath);
 
                 return true;
             } else if (carriedComponent instanceof Pump
@@ -184,10 +205,13 @@ public class Plumber extends MovablePlayer {
                 }
                 targetCell.placeComponent(pump);
                 carriedComponent = null;
+                handleOutput("You have successfully installed a Pump.", filePath);
 
                 return true;
                 // TODO what if the component in the current cell is a pump, how to set the outgoing/ incoming pipes?
             }
+        } else if (carriedComponent == null) {
+            handleOutput("You have no component carried.", null);
         }
 
         return false;
@@ -252,20 +276,27 @@ public class Plumber extends MovablePlayer {
      *         otherwise.
      */
 
-    public boolean detachPipe(Component newComponent, Component oldComponent) {
+    public boolean detachPipe(Component newComponent, Component oldComponent, String filePath) {
+        if (oldComponent instanceof Pipe) {
+            handleOutput("The pipe is not connected to any active component.", filePath);
+        } else if (newComponent instanceof Pipe) {
+            handleOutput("The component that you have tried to connect is not an active component.", filePath);
+        }
         if (newComponent instanceof Pipe || oldComponent instanceof Pipe) {
             return false;
         }
 
         if (currentCell.getComponent() instanceof Pipe) {
             Pipe pipe = (Pipe) currentCell.getComponent();
+            if (!(pipe.getConnectedComponents().containsValue(oldComponent))) {
+                handleOutput("The pipe is not connected to the given active component.", filePath);
+            } else if (!(currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation()))) {
+                handleOutput("The component that you have tried to connect is not in an adjacent cell.", filePath);
+            }
 
             try {
                 if (pipe.getConnectedComponents().containsValue(oldComponent) &&
                         currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation())) {
-
-                    // TODO: Add a new method in the Map class
-                    // TODO: Add method to the Cell class
                     Direction pipeRelativeToNewComponent = pipe.getLocation()
                             .getRelativeDirection(newComponent.getLocation());
                     Direction newComponentRelativeToPipe = newComponent.getLocation()
@@ -318,12 +349,15 @@ public class Plumber extends MovablePlayer {
                         }
                     }
 
+                    handleOutput("You successfully redirected an end of a pipe.", filePath);
                     return true;
                 }
             } catch (Exception e) {
                 System.out.println("Could not detach the pipe");
                 return false;
             }
+        } else {
+            handleOutput("You are not standing on a pipe.", filePath);
         }
         return false;
     }
@@ -336,17 +370,30 @@ public class Plumber extends MovablePlayer {
      * component. If no cistern with an available component is found, it prints a
      * message indicating so.
      */
-    public void pickComponent() {
+    public void pickComponent(String filePath) {
+        if (carriedComponent != null) {
+            handleOutput("You already have a component carried.", filePath);
+            return;
+        }
+        boolean cisternFound = false;
         // Check all connected components on the neighbouring cells to find a cistern
         for (Map.Entry<Direction, Component> entry : currentCell.getComponent().getConnectedComponents().entrySet()) {
             if (entry.getValue() instanceof Cistern) {
+                cisternFound = true;
                 Cistern cistern = (Cistern) entry.getValue();
                 if (cistern.getManufacturedComponent() != null) {
                     carriedComponent = cistern.getManufacturedComponent();
                     cistern.setManufacturedComponent(null); // Reset the manufacturedComponent
+                    handleOutput("You have picked a " + carriedComponent.getClass().getSimpleName(), filePath);
                     return; // Exit the method once a component is picked
                 }
+                else {
+                    handleOutput("There is no component available at the cistern.", filePath);
+                }
             }
+        }
+        if (!cisternFound) {
+            handleOutput("You are not close enough to any cistern.", filePath);
         }
         // Handle case when no cistern with available component is found
         System.out.println("No cistern with available component found in neighbouring cells.");
