@@ -10,6 +10,9 @@ public class Saboteur extends MovablePlayer {
      * Allows the saboteur to puncture a pipe, causing water leakage and hindering the progress of the plumber team.
      * @return boolean
      */
+    public Saboteur(Team team){
+        super(team);
+    }
 
     public boolean puncturePipe(){
         if (!currentCell.isEmpty){
