@@ -1,13 +1,20 @@
 package components;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Cistern extends Component {
     private boolean isCisternFull;
     private Component manufacturedComponent;
+    private int currentwater;
+    private int capacity;
 
     public Cistern(){
         super();
         this.isCisternFull = false;
         this.manufacturedComponent = null;
+        this.currentwater = 0;
+        this.capacity = 100; //adjustable
     }
 
     public boolean getIsCisternFull(){
@@ -24,6 +31,18 @@ public class Cistern extends Component {
     }
 
     public long fillCistern(){
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                currentwater++;
+
+                if (currentwater >= capacity) {
+                    timer.cancel();
+                    onCisternFull();
+                }
+            }
+        }, 0, 1000);
         return 0;
     }
 
@@ -40,6 +59,6 @@ public class Cistern extends Component {
     }
 
     public void onCisternFull(){
-        
+       
     }
 }
