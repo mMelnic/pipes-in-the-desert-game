@@ -1,6 +1,9 @@
 package player;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import interfaces.IScorer;
 
 public class Team {
     private List<MovablePlayer> players;

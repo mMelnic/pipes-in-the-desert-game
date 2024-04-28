@@ -135,4 +135,24 @@ public class Pipe extends Component implements ILeakage {
             }
         }
     }
+    public boolean isBroken(){
+        return isBroken;
+    }
+    public void setBroken(boolean set){
+        isBroken = set;
+    }
+    public boolean isLeaking(){
+        return isLeaking;
+    }
+    public void setLeaking(boolean set){
+        isLeaking = set;
+    }
+    public boolean isWaterFlowing(){
+        return isWaterFlowing;
+    }
+    public void setWaterFlowing(boolean set){
+        isWaterFlowing = set;
+    }
+
+    
 }
