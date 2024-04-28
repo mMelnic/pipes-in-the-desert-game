@@ -31,6 +31,7 @@ public class Cistern extends Component {
     }
 
     public long fillCistern(){
+        writeMessageToCMD("started filling cistern.");
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -47,12 +48,14 @@ public class Cistern extends Component {
     }
 
     public Pipe manufacturePipe(){
+        writeMessageToCMD("pipe successfully manufactured.");
         Pipe newPipe = new Pipe();
         this.manufacturedComponent = newPipe;
         return newPipe;
     }
 
     public Pump manufacturePump(){
+        writeMessageToCMD("pump successfully manufactured.");
         Pump newPump = new Pump();
         this.manufacturedComponent = newPump;
         return newPump;
