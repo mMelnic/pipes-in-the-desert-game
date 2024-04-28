@@ -1,4 +1,9 @@
 
+<<<<<<< Updated upstream
 r	java:S106"+Replace this use of System.out by a logger.(Œ¯Š¬ıÿÿÿÿ8õ·ª¹ñ1J$cf469baa-d312-4900-b2c4-3076e2f0941f
 u
 java:S1135Z"2Complete the task associated to this TODO comment.(Ù—Ÿü8ø·ª¹ñ1J$dbefd37f-5c94-4569-916b-0ac6ea7d3687
+=======
+d
+java:S2094"BRemove this empty class, write its code or make it an "interface".(Ò›ÂÎøÿÿÿÿ8Ó°ì¸ñ1
+>>>>>>> Stashed changes

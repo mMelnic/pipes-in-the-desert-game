@@ -1,4 +1,5 @@
 
+<<<<<<< Updated upstream
 –
 java:S1104"SMake isEmpty a static final constant or non-public and provide accessors if needed.(¯”¿–8“Ô¹ñ1J$4d37982a-07b2-46cd-9fa2-ffb42d7d7f04
 ’
@@ -7,3 +8,15 @@ java:S1104"OMake row a static final constant or non-public and provide accesso
 java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(‰¹´8Äÿ¸ñ1J$a77d0801-412a-4dbe-aec0-458469820d20
 q
 java:S1068".Remove this unused "isPlayerOn" private field.(Âğæä8’Äÿ¸ñ1J$d6c37d39-cbef-4f65-a8c4-d6ac51813195
+=======
+l
+java:S1104"OMake row a static final constant or non-public and provide accessors if needed.(²¤÷”8È°ì¸ñ1
+o
+java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(‰¹´8È°ì¸ñ1
+s
+java:S1450"VRemove the "isEmpty" field and declare it as a local variable in the relevant methods.(ÉĞîÌ8Ë°ì¸ñ1
+H
+java:S1068"+Remove this unused "isEmpty" private field.(ÉĞîÌ8Í°ì¸ñ1
+K
+java:S1068".Remove this unused "isPlayerOn" private field.(Âğæä8Í°ì¸ñ1
+>>>>>>> Stashed changes
