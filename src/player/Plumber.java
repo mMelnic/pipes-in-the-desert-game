@@ -249,7 +249,7 @@ public class Plumber extends MovablePlayer {
             if (component instanceof Cistern && pipe.isWaterFlowing()) {
                 ((Cistern) component).fillCistern();
             } else if (component instanceof Spring) {
-                ((Spring) component).startWaterSupply();
+                ((Spring) component).startWaterSupply(true);
             }
         } catch (Exception e) {
             System.out.println("Could not connect the components");
