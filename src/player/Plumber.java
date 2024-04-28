@@ -180,7 +180,7 @@ public class Plumber extends MovablePlayer {
                     // Theoretically there should be no scenario when there is no incoming and no outgoing pipe
                 }
 
-                currentCell.getMap().checkForFreeEnds(); // TODO add method in the Map class
+                // currentCell.getMap().checkForFreeEnds(); // If free ends are found start leaking
                 targetCell.placeComponent(pipe);
                 carriedComponent = null;
                 handleOutput("You have successfully installed a Pipe.", filePath);
