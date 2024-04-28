@@ -1,7 +1,6 @@
 package player;
 
 import java.util.Map;
-
 import components.Cistern;
 import components.Component;
 import components.Pipe;

@@ -1,8 +1,6 @@
 package interfaces;
 
 public interface ILeakage {
-    void startLeaking();
-    
-    void stopLeaking();
-    
+    public void startLeaking();
+    public void stopLeaking();
 }
