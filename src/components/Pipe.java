@@ -3,6 +3,7 @@ package components;
 import enumerations.Direction;
 import enumerations.Shapes;
 import interfaces.ILeakage;
+import player.PlumberScorer;
 import system.Cell;
 
 public class Pipe extends Component implements ILeakage {
@@ -13,15 +14,24 @@ public class Pipe extends Component implements ILeakage {
     private boolean isFull;
     private boolean isBroken;
     private boolean isPlayerOn;
+    private PlumberScorer plumbersScore;
 
-    public Pipe(Cell location) {
-        super(location);
+
+    // public Pipe(Cell location) {
+    //     super(location);
+    //     this.shape = Shapes.HORIZONTAL;
+    //     this.isWaterFlowing = false;
+    //     this.leakStartTime = 0;
+    //     this.isLeaking = false;
+    //     this.isBroken = false;
+    //     this.isPlayerOn = false;
+    // }
+    public Pipe() {
+        super();
         this.shape = Shapes.HORIZONTAL;
         this.isWaterFlowing = false;
         this.leakStartTime = 0;
         this.isLeaking = false;
-        this.isBroken = false;
-        this.isPlayerOn = false;
     }
 
     @Override
@@ -35,14 +45,14 @@ public class Pipe extends Component implements ILeakage {
 
 
     @Override
-    public long stopLeaking() {
+    public void stopLeaking() {
         if (isLeaking) {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
             undoStopFlow();
-            return duration;
+            plumbersScore.updateScore(duration);
         }
-        return 0;
+        
     }
 
     public boolean isFull() {
@@ -125,4 +135,24 @@ public class Pipe extends Component implements ILeakage {
             }
         }
     }
+    public boolean isBroken(){
+        return isBroken;
+    }
+    public void setBroken(boolean set){
+        isBroken = set;
+    }
+    public boolean isLeaking(){
+        return isLeaking;
+    }
+    public void setLeaking(boolean set){
+        isLeaking = set;
+    }
+    public boolean isWaterFlowing(){
+        return isWaterFlowing;
+    }
+    public void setWaterFlowing(boolean set){
+        isWaterFlowing = set;
+    }
+
+    
 }

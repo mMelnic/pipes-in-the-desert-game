@@ -8,7 +8,7 @@ public class Cell {
     Component component;
     boolean isEmpty;
     boolean isPlayerOn;
-    int rows;
+    int row;
     int column;
     Map map;
 
@@ -32,5 +32,13 @@ public class Cell {
 
     public Map getMap() {
         return map;
+    }
+
+    public int getRow() {
+        return row;
+    }
+
+    public int getColumn() {
+        return column;
     }
 }

@@ -70,7 +70,7 @@ public class Component {
                 this.connectedComponents.put(d, c);
             } 
             else if(this instanceof Pump) {
-                if(this.connectedComponents.size() < this.getConnectablePipesNumber()){
+                if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
                     this.connectedComponents.put(d, c);
                     return true;
                 }

@@ -2,6 +2,12 @@ package player;
 
 import java.util.Map;
 
+import components.Cistern;
+import components.Component;
+import components.Pipe;
+import components.Pump;
+import components.Spring;
+import enumerations.Direction;
 import system.Cell;
 
 public class Plumber extends MovablePlayer {
@@ -116,7 +122,7 @@ public class Plumber extends MovablePlayer {
 
                 if (componentInCurrentCell instanceof Pipe) {
                     ((Pipe) componentInCurrentCell).changeShape();
-                    pump.setIncomingPipe(componentInCurrentCell);
+                    pump.setIncomingPipe((Pipe)componentInCurrentCell);
                 }
                 targetCell.placeComponent(pump);
                 carriedComponent = null;

@@ -19,9 +19,18 @@ public class Pump extends Component implements ILeakage {
     private boolean isBroken;
     private SaboteurScorer saboteursScore;
 
-    public Pump(UUID componentID, int connectablePipesNumber) {
-        super(componentID);
+    public Pump(int connectablePipesNumber) {
+        super();
         this.connectablePipesNumber = connectablePipesNumber;
+        this.isReservoirFull = false;
+        this.leakStartTime = 0;
+        this.isLeaking = false;
+    }
+    public Pump() {
+        super();
+        this.isReservoirFull = false;
+        this.leakStartTime = 0;
+        this.isLeaking = false;
     }
 
     public void connectPipe(Pipe newPipe) {
@@ -72,7 +81,7 @@ public class Pump extends Component implements ILeakage {
         if (component instanceof Pipe) {
             ((Pipe) component).isWaterFlowing(stopOrStart); 
             for (Direction direction : Direction.values()) {
-                stopFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
+                stopOrStartFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
             }
         }
     }
@@ -87,4 +96,43 @@ public class Pump extends Component implements ILeakage {
             stopOrStartFlowRecursive(outgoingPipe, true);
         }
     }
+    public int getConnectablePipesNumber(){
+        return connectablePipesNumber;
+    }
+    public void setIncomingPipe(Pipe newIncomingPipe) {
+        this.incomingPipe = newIncomingPipe;
+    }
+
+    public void setOutgoingPipe(Pipe newOutgoingPipe) {
+        this.outgoingPipe = newOutgoingPipe;
+    }
+
+    public boolean isBroken(){
+        return isBroken;
+    }
+    public void setBroken(boolean set){
+        isBroken = set;
+    }
+    public boolean isLeaking(){
+        return isLeaking;
+    }
+    public void setLeaking(boolean set){
+        isLeaking = set;
+    }
+    public boolean isReservoirFull(){
+        return isReservoirFull;
+    }
+    public void setReservoirFull(boolean set){
+        isReservoirFull = set;
+    }
+
+    public Pipe getOutgoingPipe(){
+        return outgoingPipe;
+    }
+    public Pipe getIncomingPipe(){
+        return incomingPipe;
+    }
+    
+
 }
+
