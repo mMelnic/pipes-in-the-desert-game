@@ -29,7 +29,7 @@ public class Map {
                 Random r = new Random();
                 int randomNumber = r.nextInt(0,100);
                 if (randomNumber < percentThatSomethingWillSpawn){
-                    randomNumber = r.nextInt()
+                    randomNumber = r.nextInt();
                 }
             }
         }
