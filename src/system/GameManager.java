@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
+import java.util.TimerTask;
 import player.Team;
 
 
@@ -36,11 +37,23 @@ public class GameManager
     public GameManager() 
     {
         cleanOutputTxt();
+        isTimeUp = false;
     }
 
     public void startGame() 
     {
-
+        timer = new Timer("GameTimer");
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                isTimeUp = true;
+            }
+        }, 3 * 60 * 1000);
+        teams.add(new Team())
+        while (!isTimeUp)
+        {
+            
+        }
     }
 
     public void endGame() 
@@ -232,7 +245,7 @@ public class GameManager
                     }
                     catch(Exception exception)
                     {
-                        System.out.println("File not found.");
+                        System.out.println("File not found or it is empty.");
                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                         System.out.println("\n\n");
                         continue;
@@ -242,6 +255,11 @@ public class GameManager
                         if (fileScanner != null) {fileScanner.close();}
                     }
                     cleanOutputTxt();
+                }
+                default -> {
+                    System.out.println("Incorrect input. Please enter either 1 or 2.");
+                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    System.out.println("\n\n");
                 }
             }
             System.out.println();
