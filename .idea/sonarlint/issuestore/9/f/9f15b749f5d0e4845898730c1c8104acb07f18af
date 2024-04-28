@@ -1,0 +1,8 @@
+
+k
+java:S2095¨"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(¡‰Ò‘üÿÿÿÿ8÷×Î±ò1
+L	java:S1062"+Replace this use of System.out by a logger.(Œ¯Š¬ıÿÿÿÿ8ı×Î±ò1
+P
+java:S1135š"2Complete the task associated to this TODO comment.(Ù—Ÿü8ØÎ±ò1
+M	java:S106¦"+Replace this use of System.out by a logger.(øºÑûúÿÿÿÿ8‚ØÎ±ò1
+H	java:S106¬"+Replace this use of System.err by a logger.(šïğÕ8„ØÎ±ò1
