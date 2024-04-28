@@ -65,11 +65,10 @@ public abstract class MovablePlayer {
 
         if (targetCell != null) {
             if (targetCell.getComponent() instanceof Pipe) {
-                Pipe targetPipe = (Pipe) targetCell.getComponent();
-                if (!targetPipe.isPlayerOn()) {
-                    targetPipe.setPlayerOn(true);
+                if (!targetCell.isPlayerOn()) {
+                    targetCell.setPlayerOn(true);
                     if (currentCell.getComponent() instanceof Pipe) {
-                        ((Pipe) currentCell.getComponent()).setPlayerOn(false);
+                        currentCell.setPlayerOn(false);
                     }
                     currentCell = targetCell;
                 }
