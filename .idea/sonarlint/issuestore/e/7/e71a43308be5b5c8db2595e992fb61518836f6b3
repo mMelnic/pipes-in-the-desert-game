@@ -1,0 +1,26 @@
+
+•
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(·¯Ý÷J$51de88d8-7ae9-4f0b-a69e-038208dd3763
+®
+java:S1319&"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(ŠØ³þûÿÿÿÿJ$1d513816-4dc3-485e-80d3-2d6df1eec40b
+|	java:S125"<This block of commented-out lines of code should be removed.(ŽÌ·ÏùÿÿÿÿJ$51ada6f8-1d5c-484b-a066-9bfe26b850bf
+w	java:S125"<This block of commented-out lines of code should be removed.(ûˆ—çJ$36de5689-5076-47f5-bcf1-00eac8795b56
+“
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(¬¹Œ¾ùÿÿÿÿJ$1990cfa5-af0b-4379-9739-5e4f19d2ddb1
+{
+java:S18541":Remove this useless assignment to local variable "newRow".(Â€ÜÿþÿÿÿÿJ$1adf4976-e20e-4b0c-ae33-934198499383
+~
+java:S18542"=Remove this useless assignment to local variable "newColumn".(°›ÀþÿÿÿÿJ$c743aed2-7897-4c75-8577-5b3c7de903e5
+v
+java:S18544":Remove this useless assignment to local variable "newRow".(ÛÖÑ¢J$34a6de60-16b8-463f-a6d7-813f94974b6f
+~
+java:S18545"=Remove this useless assignment to local variable "newColumn".(°›ÀþÿÿÿÿJ$845eb11d-ceb4-4648-a2a4-1351459b4dbf
+v
+java:S18547":Remove this useless assignment to local variable "newRow".(žæ¯îJ$fb7109df-c2f7-475d-9cb8-6c6b78ea0629
+y
+java:S18548"=Remove this useless assignment to local variable "newColumn".(†õÌ…J$91257786-50db-49b9-9b82-121684c9b2bc
+†	java:S1286"LEnd this switch case with an unconditional break, return or throw statement.(Ö÷ÁJ$d01fdeeb-2948-41c0-a947-98d2563cc34a
+Œ	java:S1283"LEnd this switch case with an unconditional break, return or throw statement.(ÿìÙþÿÿÿÿJ$25e94cf5-6c05-4364-954c-c5d7f69a509f
+Œ	java:S1280"LEnd this switch case with an unconditional break, return or throw statement.(×ÃäýÿÿÿÿJ$cc07cffa-7534-46ce-9f60-1fef66760f89
+h
+java:S1125A"'Remove the unnecessary boolean literal.(´³Œ¡ÿÿÿÿÿJ$9193c0b1-9c57-4e4d-bdcc-838ea215bee9

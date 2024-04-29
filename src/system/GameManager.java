@@ -5,6 +5,7 @@ import components.Pipe;
 import enumerations.Direction;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
@@ -19,13 +20,12 @@ import player.Team;
 
 public class GameManager 
 {
-    private List<Map> maps;
     private Map map;
     private Timer timer;
     private int plumbersScore;
     private int saboteursScore;
     private List<Team> teams;
-    private boolean isTimeUp;
+    private boolean isTimeUp = false;
     private Plumber activePlumber = null;
     private Saboteur activeSaboteur = null;
     private MovablePlayer activePlayer;
@@ -49,10 +49,16 @@ public class GameManager
     {
         cleanOutputTxt();
         isTimeUp = false;
+        plumbersScore = 0;
+        saboteursScore = 0;
+
+        
     }
 
     public void startGame() 
     {
+        teams = new ArrayList<Team>();
+
         teams.add(new Team(new PlumberScorer()));
         teams.add(new Team(new SaboteurScorer()));
         
@@ -68,6 +74,13 @@ public class GameManager
         Saboteur saboteur2 = new Saboteur(teams.get(1));
         teams.get(1).assignPlayer(saboteur2);
 
+        map.players.add(plumber1);
+        map.players.add(plumber2);
+        map.players.add(saboteur1);
+        map.players.add(saboteur2);
+
+        map.initializeMap();
+
         startTimer();
 
         String inputText;
@@ -76,7 +89,7 @@ public class GameManager
             System.out.print("\033[H\033[2J");  
             System.out.flush();
             
-            // map.draw();
+            map.draw();
             inputText = receiveInput();
 
             switch (inputText)
@@ -438,31 +451,26 @@ public class GameManager
             switch (input)
             {
                 case 1 -> {
-                    map = maps.get(0);
+                    map = new Map(5, 5);
                 }
                 case 2 -> {
-                    map = maps.get(1);
+                    map = new Map(10, 10);
                 }
                 case 3 -> {
-                    map = maps.get(2);
+                    map = new Map(15, 15);
                 }
                 case 4 -> {
                     break MAPS_MENU_LOOP;
                 }
                 default -> {
-                    if (input != 1 && input != 2 && input != 3 && input != 4)
-                    {
-                        String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                    else
-                    {
-                        showTeams();
-                    }
+                    String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+                    System.out.print(message);
+                    writeToOutputTxt(message);
+                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    continue;
                 }
             }
+            showTeams();
         }
         while (input != 1 && input != 2 && input != 3);
         
@@ -513,19 +521,14 @@ public class GameManager
                     break TEAMS_MENU_LOOP;
                 }
                 default -> {
-                    if (input != 1 && input != 2 && input != 3)
-                    {
-                        String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                    else
-                    {
-                        startGame();
-                    }
+                    String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+                    System.out.print(message);
+                    writeToOutputTxt(message);
+                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    continue;
                 }
             }
+            startGame();
         }
         while (input != 1 && input != 2);
         
@@ -590,9 +593,12 @@ public class GameManager
                     cleanOutputTxt();
                 }
                 default -> {
-                    System.out.println("Incorrect input. Please enter either 1 or 2.");
-                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    System.out.println("\n\n");
+                    if (input != 1 && input != 2)
+                    {
+                        System.out.println("Incorrect input. Please enter either 1 or 2.");
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                        System.out.println("\n\n");
+                    }
                 }
             }
             System.out.println();
