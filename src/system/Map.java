@@ -44,7 +44,6 @@ public class Map {
     }
 
     public void initializeMap(){
-
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (j == rows-1){
@@ -65,7 +64,6 @@ public class Map {
                         Pipe newPipe = new Pipe();
                         cells[i][j].placeComponent(newPipe);
                     }
-
                 }
             }
         }
@@ -258,36 +256,36 @@ public class Map {
 
     private void outputMap() {
         try {
-            FileWriter myWriter = new FileWriter("output.txt");
-            myWriter.write("c - cistern; p - pipe; x - pump; s - spring\n");
+            FileWriter myWriter = new FileWriter("output.txt", true);
+            myWriter.append("c - cistern; p - pipe; x - pump; s - spring\n");
     
             for (int i = 0; i < columns; i++) {
-                myWriter.write("__");
+                myWriter.append("__");
             }
-            myWriter.write("\n");
+            myWriter.append("\n");
     
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
-                    myWriter.write("|");
+                    myWriter.append("|");
                     if (cells[i][j].isEmpty) {
-                        myWriter.write("  ");
+                        myWriter.append("  ");
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
-                        myWriter.write("c ");
+                        myWriter.append("c ");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
-                        myWriter.write("p ");
+                        myWriter.append("p ");
                     } else if (cells[i][j].getComponent() instanceof Pump) {
-                        myWriter.write("x ");
+                        myWriter.append("x ");
                     } else if (cells[i][j].getComponent() instanceof Spring) {
-                        myWriter.write("s ");
+                        myWriter.append("s ");
                     }
                 }
-                myWriter.write("|\n");
+                myWriter.append("|\n");
             }
     
             for (int i = 0; i < columns; i++) {
-                myWriter.write("__");
+                myWriter.append("__");
             }
-            myWriter.write("\n");
+            myWriter.append("\n");
     
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
@@ -295,6 +293,16 @@ public class Map {
             System.out.println("An error occurred.");
             e.printStackTrace();
         }
+    }
+
+    public List<Cistern> getCisterns() 
+    {
+        return cisterns;
+    }
+
+    public List<Spring> getSprings()
+    {
+        return springs;
     }
     
 

@@ -3,11 +3,9 @@ package player;
 import interfaces.IScorer;
 
 public class SaboteurScorer implements IScorer{
-    private int score;
+    private static int score = 0;
 
-    public SaboteurScorer(){
-        this.score = 0;
-    }
+    public SaboteurScorer(){}
 
     /**
      * Retrieves the current score of the saboteurs team.

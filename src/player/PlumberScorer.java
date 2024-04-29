@@ -9,14 +9,12 @@ import interfaces.IScorer;
  * score.
  */
 public class PlumberScorer implements IScorer {
-    private int score;
+    private static int score = 0;
 
     /**
-     * Constructs a new {@code PlumberScorer} with an initial score of 0.
+     * Constructs a new {@code PlumberScorer}.
      */
-    public PlumberScorer() {
-        this.score = 0;
-    }
+    public PlumberScorer() {}
 
     /**
      * Retrieves the current score of the plumber.
