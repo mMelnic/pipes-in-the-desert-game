@@ -728,6 +728,7 @@ public class GameManager
         manufactureTimer.scheduleAtFixedRate(new TimerTask() {
             public void run()
             {
+                System.out.println();
                 for (Cistern cistern : map.getCisterns())
                 {
                     cistern.manufactureComponent();
