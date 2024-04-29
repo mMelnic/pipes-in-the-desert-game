@@ -1,6 +1,29 @@
+                === PIPES IN THE DESERT ===               
+
+
+1. Start
+2. Key bindings
+3. Exit
+
+                === MAPS ===               
+
+
+Choose the map size:
+1. Small
+2. Medium
+3. Large
+4. Return to the main menu.
+
+                === TEAMS ===               
+
+
+1. Plumbers
+2. Saboteurs
+3. Return to the main menu.
+
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-|p |p |p |p |p |p |p |c |
+|* |* |p |p |p |p |p |c |
 |  |  |  |  |  |  |  |c |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |c |
@@ -9,3 +32,101 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |c |
 ________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |* |p |p |p |p |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |* |p |p |p |p |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+Moved to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |* |p |p |p |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+Moved to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |* |p |p |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+Moved to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |* |p |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+Moved to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |* |p |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+Moved to row 0 and column 6
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |p |* |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+You are not close enough to any cistern.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |p |* |c |
+|  |  |  |  |  |  |  |c |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |c |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |c |
+________________
+
+Time is up!
+
+
