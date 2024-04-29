@@ -143,7 +143,7 @@ public abstract class MovablePlayer {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
-                throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
+                // throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
             }
 
             Pump pump = (Pump) currentCell.getComponent();
