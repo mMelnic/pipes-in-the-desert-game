@@ -220,20 +220,15 @@ public class Map {
 
     }
 
-    private List<Cell> findSprings(){
+    private List<Cell> findSprings() {
         List<Cell> springs = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (cells[i][j].getComponent() instanceof Spring){
+                if (cells[i][j].getComponent() instanceof Spring) {
                     springs.add(cells[i][j]);
                 }
             }
         }
         return springs;
-
-
-    public Cell getCells(int row, int column){
-        return cells[row][column];
-
     }
 }

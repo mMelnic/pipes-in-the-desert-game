@@ -1,37 +1,37 @@
 
-•
-java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8¡ß¾¼ò1J$716ca226-61cd-42f6-be07-3ff1ae8612a5
-
-java:S18712"LThis branch's code block is the same as the block for the branch on line 47.(ÉÏÕú8¢ß¾¼ò1J$fc3cac66-f36f-4daa-93b7-922ddbdd7492
-‰
-java:S1126Y"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8¤ß¾¼ò1J$c1bc331e-0d3f-4dfb-a810-b163a454a22c
-~	java:S125{"<This block of commented-out lines of code should be removed.(£›×€8¦ß¾¼ò1J$12438816-fda8-4d06-8e64-216754a0db61
-m	java:S106‡"+Replace this use of System.out by a logger.(Ù„µO8§ß¾¼ò1J$20f90a12-5c7e-4968-86bc-faa48b41e9a8
-n	java:S106Š"+Replace this use of System.out by a logger.(‹Öà8§ß¾¼ò1J$71cd639e-c6c8-4018-bb07-be70f3020f84
-s	java:S106"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8§ß¾¼ò1J$f8bac14e-c9a8-4704-8452-5dde571d940c
-n	java:S106’"+Replace this use of System.out by a logger.(áñâ™8§ß¾¼ò1J$5e96dbb8-fe1c-4a04-87ea-2a26ed58fa33
-s	java:S106”"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8§ß¾¼ò1J$6f864859-b6e5-4470-8e8c-2e4099b7c7c3
-n	java:S106–"+Replace this use of System.out by a logger.(©ÄÓÂ8§ß¾¼ò1J$5966c244-7f11-4f18-be43-97a8c050ac94
-s	java:S106˜"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8§ß¾¼ò1J$e6c3919b-6963-4acb-9746-7442af5de7ef
-›
-java:S3776Ÿ"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(ĞúÚ¥ÿÿÿÿÿ8¨ß¾¼ò1J$afe8dce4-f827-4ec4-9439-938e1de56e5f
-n	java:S106£"+Replace this use of System.out by a logger.(ò«ÿ8©ß¾¼ò1J$f62aff4f-96ae-4d1b-ac8c-dcb325ca5e0b
-s	java:S106¥"+Replace this use of System.out by a logger.(ı¤êöıÿÿÿÿ8©ß¾¼ò1J$0ab4ed85-4a33-4f31-8ded-98b10485c9bf
-n	java:S106¨"+Replace this use of System.out by a logger.(Àûå 8©ß¾¼ò1J$d086481c-9726-44b8-9e2e-56f773fd10c0
-n	java:S106°"+Replace this use of System.out by a logger.(‹Öà8ªß¾¼ò1J$5f185efe-de28-41f5-b782-ef081138d584
-s	java:S106·"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8ªß¾¼ò1J$2aa7100c-1247-49df-8906-ffb697cca949
-s	java:S106¹"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8ªß¾¼ò1J$798af185-a01f-4391-a4c1-2fd5da5112c3
-n	java:S106»"+Replace this use of System.out by a logger.(µ÷°”8ªß¾¼ò1J$fbf5bcb7-3cce-4ea1-939b-993b3fbd6b2f
-s	java:S106½"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8«ß¾¼ò1J$d8177542-bfca-4ed2-b48b-7d859264b0d7
-n	java:S106¿"+Replace this use of System.out by a logger.(†‘Â“8«ß¾¼ò1J$5151e866-c427-44b7-9815-246d1867cb04
-s	java:S106Ã"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8«ß¾¼ò1J$b2a1173f-16a9-47bf-99c2-2ba2ea99912e
-n	java:S106Å"+Replace this use of System.out by a logger.(áñâ™8«ß¾¼ò1J$28a9efd9-76ed-4e5a-9152-ef5fbd8454cb
-s	java:S106Ç"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8«ß¾¼ò1J$efb7ad8a-5664-4aea-a112-99effc22978d
-n	java:S106É"+Replace this use of System.out by a logger.(©ÄÓÂ8«ß¾¼ò1J$d101e967-ec8b-46e0-bb90-57e65d6dda14
-s	java:S106Ë"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8«ß¾¼ò1J$6ce693a5-8d23-493c-8450-26e7592289c8
-n	java:S106Ô"+Replace this use of System.out by a logger.(’ôÆà8«ß¾¼ò1J$a44c014b-9323-4ad9-932a-0b5f1c6e1d27
-n	java:S106Ö"+Replace this use of System.out by a logger.(Àûå 8«ß¾¼ò1J$6d90dfdc-97d0-42ca-b5dc-cabf1b01868f
-„
-java:S1117İ";Rename "springs" which hides the field declared at line 21.(ÅŠĞ‰üÿÿÿÿ8¬ß¾¼ò1J$804ab83e-4c18-497a-b1a8-50c7e46d1228
-{
-java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8¬ß¾¼ò1J$d009c950-3a2f-413b-bb2f-e21ba68c3710
+o
+java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8ÈõË¼ò1
+i
+java:S18713"LThis branch's code block is the same as the block for the branch on line 48.(ÉÏÕú8ÊõË¼ò1
+c
+java:S1126["AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8ËõË¼ò1
+X	java:S125}"<This block of commented-out lines of code should be removed.(£›×€8ÍõË¼ò1
+G	java:S106Š"+Replace this use of System.out by a logger.(Ù„µO8ÎõË¼ò1
+H	java:S106"+Replace this use of System.out by a logger.(‹Öà8ÎõË¼ò1
+M	java:S106“"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8ÎõË¼ò1
+H	java:S106•"+Replace this use of System.out by a logger.(áñâ™8ÎõË¼ò1
+M	java:S106—"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8ÎõË¼ò1
+H	java:S106™"+Replace this use of System.out by a logger.(©ÄÓÂ8ÏõË¼ò1
+M	java:S106›"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8ÏõË¼ò1
+u
+java:S3776¢"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(ĞúÚ¥ÿÿÿÿÿ8ÏõË¼ò1
+H	java:S106¦"+Replace this use of System.out by a logger.(ò«ÿ8ĞõË¼ò1
+M	java:S106¨"+Replace this use of System.out by a logger.(ı¤êöıÿÿÿÿ8ĞõË¼ò1
+H	java:S106«"+Replace this use of System.out by a logger.(Àûå 8ĞõË¼ò1
+H	java:S106³"+Replace this use of System.out by a logger.(‹Öà8ÑõË¼ò1
+M	java:S106º"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8ÑõË¼ò1
+M	java:S106¼"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8ÑõË¼ò1
+H	java:S106¾"+Replace this use of System.out by a logger.(µ÷°”8ÑõË¼ò1
+M	java:S106À"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8ÑõË¼ò1
+H	java:S106Â"+Replace this use of System.out by a logger.(†‘Â“8ÒõË¼ò1
+M	java:S106Æ"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8ÒõË¼ò1
+H	java:S106È"+Replace this use of System.out by a logger.(áñâ™8ÒõË¼ò1
+M	java:S106Ê"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8ÒõË¼ò1
+H	java:S106Ì"+Replace this use of System.out by a logger.(©ÄÓÂ8ÒõË¼ò1
+M	java:S106Î"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8ÒõË¼ò1
+H	java:S106×"+Replace this use of System.out by a logger.(’ôÆà8ÒõË¼ò1
+H	java:S106Ù"+Replace this use of System.out by a logger.(Àûå 8ÒõË¼ò1
+^
+java:S1117à";Rename "springs" which hides the field declared at line 21.(ÅŠĞ‰üÿÿÿÿ8ÓõË¼ò1
+U
+java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8ÓõË¼ò1
