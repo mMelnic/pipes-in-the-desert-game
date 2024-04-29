@@ -294,6 +294,16 @@ public class Map {
             e.printStackTrace();
         }
     }
+
+    public List<Cistern> getCisterns() 
+    {
+        return cisterns;
+    }
+
+    public List<Spring> getSprings()
+    {
+        return springs;
+    }
     
 
     private List<Cell> findSprings() {

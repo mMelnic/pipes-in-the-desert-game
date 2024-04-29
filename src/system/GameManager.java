@@ -1,5 +1,6 @@
 package system;
 
+import components.Cistern;
 import components.Component;
 import components.Pipe;
 import enumerations.Direction;
@@ -30,6 +31,8 @@ public class GameManager
     private Plumber activePlumber = null;
     private Saboteur activeSaboteur = null;
     private MovablePlayer activePlayer;
+    private SaboteurScorer saboteurScorer = new SaboteurScorer();
+    private PlumberScorer plumberScorer = new PlumberScorer();
 
 
     Scanner scanner = new Scanner(System.in);
@@ -87,9 +90,8 @@ public class GameManager
         startTimer();
 
         String inputText;
-        GAME_LOOP: while (!isTimeUp)
+        GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
         {
-            
             map.draw();
             inputText = receiveInput();
 
@@ -337,10 +339,26 @@ public class GameManager
                 }
             }
         }
-    }
+        String message = "\n\n\nThe game finished. Calculation of points is in progress...\n";
+        System.out.print(message);
+        writeToOutputTxt(message);
+        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
 
-    public void endGame() 
-    {
+        saboteursScore = saboteurScorer.getScore();
+        plumbersScore = plumberScorer.getScore();
+
+        String winMessage;
+        if (plumbersScore >= saboteursScore)
+        {
+            winMessage = "Plumbers won with a lead of " + (plumbersScore - saboteursScore) + " points!\n\n\n";
+        }
+        else
+        {
+            winMessage = "Saboteurs won with a lead of " + (saboteursScore - plumbersScore) + " points!\n\n\n";
+        }
+
+        System.out.print(winMessage);
+        writeToOutputTxt(message);
 
     }
 
@@ -420,7 +438,10 @@ public class GameManager
 
     public boolean checkIfAllCisternsAreFull() 
     {
-        return false;
+        for (Cistern cistern : map.getCisterns()) {
+            if (!cistern.getIsCisternFull()) {return false;}
+        }
+        return true;
     }
 
     public void showMaps() 
