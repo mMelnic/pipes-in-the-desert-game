@@ -5,3 +5,12 @@
 2. Key bindings
 3. Exit
 
+                === MAPS ===               
+
+
+Choose the map size:
+1. Small
+2. Medium
+3. Large
+4. Return to the main menu.
+
