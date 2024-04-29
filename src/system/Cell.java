@@ -4,6 +4,7 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import enumerations.Direction;
+import player.MovablePlayer;
 
 public class Cell {
     /**
@@ -27,6 +28,9 @@ public class Cell {
      */
     public int column;
     public Map map;
+   
+
+    private MovablePlayer playerOn;
 
     /**
      * Retrieves the component currently occupying the cell for further interaction. [Component]
@@ -108,5 +112,11 @@ public class Cell {
 
     public void setPlayerOn(boolean isPlayerOn) {
         this.isPlayerOn = isPlayerOn;
+    }
+    public MovablePlayer getPlayerOn() {
+        return playerOn;
+    }
+    public void setMovablePlayer(MovablePlayer player){
+        this.playerOn = player;
     }
 }
