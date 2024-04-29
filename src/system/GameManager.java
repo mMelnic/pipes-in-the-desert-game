@@ -21,7 +21,9 @@ import player.Saboteur;
 import player.SaboteurScorer;
 import player.Team;
 
-
+/**
+ * The GameManager class manages the game's flow and logic.
+ */
 public class GameManager 
 {
     private Map map;
@@ -38,7 +40,9 @@ public class GameManager
 
 
     Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Displays the key bindings for the game.
+     */
     public void showKeyBindings()
     {
         String message = "                === KEY BINDINGS ===               \n\n\n"
@@ -51,6 +55,9 @@ public class GameManager
         System.out.println();
     }
 
+    /**
+     * Constructs a GameManager instance.
+     */
     public GameManager() 
     {
         cleanOutputTxt();
@@ -76,6 +83,9 @@ public class GameManager
         teams.get(1).assignPlayer(saboteur2);
     }
 
+    /**
+     * Starts the game.
+     */
     public void startGame() 
     {
         
@@ -383,6 +393,9 @@ public class GameManager
 
     }
 
+    /**
+     * Displays the main menu contents.
+     */
     public static void printMainMenuContents()
     {
         String message = "                === PIPES IN THE DESERT ===               \n\n\n"
@@ -394,6 +407,9 @@ public class GameManager
         writeToOutputTxt(message);
     }
 
+    /**
+     * Opens the main menu.
+     */
     public void openMenu()
     {
         String inputText = "";
@@ -436,6 +452,9 @@ public class GameManager
         while (true);
     }
 
+    /**
+     * Initiates a sandstorm event.
+     */
     public void startSandstorm()
     {
         String message = "\nSANDSTORM!\n\n";
@@ -450,6 +469,9 @@ public class GameManager
         }
     }
     
+    /**
+     * Starts sandstorm timers.
+     */
     public void startSandstormTimers() 
     {
         Timer timer = new Timer("SandstormTimer1");
@@ -475,6 +497,9 @@ public class GameManager
         }, (int) (Math.random() * (3000 - 2000)) + 2000);
     }
 
+    /**
+     * Starts the game timer.
+     */
     public void startTimer() 
     {
         timer = new Timer("GameTimer");
@@ -489,6 +514,11 @@ public class GameManager
         }, 3 * 60 * 1000);
     }
 
+    /**
+     * Checks if all cisterns are full.
+     * 
+     * @return true if all cisterns are full, false otherwise
+     */
     public boolean checkIfAllCisternsAreFull() 
     {
         for (Cistern cistern : map.getCisterns()) {
@@ -497,6 +527,9 @@ public class GameManager
         return true;
     }
 
+     /**
+     * Shows available maps.
+     */
     public void showMaps() 
     {
         String message = "                === MAPS ===               \n\n\n"
@@ -556,6 +589,9 @@ public class GameManager
         
     }
 
+    /**
+     * Shows available teams.
+     */
     public void showTeams()
     {
         String message = "                === TEAMS ===               \n\n\n"
@@ -614,6 +650,11 @@ public class GameManager
         
     }
 
+    /**
+     * Receives input from the user.
+     * 
+     * @return the user's input
+     */
     public String receiveInput()
     {
         String inputText = "";
@@ -687,6 +728,11 @@ public class GameManager
         while (true);
     }
 
+    /**
+     * Writes a message to the output.txt file.
+     * 
+     * @param message the message to write
+     */
     public static void writeToOutputTxt(String message)
     {
         FileWriter fileWriter = null;
@@ -714,6 +760,9 @@ public class GameManager
         }
     }
 
+    /**
+     * Cleans the output.txt file.
+     */
     public static void cleanOutputTxt()
     {
         FileWriter fileWriter = null;
@@ -737,17 +786,21 @@ public class GameManager
         }
     }
 
+    /**
+     * Manufactures components periodically.
+     */
     public void manufactureComponents()
     {
         Timer manufactureTimer = new Timer("ManufactureTimer");
         manufactureTimer.scheduleAtFixedRate(new TimerTask() {
             public void run()
             {
+                System.out.println();
                 for (Cistern cistern : map.getCisterns())
                 {
                     cistern.manufactureComponent();
                 }
             }
-        }, 1000 * 10, 1000 * 10);
+        }, 1000 * 30, 1000 * 30);
     }
 }
