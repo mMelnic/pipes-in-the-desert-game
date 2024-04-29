@@ -142,7 +142,7 @@ public class Plumber extends MovablePlayer {
         if (carriedComponent != null && targetCell != null) {
             Component componentInCurrentCell = currentCell.getComponent();
             Component componentInTargetCell = targetCell.getComponent();
-            if (componentInTargetCell != null) {
+            if (componentInTargetCell != null && !(carriedComponent instanceof Pump)) {
                 handleOutput("The cell is not empty, you cannot install here.");
             }
 
