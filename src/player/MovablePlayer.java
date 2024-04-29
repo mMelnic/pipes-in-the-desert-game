@@ -153,7 +153,7 @@ public abstract class MovablePlayer {
             handleOutput("The direction changed.");
         } else {
             handleOutput("You are not standing on a pump.");
-            throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
+            // throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
     }
 
