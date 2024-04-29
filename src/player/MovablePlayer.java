@@ -111,7 +111,12 @@ public abstract class MovablePlayer {
                     handleOutput("You cannot move there.");
                 }
             } else if (targetCell.getComponent() instanceof Pump) {
+                if (currentCell.getComponent() instanceof Pipe) {
+                    currentCell.setPlayerOn(false);
+                }
                 currentCell = targetCell;
+                String message = "Moved to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
+                handleOutput(message);
             } else {
                 handleOutput("You cannot move there.");
             }
