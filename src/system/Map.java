@@ -46,18 +46,6 @@ public class Map {
                 cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
-                try {
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.LEFT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.RIGHT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.DOWN);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.UP);
-                } catch (PumpConnectablePipeNumberExceedException e) {
-                    e.printStackTrace();
-                } catch (CisternMultipleComponentsConnectedException e) {
-                    e.printStackTrace();
-                } catch (SpringMultipleComponensConnectedException e) {
-                    e.printStackTrace();
-                }
             }
 
 
@@ -86,6 +74,50 @@ public class Map {
                         cells[i][j].placeComponent(newPipe);
                     }
                 }
+                
+                if (cells[i][j].getComponent() != null) {
+                    // Check if left cell exists and has a component
+                    if (j > 0 && cells[i][j - 1].getComponent() != null) {
+                        try {
+                            cells[i][j].getComponent().addConnectedComponent(cells[i][j - 1].getComponent(),
+                                    Direction.LEFT);
+                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
+                                | SpringMultipleComponensConnectedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // Check if right cell exists and has a component
+                    if (j < cells[i].length - 1 && cells[i][j + 1].getComponent() != null) {
+                        try {
+                            cells[i][j].getComponent().addConnectedComponent(cells[i][j + 1].getComponent(),
+                                    Direction.RIGHT);
+                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
+                                | SpringMultipleComponensConnectedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // Check if lower cell exists and has a component
+                    if (i < cells.length - 1 && cells[i + 1][j].getComponent() != null) {
+                        try {
+                            cells[i][j].getComponent().addConnectedComponent(cells[i + 1][j].getComponent(),
+                                    Direction.DOWN);
+                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
+                                | SpringMultipleComponensConnectedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    // Check if upper cell exists and has a component
+                    if (i > 0 && cells[i - 1][j].getComponent() != null) {
+                        try {
+                            cells[i][j].getComponent().addConnectedComponent(cells[i - 1][j].getComponent(),
+                                    Direction.UP);
+                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
+                                | SpringMultipleComponensConnectedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
             }
         }
     }
@@ -265,24 +297,19 @@ public class Map {
     }
 
     private void printMap() {
-        System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
-    
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring");
+
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
-    
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
-                }
-                else if (cells[i][j].isPlayerOn()) {
-                    if (cells[i][j].getPlayerOn() instanceof Plumber) {
-                        System.out.print("|*");
-                    } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
-                        System.out.print("|+");
-                    }
+                } else if (cells[i][j].isPlayerOn()) {
+                    System.out.print("|*");
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
