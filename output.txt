@@ -1,1 +1,4 @@
-c - cistern; p - pipe; x - pump; s - spring
+c - cistern; p - pipe; x - pump; s - springMoved to row 0 and column 0
+Above is Pipe
+To the right is Pipe
+

@@ -29,14 +29,14 @@ public class Map {
     String size;
 
     public Map(int sizeN, int sizeM){
-        rows = sizeN;
-        columns = sizeM;
+        // rows = sizeN;
+        // columns = sizeM;
 
         for (int i = 0; i < cells.length; i++)
         {
             for (int j = 0; j < cells[i].length; j++) 
             {
-                cells[i][j] = new Cell();
+                cells[i][j] = new Cell(this);
             }
         }
     }
@@ -82,10 +82,30 @@ public class Map {
         else return currentCell;
     }
     public Cell getLeftwardCell(Cell currentCell){
-        if (currentCell.column != 0){
-            return cells[currentCell.row][currentCell.column-1];
+        int row = -1;
+        int col = -1;
+
+        // Find the coordinates of the given cell
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j] == currentCell) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+            if (row != -1) {
+                break;
+            }
         }
-        else return currentCell;
+
+        // Check if the cell has a left neighbor
+        if (row != -1 && col > 0) {
+            return cells[row][col - 1];
+        } else {
+            // Return null if no left neighbor or cell not found
+            return null;
+        }
     }
     public Cell getRightwardCell(Cell currentCell){
         if (currentCell.column != columns-1){

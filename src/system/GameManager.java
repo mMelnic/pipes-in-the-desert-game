@@ -80,6 +80,7 @@ public class GameManager
         map.players.add(saboteur2);
 
         map.initializeMap();
+        activePlayer.setCurrentCell(map.getCells(0, 7)); // TODO
 
         startTimer();
 
@@ -504,6 +505,23 @@ public class GameManager
                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                 continue;
             }
+
+            teams = new ArrayList<Team>();
+
+            teams.add(new Team(new PlumberScorer()));
+            teams.add(new Team(new SaboteurScorer()));
+
+            Plumber plumber1 = new Plumber(teams.get(0));
+            teams.get(0).assignPlayer(plumber1);
+
+            Plumber plumber2 = new Plumber(teams.get(0));
+            teams.get(0).assignPlayer(plumber2);
+
+            Saboteur saboteur1 = new Saboteur(teams.get(1));
+            teams.get(1).assignPlayer(saboteur1);
+
+            Saboteur saboteur2 = new Saboteur(teams.get(1));
+            teams.get(1).assignPlayer(saboteur2);
 
             switch (input)
             {
