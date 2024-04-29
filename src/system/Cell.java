@@ -36,6 +36,11 @@ public class Cell {
         return component;
     }
 
+    public Cell(int row, int column){
+        this.row = row;
+        this.column = column;
+    }
+
     /**
      * Places a new component onto the cell, updating its status accordingly.
      * @param newElement

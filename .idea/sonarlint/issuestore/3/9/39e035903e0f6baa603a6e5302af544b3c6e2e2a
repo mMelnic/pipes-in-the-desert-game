@@ -1,37 +1,34 @@
 
-o
-java:S3776!"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8ÈõË¼ò1
-i
-java:S18713"LThis branch's code block is the same as the block for the branch on line 48.(ÉÏÕú8ÊõË¼ò1
-c
-java:S1126["AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8ËõË¼ò1
-X	java:S125}"<This block of commented-out lines of code should be removed.(£›×€8ÍõË¼ò1
-G	java:S106Š"+Replace this use of System.out by a logger.(Ù„µO8ÎõË¼ò1
-H	java:S106"+Replace this use of System.out by a logger.(‹Öà8ÎõË¼ò1
-M	java:S106“"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8ÎõË¼ò1
-H	java:S106•"+Replace this use of System.out by a logger.(áñâ™8ÎõË¼ò1
-M	java:S106—"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8ÎõË¼ò1
-H	java:S106™"+Replace this use of System.out by a logger.(©ÄÓÂ8ÏõË¼ò1
-M	java:S106›"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8ÏõË¼ò1
-u
-java:S3776¢"RRefactor this method to reduce its Cognitive Complexity from 28 to the 15 allowed.(ĞúÚ¥ÿÿÿÿÿ8ÏõË¼ò1
-H	java:S106¦"+Replace this use of System.out by a logger.(ò«ÿ8ĞõË¼ò1
-M	java:S106¨"+Replace this use of System.out by a logger.(ı¤êöıÿÿÿÿ8ĞõË¼ò1
-H	java:S106«"+Replace this use of System.out by a logger.(Àûå 8ĞõË¼ò1
-H	java:S106³"+Replace this use of System.out by a logger.(‹Öà8ÑõË¼ò1
-M	java:S106º"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8ÑõË¼ò1
-M	java:S106¼"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8ÑõË¼ò1
-H	java:S106¾"+Replace this use of System.out by a logger.(µ÷°”8ÑõË¼ò1
-M	java:S106À"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8ÑõË¼ò1
-H	java:S106Â"+Replace this use of System.out by a logger.(†‘Â“8ÒõË¼ò1
-M	java:S106Æ"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8ÒõË¼ò1
-H	java:S106È"+Replace this use of System.out by a logger.(áñâ™8ÒõË¼ò1
-M	java:S106Ê"+Replace this use of System.out by a logger.(İ¯Öüÿÿÿÿ8ÒõË¼ò1
-H	java:S106Ì"+Replace this use of System.out by a logger.(©ÄÓÂ8ÒõË¼ò1
-M	java:S106Î"+Replace this use of System.out by a logger.(°âışÿÿÿÿ8ÒõË¼ò1
-H	java:S106×"+Replace this use of System.out by a logger.(’ôÆà8ÒõË¼ò1
-H	java:S106Ù"+Replace this use of System.out by a logger.(Àûå 8ÒõË¼ò1
-^
-java:S1117à";Rename "springs" which hides the field declared at line 21.(ÅŠĞ‰üÿÿÿÿ8ÓõË¼ò1
-U
-java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8ÓõË¼ò1
+¡
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(…Ğğıÿÿÿÿ8ŠÚáÉò1J$68369c13-9218-4f66-9214-d3d1aa24a200
+œ
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò¥çÌ8‹ÚáÉò1J$8c179242-d729-489e-ab3a-523126a1a730
+¡
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÂıÿÿÿÿ8‹ÚáÉò1J$05352c81-747f-4d82-b3ea-c11de1cdd18b
+›
+java:S1104"SMake players a static final constant or non-public and provide accessors if needed.(ªÂıÿÿÿÿ8‹ÚáÉò1J$2f56881e-aa55-404b-8040-a56a81e3cc2f
+z
+java:S1172"7Remove these unused method parameters "sizeN", "sizeM".(®Çæ8‘ÚáÉò1J$a598e197-ad49-4336-b68e-6a5bc6491158
+~	java:S125 "<This block of commented-out lines of code should be removed.(Ôàˆ 8’ÚáÉò1J$dabb8099-6370-400d-b29c-1fd5d126491e
+•
+java:S3776."RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8’ÚáÉò1J$6e3509be-07b0-48be-97b8-4bb69ea6a56c
+
+java:S1871@"LThis branch's code block is the same as the block for the branch on line 61.(ÉÏÕú8“ÚáÉò1J$1a5b1cdf-b027-46b2-873f-8f146681fd35
+Š
+java:S1126»"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8•ÚáÉò1J$1631331a-b567-458e-97d9-1cc780be4636
+	java:S125İ"<This block of commented-out lines of code should be removed.(£›×€8—ÚáÉò1J$857b481c-c622-42c0-b5bb-6386dc96ab70
+m	java:S106ê"+Replace this use of System.out by a logger.(Ù„µO8˜ÚáÉò1J$c3336059-6ef0-42d8-b4b3-540a19034ca5
+m	java:S106í"+Replace this use of System.out by a logger.(†ÂÆ+8˜ÚáÉò1J$8280b838-3641-47a6-a6c4-86180629091e
+s	java:S106ï"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8˜ÚáÉò1J$1dd9de8f-5c9d-40f5-ac7b-609ac75e4995
+s	java:S106ô"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8˜ÚáÉò1J$712b3057-c209-466d-93d9-9d3d9fe9798c
+s	java:S106ö"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8˜ÚáÉò1J$eecc82c0-cb8a-4df7-9847-ec0f10375952
+n	java:S106ø"+Replace this use of System.out by a logger.(µ÷°”8˜ÚáÉò1J$3c2d1d5c-8664-48f0-a455-14a9e7e5b635
+s	java:S106ú"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8™ÚáÉò1J$0ea8fbdc-b488-4114-a737-ea70b74be3f7
+n	java:S106ü"+Replace this use of System.out by a logger.(†‘Â“8™ÚáÉò1J$01c95ebb-db09-4c5f-a2e2-90addfe60836
+s	java:S106ÿ"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8™ÚáÉò1J$7f40ada6-449c-4a17-98fd-8c7781e803c2
+n	java:S106¥"+Replace this use of System.out by a logger.(’ôÆà8šÚáÉò1J$90f671d5-ff67-4288-9a8a-03629bf68019
+n	java:S106§"+Replace this use of System.out by a logger.(Àûå 8šÚáÉò1J$a1f6ce21-4320-45fe-954b-54f0648e3536
+„
+java:S1117®";Rename "springs" which hides the field declared at line 22.(ÅŠĞ‰üÿÿÿÿ8›ÚáÉò1J$198028e0-367a-41b0-86e2-fd55d17b7fb1
+{
+java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8›ÚáÉò1J$5db4cfe6-d8a3-43f2-b8c2-0098c258a721
