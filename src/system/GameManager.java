@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import player.Plumber;
+import player.PlumberScorer;
+import player.Saboteur;
+import player.SaboteurScorer;
 import player.Team;
 
 
@@ -42,6 +46,21 @@ public class GameManager
 
     public void startGame() 
     {
+        teams.add(new Team(new PlumberScorer()));
+        teams.add(new Team(new SaboteurScorer()));
+        
+        Plumber plumber1 = new Plumber(teams.get(0));
+        teams.get(0).assignPlayer(plumber1);
+
+        Plumber plumber2 = new Plumber(teams.get(0));
+        teams.get(0).assignPlayer(plumber2);
+
+        Saboteur saboteur1 = new Saboteur(teams.get(1));
+        teams.get(1).assignPlayer(saboteur1);
+
+        Saboteur saboteur2 = new Saboteur(teams.get(1));
+        teams.get(1).assignPlayer(saboteur2);
+
         timer = new Timer("GameTimer");
         timer.schedule(new TimerTask() {
             public void run()
@@ -49,7 +68,8 @@ public class GameManager
                 isTimeUp = true;
             }
         }, 3 * 60 * 1000);
-        teams.add(new Team())
+
+
         while (!isTimeUp)
         {
             

@@ -2,7 +2,6 @@ package system;
 
 import components.Cistern;
 import components.Spring;
-
 import java.util.List;
 import java.util.Random;
 
@@ -29,7 +28,7 @@ public class Map {
                 Random r = new Random();
                 int randomNumber = r.nextInt(0,100);
                 if (randomNumber < percentThatSomethingWillSpawn){
-                    randomNumber = r.nextInt()
+                    randomNumber = r.nextInt();
                 }
             }
         }
