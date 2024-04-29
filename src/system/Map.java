@@ -1,21 +1,26 @@
 package system;
 
 import components.Cistern;
+import components.Pipe;
+import components.Pump;
 import components.Spring;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 public class Map {
-    private int rows = 10; // temporary number
-    private int columns = 10; // temporary number
+    private int rows = 8; // temporary number
+    private int columns = 8; // temporary number
     /**
      * This encapsulated attribute represents the matrix of Cell objects that collectively constitute the game map, facilitating comprehensive spatial data management. Initialized by the constructor with the required components in dependence with the chosen map.
      */
     private Cell[][] cells = new Cell[rows][columns];
     private List<Cistern> cisterns;
     private List<Spring> springs;
-    private int percentThatSomethingWillSpawn = 0;
+    private int numberOfCisterns = 0; // must be a multiple of 4
+    private int numberOfSprings = numberOfCisterns / 4;
+
+
     String size;
 
     public Map(int sizeN, int sizeM){
@@ -24,12 +29,26 @@ public class Map {
     }
 
     public void initializeMap(){
-        for (int i = 0; i < cells.length; i++) {
-            for (int j = 0; j < cells[i].length; j++) {
-                Random r = new Random();
-                int randomNumber = r.nextInt(0,100);
-                if (randomNumber < percentThatSomethingWillSpawn){
-                    randomNumber = r.nextInt()
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (j == rows-1){
+                    Cistern newCistern = new Cistern();
+                    cells[i][j].placeComponent(newCistern);
+                    cisterns.add(newCistern);
+                }
+                else if (i == 2 && j == 2 || i == 5 && j == 6){
+                    Spring newSpring = new Spring();
+                    cells[i][j].placeComponent(newSpring);
+                    springs.add(newSpring);
+                }
+                else if (i == 0 || j == columns -1){
+                    if (j != 0){
+                        Pipe newPipe = new Pipe();
+                        cells[i][j].placeComponent(newPipe);
+                    } else if (i != rows -1) {
+                        Pipe newPipe = new Pipe();
+                        cells[i][j].placeComponent(newPipe);
+                    }
                 }
             }
         }
@@ -70,13 +89,55 @@ public class Map {
         }
         else {return false;}
     }
+    public List<Cell> getNeighbouringCells(Cell cell){
+        List<Cell> returnList = new ArrayList<>();
+        returnList.add(getDownwardCell(cell));
+        returnList.add(getUpwardCell(cell));
+        returnList.add(getLeftwardCell(cell));
+        returnList.add(getRightwardCell(cell));
+        return returnList;
+    }
     public void updateWaterFlow(){
+        List<Cell> queue = findSprings();
+        List<Cell> visitedCells = new ArrayList<>();
 
-    }
-    public void checkForFreeEnds(){
 
+        while(!queue.isEmpty()){
+            List<Cell> neighbouringCells = getNeighbouringCells(queue.get(0));
+            visitedCells.add(queue.get(0));
+            for (int i = 0; i < neighbouringCells.size(); i++) {
+                if (neighbouringCells.get(i).getComponent() instanceof Pipe || neighbouringCells.get(i).getComponent() instanceof Pump){
+                    queue.add(neighbouringCells.get(i));
+                    visitedCells.add(neighbouringCells.get(i));
+                    (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column].getComponent().
+
+                }
+            }
+        }
+
+        
+        
+        
     }
+//    public void checkForFreeEnds(){
+//
+//    }
     public String getSize() {
         return size;
+    }
+    public void draw(){
+
+    }
+
+    private List<Cell> findSprings(){
+        List<Cell> springs = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (cells[i][j].getComponent() instanceof Spring){
+                    springs.add(cells[i][j]);
+                }
+            }
+        }
+        return springs;
     }
 }
