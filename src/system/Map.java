@@ -31,6 +31,7 @@ public class Map {
     }
 
     public void initializeMap(){
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (j == rows-1){
@@ -51,6 +52,7 @@ public class Map {
                         Pipe newPipe = new Pipe();
                         cells[i][j].placeComponent(newPipe);
                     }
+
                 }
             }
         }
@@ -126,6 +128,7 @@ public class Map {
     public String getSize() {
         return size;
     }
+
     public void draw(){
         printMap();
         outputMap();
@@ -227,5 +230,10 @@ public class Map {
             }
         }
         return springs;
+
+
+    public Cell getCells(int row, int column){
+        return cells[row][column];
+
     }
 }
