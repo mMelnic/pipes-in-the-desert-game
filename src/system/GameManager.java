@@ -82,6 +82,7 @@ public class GameManager
         map.players.get(2).setCurrentCell(map.getCells(0, 3));
         map.getCells(0, 6).setPlayerOn(true);
         map.initializeMap();
+        activePlayer.setCurrentCell(map.getCells(0, 7));
 
         startTimer();
 
