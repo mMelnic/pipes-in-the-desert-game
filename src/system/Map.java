@@ -9,6 +9,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import enumerations.Direction;
+import exceptions.CisternMultipleComponentsConnectedException;
+import exceptions.PumpConnectablePipeNumberExceedException;
+import exceptions.SpringMultipleComponensConnectedException;
 import player.MovablePlayer;
 
 public class Map {
@@ -34,12 +39,25 @@ public class Map {
 
         for (int i = 0; i < cells.length; i++)
         {
-            for (int j = 0; j < cells[i].length; j++) 
-            {
-                cells[i][j] = new Cell(i,j);
+            for (int j = 0; j < cells[i].length; j++) {
+                cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
+                try {
+                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.LEFT);
+                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.RIGHT);
+                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.DOWN);
+                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.UP);
+                } catch (PumpConnectablePipeNumberExceedException e) {
+                    e.printStackTrace();
+                } catch (CisternMultipleComponentsConnectedException e) {
+                    e.printStackTrace();
+                } catch (SpringMultipleComponensConnectedException e) {
+                    e.printStackTrace();
+                }
             }
+
+
         }
     }
 

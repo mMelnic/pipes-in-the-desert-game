@@ -103,8 +103,8 @@ public class Component {
         }
         try {
             //if the cell is not empty i.e. occupied, an exception is thrown, and returns false
-            if(this.location.getMap().getCells(newRow, newColumn).isEmpty() == false){
-                throw new CellOccupiedException("the cell is not empty!");
+            if(this.location.getMap().getCells(newRow, newColumn).isEmpty()){
+                throw new CellOccupiedException("the cell is empty!");
             } 
             else 
             {
