@@ -29,8 +29,8 @@ public class Map {
     String size;
 
     public Map(int sizeN, int sizeM){
-        rows = sizeN;
-        columns = sizeM;
+        // rows = sizeN;
+        // columns = sizeM;
 
         for (int i = 0; i < cells.length; i++)
         {
@@ -71,29 +71,112 @@ public class Map {
     }
 
     public Cell getUpwardCell(Cell currentCell){
-       if (currentCell.row != 0){
-           return cells[currentCell.row-1][currentCell.column];
-       }
-       else return currentCell;
+        int row = -1;
+        int col = -1;
+
+        // Find the coordinates of the given cell
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j] == currentCell) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+            if (row != -1) {
+                break;
+            }
+        }
+
+        // Check if the cell has an upward neighbor
+        if (row > 0) {
+            return cells[row - 1][col];
+        } else {
+            // Return null if no upward neighbor or cell not found
+            return null;
+        }
     }
     public Cell getDownwardCell(Cell currentCell){
-        if (currentCell.row != rows-1){
-            return cells[currentCell.row+1][currentCell.column];
+        int row = -1;
+        int col = -1;
+
+        // Find the coordinates of the given cell
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j] == currentCell) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+            if (row != -1) {
+                break;
+            }
         }
-        else return currentCell;
-    }
-    public Cell getLeftwardCell(Cell currentCell){
-        if (currentCell.column != 0){
-            return cells[currentCell.row][currentCell.column-1];
+
+        // Check if the cell has a downward neighbor
+        if (row < cells.length - 1) {
+            return cells[row + 1][col];
+        } else {
+            // Return null if no downward neighbor or cell not found
+            return null;
         }
-        else return currentCell;
     }
+    
+    public Cell getLeftwardCell(Cell currentCell) {
+        int row = -1;
+        int col = -1;
+
+        // Find the coordinates of the given cell
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j] == currentCell) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+            if (row != -1) {
+                break;
+            }
+        }
+
+        // Check if the cell has a left neighbor
+        if (row != -1 && col > 0) {
+            return cells[row][col - 1];
+        } else {
+            // Return null if no left neighbor or cell not found
+            return null;
+        }
+    }
+
     public Cell getRightwardCell(Cell currentCell){
-        if (currentCell.column != columns-1){
-            return cells[currentCell.row][currentCell.column+1];
+        int row = -1;
+        int col = -1;
+
+        // Find the coordinates of the given cell
+        for (int i = 0; i < cells.length; i++) {
+            for (int j = 0; j < cells[i].length; j++) {
+                if (cells[i][j] == currentCell) {
+                    row = i;
+                    col = j;
+                    break;
+                }
+            }
+            if (row != -1) {
+                break;
+            }
         }
-        else return currentCell;
+
+        // Check if the cell has a right neighbor
+        if (row != -1 && col < cells[row].length - 1) {
+            return cells[row][col + 1];
+        } else {
+            // Return null if no right neighbor or cell not found
+            return null;
+        }
     }
+
     public boolean isNeighbouringCell(Cell cell1, Cell cell2){
         Cell upCell = getUpwardCell(cell1);
         Cell downCell = getDownwardCell(cell1);

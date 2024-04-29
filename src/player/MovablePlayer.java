@@ -105,10 +105,24 @@ public abstract class MovablePlayer {
                         currentCell.setPlayerOn(false);
                     }
                     currentCell = targetCell;
-                    String message = "Moved to row " + targetCell.getRow() + " and column " + targetCell.getColumn() + "\n" +
-                            "Above is " + targetCell.getMap().getUpwardCell(targetCell).getComponent().getClass().getSimpleName() + "\n" +
-                            "To the right is " + targetCell.getMap().getRightwardCell(targetCell).getComponent().getClass()
-                            .getSimpleName() + "\n";
+                    String aboveComponent = "-";
+                    String rightComponent = "-";
+
+                    Cell upwardCell = targetCell.getMap().getUpwardCell(targetCell);
+                    if (upwardCell != null) {
+                        aboveComponent = upwardCell.getComponent().getClass().getSimpleName();
+                    }
+
+                    Cell rightwardCell = targetCell.getMap().getRightwardCell(targetCell);
+                    if (rightwardCell != null) {
+                        rightComponent = rightwardCell.getComponent().getClass().getSimpleName();
+                    }
+
+                    String message = "Moved to row " + targetCell.getRow() + " and column " + targetCell.getColumn()
+                            + "\n" +
+                            "Above is " + aboveComponent + "\n" +
+                            "To the right is " + rightComponent + "\n";
+
                     handleOutput(message);
                 } else {
                     handleOutput("You cannot move there.");
