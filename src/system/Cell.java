@@ -28,6 +28,10 @@ public class Cell {
     public int column;
     Map map;
 
+    public Cell(Map map) {
+        this.map = map;
+    }
+
     /**
      * Retrieves the component currently occupying the cell for further interaction. [Component]
      * @return Component
