@@ -132,6 +132,9 @@ public class Component {
                 else if(this instanceof Cistern) {
                     if(this.connectedComponents.size() < 1){
                         this.connectedComponents.put(d, c);
+                        if((c instanceof Pipe) && ((Pipe) c).isWaterFlowing()){
+                            ((Cistern) this).fillCistern();
+                        }
                         writeMessageToCMD("component successfully added.");
                         return true;
                     } else {
@@ -143,6 +146,7 @@ public class Component {
                 else if(this instanceof Spring){
                     if(this.connectedComponents.size() < 1){
                         this.connectedComponents.put(d ,c);
+                        ((Spring) this).startWaterSupply();
                         writeMessageToCMD("component successfully added.");
                         return true;
                     } else {
