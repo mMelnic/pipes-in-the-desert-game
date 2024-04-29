@@ -69,6 +69,7 @@ public class Map {
                 cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
+                /* 
                 try {
                     cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.LEFT);
                     cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.RIGHT);
@@ -81,6 +82,7 @@ public class Map {
                 } catch (SpringMultipleComponensConnectedException e) {
                     e.printStackTrace();
                 }
+                */
             }
 
 
