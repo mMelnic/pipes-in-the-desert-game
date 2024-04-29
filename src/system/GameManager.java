@@ -154,17 +154,32 @@ public class GameManager
                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                     }
                 }
-                case "InstallComponent" -> {
-                    if (activePlumber != null)
-                    {
+                case "InstallPump" -> {
+                    if (activePlumber != null) {
+                        activePlumber.setCarriedComponent(new Pump());
                         activePlumber.installComponent(activePlayer.getFacingDirection());
-                    }
-                    else
-                    {
+                    } else {
                         String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
                         System.out.print(message);
                         writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException interruptedException) {
+                        }
+                    }
+                }
+                case "InstallPipe" -> {
+                    if (activePlumber != null) {
+                        activePlumber.setCarriedComponent(new Pipe());
+                        activePlumber.installComponent(activePlayer.getFacingDirection());
+                    } else {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException interruptedException) {
+                        }
                     }
                 }
                 case "PickComponent" -> {
