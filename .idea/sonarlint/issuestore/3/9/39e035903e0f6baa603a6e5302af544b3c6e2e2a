@@ -1,34 +1,34 @@
 
 ¡
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(…Ğğıÿÿÿÿ8ŠÚáÉò1J$68369c13-9218-4f66-9214-d3d1aa24a200
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(…Ğğıÿÿÿÿ8ŠÚáÉò1J$103e9f19-8e07-4996-9c7b-7f85efeb049b
 œ
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò¥çÌ8‹ÚáÉò1J$8c179242-d729-489e-ab3a-523126a1a730
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò¥çÌ8‹ÚáÉò1J$928f557a-27da-4d73-8158-3e821b901961
 ¡
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÂıÿÿÿÿ8‹ÚáÉò1J$05352c81-747f-4d82-b3ea-c11de1cdd18b
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÂıÿÿÿÿ8‹ÚáÉò1J$1b794fce-5daa-484f-a7ac-d1b222a73848
 ›
-java:S1104"SMake players a static final constant or non-public and provide accessors if needed.(ªÂıÿÿÿÿ8‹ÚáÉò1J$2f56881e-aa55-404b-8040-a56a81e3cc2f
+java:S1104"SMake players a static final constant or non-public and provide accessors if needed.(ªÂıÿÿÿÿ8‹ÚáÉò1J$bfe67b21-c493-4f80-b35c-93f9e9743f3f
 z
-java:S1172"7Remove these unused method parameters "sizeN", "sizeM".(®Çæ8‘ÚáÉò1J$a598e197-ad49-4336-b68e-6a5bc6491158
-~	java:S125 "<This block of commented-out lines of code should be removed.(Ôàˆ 8’ÚáÉò1J$dabb8099-6370-400d-b29c-1fd5d126491e
+java:S1172"7Remove these unused method parameters "sizeN", "sizeM".(®Çæ8‘ÚáÉò1J$d4117265-2a6c-4170-b993-332ec3c7221a
+~	java:S125 "<This block of commented-out lines of code should be removed.(Ôàˆ 8’ÚáÉò1J$b6dbd9b7-2bef-4c54-a1a3-5c8ffafdafbc
 •
-java:S3776."RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8’ÚáÉò1J$6e3509be-07b0-48be-97b8-4bb69ea6a56c
+java:S3776."RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8’ÚáÉò1J$f311d5e7-40f7-444f-9833-29547c8d0e6b
 
-java:S1871@"LThis branch's code block is the same as the block for the branch on line 61.(ÉÏÕú8“ÚáÉò1J$1a5b1cdf-b027-46b2-873f-8f146681fd35
+java:S1871?"LThis branch's code block is the same as the block for the branch on line 60.(ÉÏÕú8“ÚáÉò1J$145b80fb-f2ea-44a7-8d71-0170ffd0669d
 Š
-java:S1126»"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8•ÚáÉò1J$1631331a-b567-458e-97d9-1cc780be4636
-	java:S125İ"<This block of commented-out lines of code should be removed.(£›×€8—ÚáÉò1J$857b481c-c622-42c0-b5bb-6386dc96ab70
-m	java:S106ê"+Replace this use of System.out by a logger.(Ù„µO8˜ÚáÉò1J$c3336059-6ef0-42d8-b4b3-540a19034ca5
-m	java:S106í"+Replace this use of System.out by a logger.(†ÂÆ+8˜ÚáÉò1J$8280b838-3641-47a6-a6c4-86180629091e
-s	java:S106ï"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8˜ÚáÉò1J$1dd9de8f-5c9d-40f5-ac7b-609ac75e4995
-s	java:S106ô"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8˜ÚáÉò1J$712b3057-c209-466d-93d9-9d3d9fe9798c
-s	java:S106ö"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8˜ÚáÉò1J$eecc82c0-cb8a-4df7-9847-ec0f10375952
-n	java:S106ø"+Replace this use of System.out by a logger.(µ÷°”8˜ÚáÉò1J$3c2d1d5c-8664-48f0-a455-14a9e7e5b635
-s	java:S106ú"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8™ÚáÉò1J$0ea8fbdc-b488-4114-a737-ea70b74be3f7
-n	java:S106ü"+Replace this use of System.out by a logger.(†‘Â“8™ÚáÉò1J$01c95ebb-db09-4c5f-a2e2-90addfe60836
-s	java:S106ÿ"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8™ÚáÉò1J$7f40ada6-449c-4a17-98fd-8c7781e803c2
-n	java:S106¥"+Replace this use of System.out by a logger.(’ôÆà8šÚáÉò1J$90f671d5-ff67-4288-9a8a-03629bf68019
-n	java:S106§"+Replace this use of System.out by a logger.(Àûå 8šÚáÉò1J$a1f6ce21-4320-45fe-954b-54f0648e3536
+java:S1126¹"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8•ÚáÉò1J$1f33a6eb-d3c8-4adf-9005-4cd685aaa383
+	java:S125Û"<This block of commented-out lines of code should be removed.(£›×€8—ÚáÉò1J$d19dcdef-5a0e-41ae-9ff7-b6aaa421159f
+m	java:S106è"+Replace this use of System.out by a logger.(Ù„µO8˜ÚáÉò1J$b50f8c29-91ad-4351-84b7-bd6ee45e8f68
+m	java:S106ë"+Replace this use of System.out by a logger.(†ÂÆ+8˜ÚáÉò1J$92b0c2a8-6c1a-4251-9a5a-44973f9553af
+s	java:S106í"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8˜ÚáÉò1J$4e892f8d-dff1-45a3-bacb-631f6f2a13f8
+s	java:S106ò"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8˜ÚáÉò1J$7c9b5388-7a6d-439e-95ee-f4c0ce6d2d48
+s	java:S106ô"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8˜ÚáÉò1J$f4b7e7bd-e4a8-43d9-b515-1b1ca098d742
+n	java:S106ö"+Replace this use of System.out by a logger.(µ÷°”8˜ÚáÉò1J$859c12bf-f5ef-4cc1-bc1b-a2f757ebd7eb
+s	java:S106ø"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8™ÚáÉò1J$82e6abcc-b177-472a-adca-6f23e748055f
+n	java:S106ú"+Replace this use of System.out by a logger.(†‘Â“8™ÚáÉò1J$4c05fa7e-6a07-4c2c-a92e-55538dc9fd73
+s	java:S106ı"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8™ÚáÉò1J$43b52575-cb43-4367-8585-2fe399bb4b77
+n	java:S106£"+Replace this use of System.out by a logger.(’ôÆà8šÚáÉò1J$02ec436c-dcc6-455c-827d-b0111a0697e3
+n	java:S106¥"+Replace this use of System.out by a logger.(Àûå 8šÚáÉò1J$cecfc214-8dea-44e9-8a83-c820e6fe7e64
 „
-java:S1117®";Rename "springs" which hides the field declared at line 22.(ÅŠĞ‰üÿÿÿÿ8›ÚáÉò1J$198028e0-367a-41b0-86e2-fd55d17b7fb1
+java:S1117¬";Rename "springs" which hides the field declared at line 22.(ÅŠĞ‰üÿÿÿÿ8›ÚáÉò1J$52be37c2-0342-4240-9676-25f3c6f51b9a
 {
-java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8›ÚáÉò1J$5db4cfe6-d8a3-43f2-b8c2-0098c258a721
+java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8›ÚáÉò1J$3914431b-a3f7-4412-ad5c-f254234cca13
