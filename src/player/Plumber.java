@@ -1,12 +1,12 @@
 package player;
 
-import java.util.Map;
 import components.Cistern;
 import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
 import enumerations.Direction;
+import java.util.Map;
 import system.Cell;
 
 /**
@@ -251,7 +251,7 @@ public class Plumber extends MovablePlayer {
                 ((Cistern) component).fillCistern();
                 handleOutput("Pipe connected to cistern.");
             } else if (component instanceof Spring) {
-                ((Spring) component).startWaterSupply(true);
+                ((Spring) component).startWaterSupply();
                 handleOutput("Pipe connected to spring.");
             }
         } catch (Exception e) {

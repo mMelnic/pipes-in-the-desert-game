@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import player.MovablePlayer;
 
 public class Map {
     private int rows = 8; // temporary number
@@ -17,10 +18,12 @@ public class Map {
      * This encapsulated attribute represents the matrix of Cell objects that collectively constitute the game map, facilitating comprehensive spatial data management. Initialized by the constructor with the required components in dependence with the chosen map.
      */
     private Cell[][] cells = new Cell[rows][columns];
-    private List<Cistern> cisterns;
-    private List<Spring> springs;
+    private List<Cistern> cisterns = new ArrayList<Cistern>();
+    private List<Spring> springs = new ArrayList<Spring>();
     private int numberOfCisterns = 0; // must be a multiple of 4
     private int numberOfSprings = numberOfCisterns / 4;
+
+    public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
 
 
     String size;
@@ -28,6 +31,14 @@ public class Map {
     public Map(int sizeN, int sizeM){
         rows = sizeN;
         columns = sizeM;
+
+        for (int i = 0; i < cells.length; i++)
+        {
+            for (int j = 0; j < cells[i].length; j++) 
+            {
+                cells[i][j] = new Cell();
+            }
+        }
     }
 
     public void initializeMap(){
@@ -230,5 +241,10 @@ public class Map {
             }
         }
         return springs;
+    }
+
+    public Cell getCells(int row, int col)
+    {
+        return cells[row][col];
     }
 }

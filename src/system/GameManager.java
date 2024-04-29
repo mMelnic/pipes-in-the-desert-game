@@ -1,22 +1,34 @@
 package system;
 
+import components.Component;
+import components.Pipe;
+import enumerations.Direction;
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.Timer;
+import java.util.TimerTask;
+import player.MovablePlayer;
+import player.Plumber;
+import player.PlumberScorer;
+import player.Saboteur;
+import player.SaboteurScorer;
 import player.Team;
 
 
 public class GameManager 
 {
-    private List<Map> maps;
     private Map map;
     private Timer timer;
     private int plumbersScore;
     private int saboteursScore;
     private List<Team> teams;
-    private boolean isTimeUp;
+    private boolean isTimeUp = false;
+    private Plumber activePlumber = null;
+    private Saboteur activeSaboteur = null;
+    private MovablePlayer activePlayer;
 
 
     Scanner scanner = new Scanner(System.in);
@@ -36,11 +48,289 @@ public class GameManager
     public GameManager() 
     {
         cleanOutputTxt();
+        isTimeUp = false;
+        plumbersScore = 0;
+        saboteursScore = 0;
+
+        
     }
 
     public void startGame() 
     {
+        teams = new ArrayList<Team>();
 
+        teams.add(new Team(new PlumberScorer()));
+        teams.add(new Team(new SaboteurScorer()));
+        
+        Plumber plumber1 = new Plumber(teams.get(0));
+        teams.get(0).assignPlayer(plumber1);
+
+        Plumber plumber2 = new Plumber(teams.get(0));
+        teams.get(0).assignPlayer(plumber2);
+
+        Saboteur saboteur1 = new Saboteur(teams.get(1));
+        teams.get(1).assignPlayer(saboteur1);
+
+        Saboteur saboteur2 = new Saboteur(teams.get(1));
+        teams.get(1).assignPlayer(saboteur2);
+
+        map.players.add(plumber1);
+        map.players.add(plumber2);
+        map.players.add(saboteur1);
+        map.players.add(saboteur2);
+
+        map.initializeMap();
+
+        startTimer();
+
+        String inputText;
+        GAME_LOOP: while (!isTimeUp)
+        {
+            System.out.print("\033[H\033[2J");  
+            System.out.flush();
+            
+            map.draw();
+            inputText = receiveInput();
+
+            switch (inputText)
+            {
+                case "U" -> {
+                    activePlayer.move(Direction.UP);
+                }
+                case "R" -> {
+                    activePlayer.move(Direction.RIGHT);
+                }
+                case "D" -> {
+                    activePlayer.move(Direction.DOWN);
+                }
+                case "L" -> {
+                    activePlayer.move(Direction.LEFT);
+                }
+                case "RepairPipe" -> {
+                    if (activePlumber != null)
+                    {
+                        activePlumber.repairPipe();
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "RepairPump" -> {
+                    if (activePlumber != null)
+                    {
+                        activePlumber.repairPump();
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "PuncturePipe" -> {
+                    if (activeSaboteur != null)
+                    {
+                        activeSaboteur.puncturePipe();
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a saboteur: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "InstallComponent" -> {
+                    if (activePlumber != null)
+                    {
+                        activePlumber.installComponent(activePlayer.getFacingDirection());
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "PickComponent" -> {
+                    if (activePlumber != null)
+                    {
+                        activePlumber.pickComponent();
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "ChangePumpDirection" -> {
+                    String message = "\nIncoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):\n\n";
+                    System.out.print(message);
+                    writeToOutputTxt(message);
+                    inputText = receiveInput();
+
+                    if (inputText.length() != 2) 
+                    {
+                        String errorMessage = "\nIncorrect input\n\n\n";
+                        System.out.print(errorMessage);
+                        writeToOutputTxt(errorMessage);
+                        continue;
+                    }
+
+                    Pipe newIncomingPipe = null;
+                    Pipe newOutgoingPipe = null;
+                    boolean[] checkPumpOrPipe;
+
+                    switch (inputText.charAt(0))
+                    {
+                        case 'U' -> {
+                            if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newIncomingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'R' -> {
+                            if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newIncomingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'D' -> {
+                            if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newIncomingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'L' -> {
+                            if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newIncomingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        default -> {
+                            if (newIncomingPipe == null)
+                            {
+                                String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the incoming pipe.\n\n\n";
+                                System.out.print(errorMessage);
+                                writeToOutputTxt(errorMessage);
+                                continue;
+                            }
+                        }
+                    }
+                    switch (inputText.charAt(1))
+                    {
+                        case 'U' -> {
+                            if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newOutgoingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'R' -> {
+                            if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newOutgoingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'D' -> {
+                            if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newOutgoingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        case 'L' -> {
+                            if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+                            {
+                                newOutgoingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+                            }
+                        }
+                        default -> {
+                            if (newOutgoingPipe == null)
+                            {
+                                String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the outgoing pipe.\n\n\n";
+                                System.out.print(errorMessage);
+                                writeToOutputTxt(errorMessage);
+                                continue;
+                            }
+                        }
+                    }
+                    
+                    activePlayer.redirectWaterFlow(newIncomingPipe, newOutgoingPipe);
+                }
+                case "DetachPipeFromActiveComponent" -> {
+                    if (activePlumber != null)
+                    {
+                        String message = "\nOld component - new component direction pair (e.g. UL, where 'U' (up) is for the old component's direction, 'L' (left) - for the new one's):\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        inputText = receiveInput();
+
+                        if (inputText.length() != 2) 
+                        {
+                            String errorMessage = "\nIncorrect input\n\n\n";
+                            System.out.print(errorMessage);
+                            writeToOutputTxt(errorMessage);
+                            continue;
+                        }
+    
+                        Component oldComponent = null;
+                        Component newComponent = null;
+    
+                        switch (inputText.charAt(0))
+                        {
+                            case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'R' -> oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'D' -> oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'L' -> oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+                            default -> {
+                                if (oldComponent == null)
+                                {
+                                    String errorMessage = "\nIncorrect input.\n\n\n";
+                                    System.out.print(errorMessage);
+                                    writeToOutputTxt(errorMessage);
+                                    continue;
+                                }
+                            }
+                        }
+                        switch (inputText.charAt(1))
+                        {
+                            case 'U' -> newComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'R' -> newComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'D' -> newComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'L' -> newComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+                            default -> {
+                                if (newComponent == null)
+                                {
+                                    String errorMessage = "\nIncorrect input.\n\n\n";
+                                    System.out.print(errorMessage);
+                                    writeToOutputTxt(errorMessage);
+                                    continue;
+                                }
+                            }
+                        }
+
+                        activePlumber.detachPipe(newComponent, oldComponent);
+                    }
+                    else
+                    {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    }
+                }
+                case "Exit" -> {
+                    break GAME_LOOP;
+                }
+            }
+        }
     }
 
     public void endGame() 
@@ -108,7 +398,13 @@ public class GameManager
 
     public void startTimer() 
     {
-
+        timer = new Timer("GameTimer");
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                isTimeUp = true;
+            }
+        }, 3 * 60 * 1000);
     }
 
     public int compareScore() 
@@ -155,33 +451,86 @@ public class GameManager
             switch (input)
             {
                 case 1 -> {
-                    map = maps.get(0);
+                    map = new Map(5, 5);
                 }
                 case 2 -> {
-                    map = maps.get(1);
+                    map = new Map(10, 10);
                 }
                 case 3 -> {
-                    map = maps.get(2);
+                    map = new Map(15, 15);
                 }
                 case 4 -> {
                     break MAPS_MENU_LOOP;
                 }
                 default -> {
-                    if (input != 1 && input != 2 && input != 3 && input != 4)
-                    {
-                        String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                    else
-                    {
-                        startGame();
-                    }
+                    String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+                    System.out.print(message);
+                    writeToOutputTxt(message);
+                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    continue;
                 }
             }
+            showTeams();
         }
         while (input != 1 && input != 2 && input != 3);
+        
+    }
+
+    public void showTeams()
+    {
+        String message = "                === TEAMS ===               \n\n\n"
+                       + "1. Plumbers\n"
+                       + "2. Saboteurs\n"
+                       + "3. Return to the main menu.\n\n";
+
+        System.out.print(message);
+        writeToOutputTxt(message);
+
+        String inputText = "";
+        int input = 0;
+
+        TEAMS_MENU_LOOP: do
+        {
+            try
+            {
+                inputText = receiveInput();
+                input = Integer.parseInt(inputText);
+            }
+            catch (Exception exception)
+            {
+                String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+                System.out.print(message);
+                writeToOutputTxt(message);
+                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                continue;
+            }
+
+            switch (input)
+            {
+                case 1 -> {
+                    activePlayer = teams.get(0).getPlayers().get(0);
+                    activePlumber = (Plumber)teams.get(0).getPlayers().get(0);
+                    activeSaboteur = null;
+                }
+                case 2 -> {
+                    activePlayer = teams.get(1).getPlayers().get(0);
+                    activeSaboteur = (Saboteur)teams.get(1).getPlayers().get(0);
+                    activePlumber = null;
+                }
+                case 3 -> {
+                    break TEAMS_MENU_LOOP;
+                }
+                default -> {
+                    String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+                    System.out.print(message);
+                    writeToOutputTxt(message);
+                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                    continue;
+                }
+            }
+            startGame();
+        }
+        while (input != 1 && input != 2);
         
     }
 
@@ -232,7 +581,7 @@ public class GameManager
                     }
                     catch(Exception exception)
                     {
-                        System.out.println("File not found.");
+                        System.out.println("File not found or it is empty.");
                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                         System.out.println("\n\n");
                         continue;
@@ -242,6 +591,14 @@ public class GameManager
                         if (fileScanner != null) {fileScanner.close();}
                     }
                     cleanOutputTxt();
+                }
+                default -> {
+                    if (input != 1 && input != 2)
+                    {
+                        System.out.println("Incorrect input. Please enter either 1 or 2.");
+                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+                        System.out.println("\n\n");
+                    }
                 }
             }
             System.out.println();

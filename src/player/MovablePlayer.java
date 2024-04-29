@@ -1,14 +1,13 @@
 package player;
 
+import components.Pipe;
+import components.Pump;
+import enumerations.Direction;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.UUID;
-
-import components.Pipe;
-import components.Pump;
-import enumerations.Direction;
 import system.Cell;
 import system.Map;
 
