@@ -18,24 +18,47 @@ import player.MovablePlayer;
 import player.Plumber;
 import player.Saboteur;
 
+/**
+ * The Map class represents the game map consisting of cells, cisterns, pipes, pumps, and springs.
+ * It facilitates various map-related operations such as initialization, updating water flow, and providing neighboring cells.
+ */
 public class Map {
-    private int rows = 8; // temporary number
-    private int columns = 8; // temporary number
-    /**
-     * This encapsulated attribute represents the matrix of Cell objects that collectively constitute the game map, facilitating comprehensive spatial data management. Initialized by the constructor with the required components in dependence with the chosen map.
+   /** The number of rows in the map grid. */
+   private int rows;
+    
+   /** The number of columns in the map grid. */
+   private int columns;
+   
+   /** The matrix of Cell objects representing the game map. */
+   private Cell[][] cells;
+   
+   /** The list of cisterns present on the map. */
+   private List<Cistern> cisterns;
+   
+   /** The list of springs present on the map. */
+   private List<Spring> springs;
+   
+   /** The list of pumps present on the map. */
+   private List<Pump> pumps;
+   
+   /** The number of cisterns in the map. It must be a multiple of 4. */
+   private int numberOfCisterns;
+   
+   /** The number of springs in the map. */
+   private int numberOfSprings;
+
+   /** The list of movable players present on the map. */
+   public List<MovablePlayer> players;
+
+   /** The size of the map. */
+   String size;
+
+   /**
+     * Constructs a Map object with the specified size.
+     * Initializes the map grid and populates it with empty cells.
+     * @param sizeN The number of rows in the map.
+     * @param sizeM The number of columns in the map.
      */
-    private Cell[][] cells = new Cell[rows][columns];
-    private List<Cistern> cisterns = new ArrayList<Cistern>();
-    private List<Spring> springs = new ArrayList<Spring>();
-    private List<Pump> pumps = new ArrayList<Pump>();
-    private int numberOfCisterns = 0; // must be a multiple of 4
-    private int numberOfSprings = numberOfCisterns / 4;
-
-    public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
-
-
-    String size;
-
     public Map(int sizeN, int sizeM){
         // rows = sizeN;
         // columns = sizeM;
@@ -64,6 +87,9 @@ public class Map {
         }
     }
 
+     /**
+     * Initializes the map by placing cisterns, springs, pipes, and pumps on the map grid.
+     */
     public void initializeMap(){
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
@@ -89,7 +115,11 @@ public class Map {
             }
         }
     }
-
+/**
+     * Retrieves the cell located above the specified cell on the map grid.
+     * @param currentCell The cell for which to find the upward neighbor.
+     * @return The cell located above the specified cell, or null if no upward neighbor exists.
+     */
     public Cell getUpwardCell(Cell currentCell){
         int row = -1;
         int col = -1;
@@ -116,6 +146,11 @@ public class Map {
             return null;
         }
     }
+    /**
+     * Retrieves the cell located below the specified cell on the map grid.
+     * @param currentCell The cell for which to find the downward neighbor.
+     * @return The cell located below the specified cell, or null if no downward neighbor exists.
+     */
     public Cell getDownwardCell(Cell currentCell){
         int row = -1;
         int col = -1;
@@ -216,6 +251,9 @@ public class Map {
         returnList.add(getRightwardCell(cell));
         return returnList;
     }
+    /**
+     * Updates the water flow on the map by simulating the flow from springs through pipes.
+     */
     public void updateWaterFlow(){
         List<Cell> queue = findSprings();
         List<Cell> visitedCells = new ArrayList<>();
@@ -244,6 +282,10 @@ public class Map {
         return size;
     }
 
+     /**
+     * Retrieves the list of pumps present on the map.
+     * @return The list of pumps.
+     */
     public List<Pump> getPumps()
     {
         for (int i = 0; i < 8; i++)
@@ -258,12 +300,18 @@ public class Map {
         }
         return pumps;
     }
-
+/**
+     * Draws the map by printing its contents to the console and writing them to a file.
+     */
     public void draw(){
         printMap();
         outputMap();
     }
-
+ /**
+     * Prints the map to the console.
+     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
+     * '*' represents plumber, and '+' represents saboteur.
+     */
     private void printMap() {
         System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
     
@@ -297,6 +345,11 @@ public class Map {
         }
     }
 
+     /**
+     * Outputs the map to a text file named "output.txt".
+     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
+     * '*' represents plumber, and '+' represents saboteur.
+     */
     private void outputMap() {
         try {
             FileWriter myWriter = new FileWriter("output.txt", true);
@@ -313,7 +366,11 @@ public class Map {
                     if (cells[i][j].isEmpty) {
                         myWriter.append("  ");
                     } else if (cells[i][j].isPlayerOn()) {
-                        myWriter.append("* ");
+                        if (cells[i][j].getPlayerOn() instanceof Plumber) {
+                            myWriter.append("* ");
+                        } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
+                            myWriter.append("+ ");
+                        }
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
                         myWriter.append("c ");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
@@ -339,18 +396,28 @@ public class Map {
             e.printStackTrace();
         }
     }
-
+ /**
+     * Retrieves the list of cisterns present on the map.
+     * @return The list of cisterns.
+     */
     public List<Cistern> getCisterns() 
     {
         return cisterns;
     }
 
+    /**
+     * Retrieves the list of springs present on the map.
+     * @return The list of springs.
+     */
     public List<Spring> getSprings()
     {
         return springs;
     }
     
-
+ /**
+     * Finds and returns a list of cells containing springs.
+     * @return A list of cells containing springs.
+     */
     private List<Cell> findSprings() {
         List<Cell> springs = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
