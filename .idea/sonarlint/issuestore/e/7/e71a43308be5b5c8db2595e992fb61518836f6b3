@@ -1,0 +1,26 @@
+
+o
+java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(·¯Ý÷
+ˆ
+java:S1319&"mThe return type of this method should be an interface such as "Map" rather than the implementation "HashMap".(ŠØ³þûÿÿÿÿ
+V	java:S125"<This block of commented-out lines of code should be removed.(ŽÌ·Ïùÿÿÿÿ
+Q	java:S125"<This block of commented-out lines of code should be removed.(ûˆ—ç
+m
+java:S3776*"RRefactor this method to reduce its Cognitive Complexity from 21 to the 15 allowed.(¬¹Œ¾ùÿÿÿÿ
+U
+java:S18541":Remove this useless assignment to local variable "newRow".(Â€Üÿþÿÿÿÿ
+X
+java:S18542"=Remove this useless assignment to local variable "newColumn".(°›Àþÿÿÿÿ
+P
+java:S18544":Remove this useless assignment to local variable "newRow".(ÛÖÑ¢
+X
+java:S18545"=Remove this useless assignment to local variable "newColumn".(°›Àþÿÿÿÿ
+P
+java:S18547":Remove this useless assignment to local variable "newRow".(žæ¯î
+S
+java:S18548"=Remove this useless assignment to local variable "newColumn".(†õÌ…
+`	java:S1286"LEnd this switch case with an unconditional break, return or throw statement.(Ö÷Á
+f	java:S1283"LEnd this switch case with an unconditional break, return or throw statement.(ÿìÙþÿÿÿÿ
+f	java:S1280"LEnd this switch case with an unconditional break, return or throw statement.(×Ãäýÿÿÿÿ
+B
+java:S1125A"'Remove the unnecessary boolean literal.(´³Œ¡ÿÿÿÿÿ

@@ -17,3 +17,9 @@ G
 src/player/Plumber.java,5/4/54651e8e6873e7c1f2805ee2ce026ecc40b5068f
 M
 src/player/PlumberScorer.java,4/7/47a9e1ae8221e5f0e72356a195a8a9b447303b26
+K
+src/components/Cistern.java,9/c/9c43dfc8234d061a6454871f6eec392aaf419728
+J
+src/components/Spring.java,d/c/dc312783125fefa0075df1e29233bc973a384d3a
+M
+src/components/Component.java,e/7/e71a43308be5b5c8db2595e992fb61518836f6b3
