@@ -4,7 +4,9 @@ import components.Cistern;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
-
+import java.io.File;  // Import the File class
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -103,23 +105,22 @@ public class Map {
         List<Cell> queue = findSprings();
         List<Cell> visitedCells = new ArrayList<>();
 
-
         while(!queue.isEmpty()){
             List<Cell> neighbouringCells = getNeighbouringCells(queue.get(0));
             visitedCells.add(queue.get(0));
             for (int i = 0; i < neighbouringCells.size(); i++) {
-                if (neighbouringCells.get(i).getComponent() instanceof Pipe || neighbouringCells.get(i).getComponent() instanceof Pump){
+                if (neighbouringCells.get(i).getComponent() instanceof Pipe){
                     queue.add(neighbouringCells.get(i));
                     visitedCells.add(neighbouringCells.get(i));
-                    (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column].getComponent().
-
+                    Pipe pipe = (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column].getComponent();
+                    pipe.setWaterFlowing(true);
+                } else if (neighbouringCells.get(i).getComponent() instanceof Pump) {
+                    queue.add(neighbouringCells.get(i));
+                    visitedCells.add(neighbouringCells.get(i));
                 }
             }
+            queue.remove(0);
         }
-
-        
-        
-        
     }
 //    public void checkForFreeEnds(){
 //
@@ -129,6 +130,93 @@ public class Map {
     }
 
     public void draw(){
+        printMap();
+        outputMap();
+    }
+
+    private void printMap(){
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring");
+
+        for (int i = 0; i < columns; i++) {
+            System.out.println("_");
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                if (cells[i][j].isEmpty){
+                    System.out.println("| ");
+                } else if (cells[i][j].getComponent() instanceof Cistern) {
+                    System.out.println("|c");
+                }else if (cells[i][j].getComponent() instanceof Pipe) {
+                    System.out.println("|p");
+                }else if (cells[i][j].getComponent() instanceof Pump) {
+                    System.out.println("|x");
+                }else if (cells[i][j].getComponent() instanceof Spring) {
+                    System.out.println("|s");
+                }
+            }
+        }
+
+    }
+
+    private void outputMap(){
+        try { // creating file
+            File myObj = new File("output.txt");
+            if (myObj.createNewFile()) {
+                System.out.println("File created: " + myObj.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+
+        try {
+            FileWriter myWriter = new FileWriter("output.txt");
+            myWriter.write("c - cistern; p - pipe; x - pump; s - spring");
+            for (int i = 0; i < columns; i++) {
+                System.out.println("_");
+            }
+
+            for (int i = 0; i < rows; i++) {
+                for (int j = 0; j < columns; j++) {
+                    if (j != columns-1){
+                        if (cells[i][j].isEmpty){
+                            System.out.print("| ");
+                        } else if (cells[i][j].getComponent() instanceof Cistern) {
+                            System.out.print("|c");
+                        }else if (cells[i][j].getComponent() instanceof Pipe) {
+                            System.out.print("|p");
+                        }else if (cells[i][j].getComponent() instanceof Pump) {
+                            System.out.print("|x");
+                        }else if (cells[i][j].getComponent() instanceof Spring) {
+                            System.out.print("|s");
+                        }
+                    }else {
+                        if (cells[i][j].isEmpty){
+                            System.out.println("| ");
+                        } else if (cells[i][j].getComponent() instanceof Cistern) {
+                            System.out.println("|c");
+                        }else if (cells[i][j].getComponent() instanceof Pipe) {
+                            System.out.println("|p");
+                        }else if (cells[i][j].getComponent() instanceof Pump) {
+                            System.out.println("|x");
+                        }else if (cells[i][j].getComponent() instanceof Spring) {
+                            System.out.println("|s");
+                        }
+                    }
+
+                }
+            }
+
+
+            myWriter.close();
+            System.out.println("Successfully wrote to the file.");
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
 
     }
 
