@@ -279,13 +279,13 @@ public class Map {
                         myWriter.append("s ");
                     }
                 }
-                myWriter.write("|\n");
+                myWriter.append("|\n");
             }
     
             for (int i = 0; i < columns; i++) {
-                myWriter.write("__");
+                myWriter.append("__");
             }
-            myWriter.write("\n");
+            myWriter.append("\n");
     
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
