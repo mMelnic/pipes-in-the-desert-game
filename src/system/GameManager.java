@@ -3,11 +3,13 @@ package system;
 import components.Cistern;
 import components.Component;
 import components.Pipe;
+import components.Pump;
 import enumerations.Direction;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -81,13 +83,14 @@ public class GameManager
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));
         map.players.add(teams.get(1).getPlayers().get(1));
-        map.players.get(0).setCurrentCell(map.getCells(0, 7));
-        map.getCells(0, 7).setPlayerOn(true);
-        map.players.get(2).setCurrentCell(map.getCells(0, 3));
-        map.getCells(0, 3).setPlayerOn(true);
+        map.players.get(2).setCurrentCell(map.getCells(0, 0));
+        map.getCells(0, 0).setPlayerOn(true);
+        map.players.get(0).setCurrentCell(map.getCells(0, 1));
+        map.getCells(0, 1).setPlayerOn(true);
         map.initializeMap();
 
         startTimer();
+        manufactureComponents();
 
         String inputText;
         GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
@@ -415,9 +418,43 @@ public class GameManager
         while (true);
     }
 
-    public void startSandstorm() 
+    public void startSandstorm()
     {
+        String message = "\nSANDSTORM!\n\n";
+        System.out.print(message);
+        writeToOutputTxt(message);
+        for (Pump pump : map.getPumps())
+        {
+            if (Math.random() <= 0.20)
+            {
+                pump.setBroken(true);
+            }
+        }
+    }
+    
+    public void startSandstormTimers() 
+    {
+        Timer timer = new Timer("SandstormTimer1");
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                startSandstorm();
+            }
+        }, (int) (Math.random() * (1000 - 1)) + 1);
 
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                startSandstorm();
+            }
+        }, (int) (Math.random() * (2000 - 1000)) + 1000);
+
+        timer.schedule(new TimerTask() {
+            public void run()
+            {
+                startSandstorm();
+            }
+        }, (int) (Math.random() * (3000 - 2000)) + 2000);
     }
 
     public void startTimer() 
@@ -427,13 +464,11 @@ public class GameManager
             public void run()
             {
                 isTimeUp = true;
+                String message = "\nTime is up!\n\n\n";
+                System.out.print(message);
+                writeToOutputTxt(message);
             }
         }, 3 * 60 * 1000);
-    }
-
-    public int compareScore() 
-    {
-        return 0;
     }
 
     public boolean checkIfAllCisternsAreFull() 
@@ -682,5 +717,19 @@ public class GameManager
                 catch(Exception ex) {}
             }
         }
+    }
+
+    public void manufactureComponents()
+    {
+        Timer manufactureTimer = new Timer("ManufactureTimer");
+        manufactureTimer.scheduleAtFixedRate(new TimerTask() {
+            public void run()
+            {
+                for (Cistern cistern : map.getCisterns())
+                {
+                    cistern.manufactureComponent();
+                }
+            }
+        }, 1000 * 10, 1000 * 10);
     }
 }

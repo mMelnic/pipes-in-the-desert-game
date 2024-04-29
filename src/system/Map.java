@@ -20,6 +20,7 @@ public class Map {
     private Cell[][] cells = new Cell[rows][columns];
     private List<Cistern> cisterns = new ArrayList<Cistern>();
     private List<Spring> springs = new ArrayList<Spring>();
+    private List<Pump> pumps = new ArrayList<Pump>();
     private int numberOfCisterns = 0; // must be a multiple of 4
     private int numberOfSprings = numberOfCisterns / 4;
 
@@ -223,6 +224,21 @@ public class Map {
         return size;
     }
 
+    public List<Pump> getPumps()
+    {
+        for (int i = 0; i < 8; i++)
+        {
+            for (Cell cell : cells[i])
+            {
+                if (cell.getComponent() instanceof Pump)
+                {
+                    pumps.add((Pump)cell.getComponent());
+                }
+            }
+        }
+        return pumps;
+    }
+
     public void draw(){
         printMap();
         outputMap();
@@ -240,6 +256,9 @@ public class Map {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
+                }
+                else if (cells[i][j].isPlayerOn()) {
+                    System.out.print("|*");
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
@@ -269,6 +288,8 @@ public class Map {
                     myWriter.append("|");
                     if (cells[i][j].isEmpty) {
                         myWriter.append("  ");
+                    } else if (cells[i][j].isPlayerOn()) {
+                        myWriter.append("* ");
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
                         myWriter.append("c ");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
