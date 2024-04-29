@@ -1,8 +1,7 @@
 
-p
-java:S1104"SMake isEmpty a static final constant or non-public and provide accessors if needed.(Â¯â€Â¿â€“8Ã¼Â¦Ã…Â²Ã²1
-l
-java:S1104"OMake row a static final constant or non-public and provide accessors if needed.(Â²Â¤Ã·â€8Ã¼Â¦Ã…Â²Ã²1
-o
-java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(Ââ€°Â¹Â´8Ã¼Â¦Ã…Â²Ã²1
-
+–
+java:S1104"SMake isEmpty a static final constant or non-public and provide accessors if needed.(¯”¿–8ü¦Å²ò1J$9bdadf52-3932-4e3c-ac4e-59ccd1f9553f
+’
+java:S1104"OMake row a static final constant or non-public and provide accessors if needed.(²¤÷”8ü¦Å²ò1J$4b366b72-17df-43ac-836a-70ba846c043a
+•
+java:S1104"RMake column a static final constant or non-public and provide accessors if needed.(‰¹´8ü¦Å²ò1J$64360a9c-197e-4a57-b85b-d50841561ac6
