@@ -37,6 +37,7 @@ public class Map {
             for (int j = 0; j < cells[i].length; j++) 
             {
                 cells[i][j] = new Cell();
+                cells[i][j].map = this;
             }
         }
     }

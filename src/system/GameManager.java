@@ -52,11 +52,6 @@ public class GameManager
         plumbersScore = 0;
         saboteursScore = 0;
 
-        
-    }
-
-    public void startGame() 
-    {
         teams = new ArrayList<Team>();
 
         teams.add(new Team(new PlumberScorer()));
@@ -73,12 +68,15 @@ public class GameManager
 
         Saboteur saboteur2 = new Saboteur(teams.get(1));
         teams.get(1).assignPlayer(saboteur2);
+    }
 
-        map.players.add(plumber1);
-        map.players.add(plumber2);
-        map.players.add(saboteur1);
-        map.players.add(saboteur2);
-
+    public void startGame() 
+    {
+        
+        map.players.add(teams.get(0).getPlayers().get(0));
+        map.players.add(teams.get(0).getPlayers().get(1));
+        map.players.add(teams.get(1).getPlayers().get(0));
+        map.players.add(teams.get(1).getPlayers().get(1));
         map.initializeMap();
 
         startTimer();
