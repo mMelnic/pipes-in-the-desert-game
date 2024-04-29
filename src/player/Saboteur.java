@@ -2,8 +2,6 @@ package player;
 
 import components.Pipe;
 
-import java.util.Date;
-
 public class Saboteur extends MovablePlayer {
 
     /**
