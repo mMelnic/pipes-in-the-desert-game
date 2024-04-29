@@ -10,6 +10,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import player.MovablePlayer;
+import player.Plumber;
+import player.Saboteur;
 
 public class Map {
     private int rows = 8; // temporary number
@@ -245,7 +247,7 @@ public class Map {
     }
 
     private void printMap() {
-        System.out.println("c - cistern; p - pipe; x - pump; s - spring");
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
     
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
@@ -258,7 +260,11 @@ public class Map {
                     System.out.print("| ");
                 }
                 else if (cells[i][j].isPlayerOn()) {
-                    System.out.print("|*");
+                    if (cells[i][j].getPlayerOn() instanceof Plumber) {
+                        System.out.print("|*");
+                    } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
+                        System.out.print("|+");
+                    }
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
