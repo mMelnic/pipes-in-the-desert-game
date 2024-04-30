@@ -92,11 +92,7 @@ public class Map {
                         cells[i][j].placeComponent(newPipe);
                     }
                 }
-            }
-        }
-
-        for(int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
+                
                 if (cells[i][j].getComponent() != null) {
                     // Check if left cell exists and has a component
                     if (j > 0 && cells[i][j - 1].getComponent() != null) {
@@ -139,6 +135,7 @@ public class Map {
                         }
                     }
                 }
+
             }
         }
     }
@@ -335,32 +332,37 @@ public class Map {
      * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
      * '*' represents plumber, and '+' represents saboteur.
      */
-    private void printMap() {
+    public void printMap() {
         System.out.println("c - cistern; p - pipe; x - pump; s - spring");
-    
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
-    
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
-                } else if (cells[i][j].isPlayerOn()) {
-                    System.out.print("|*");
-                } else if (cells[i][j].getComponent() instanceof Cistern) {
-                    System.out.print("|c");
-                } else if (cells[i][j].getComponent() instanceof Pump) {
-                    System.out.print("|x");
-                } else if (cells[i][j].getComponent() instanceof Spring) {
-                    System.out.print("|s");
-                } else if (cells[i][j].getComponent() instanceof Pipe) {
-                    Pipe pipe = (Pipe) cells[i][j].getComponent();
-                    if (pipe.isBroken() == true) {
-                        System.out.print("|-p");
-                    } else {
-                        System.out.print("|p");
+                } else {
+                    if (cells[i][j].isPlayerOn()) {
+                        System.out.print("|*"); // Print player symbol
+                    } else if (cells[i][j].getComponent() instanceof Cistern) {
+                        System.out.print("|c");
+                    } else if (cells[i][j].getComponent() instanceof Pump) {
+                        Pump pump = (Pump) cells[i][j].getComponent();
+                        if (pump.isBroken()) {
+                            System.out.print("|-x"); 
+                        } else {
+                            System.out.print("|x");
+                        }
+                    } else if (cells[i][j].getComponent() instanceof Spring) {
+                        System.out.print("|s");
+                    } else if (cells[i][j].getComponent() instanceof Pipe) {
+                        Pipe pipe = (Pipe) cells[i][j].getComponent();
+                        if (pipe.isBroken()) {
+                            System.out.print("|-p");
+                        } else {
+                            System.out.print("|p");
+                        }
                     }
                 }
             }

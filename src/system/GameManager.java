@@ -490,9 +490,10 @@ public class GameManager
             if (Math.random() <= 0.20)
             {
                 pump.setBroken(true);
-                System.out.print(""+pump.getLocation().getColumn() + "" + pump.getLocation().getRow());
+                System.out.print("["+pump.getLocation().getColumn() + "  " + pump.getLocation().getRow()+"]");
             }
         }
+        map.printMap();
     }
     
 //     /**
