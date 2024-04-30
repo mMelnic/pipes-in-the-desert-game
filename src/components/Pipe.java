@@ -59,13 +59,15 @@ public class Pipe extends Component implements ILeakage {
      * Stops the leaking of the pipe.
      */
     @Override
-    public void stopLeaking() {
+    public long stopLeaking() {
         if (isLeaking) {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
             undoStopFlow();
-            plumbersScore.updateScore(duration);
+            // plumbersScore.updateScore(duration);
+            return duration;
         }
+        return 0;
         
     }
 
