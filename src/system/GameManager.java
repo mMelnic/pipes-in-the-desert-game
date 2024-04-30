@@ -125,19 +125,15 @@ public class GameManager
                 }
                 case "U" -> {
                     activePlayer.move(Direction.UP);
-                    System.out.println("You moved UP");
                 }
                 case "R" -> {
                     activePlayer.move(Direction.RIGHT);
-                    System.out.println("You moved RIGHT");
                 }
                 case "D" -> {
                     activePlayer.move(Direction.DOWN);
-                    System.out.println("You moved DOWN");
                 }
                 case "L" -> {
                     activePlayer.move(Direction.LEFT);
-                    System.out.println("You moved LEFT");
                 }
                 case "RepairPipe" -> {
                     if (activePlumber != null)

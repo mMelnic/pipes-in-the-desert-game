@@ -32,40 +32,7 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p ||p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p ||p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p ||p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-Moved to row 0 and column 4
+MovedRIGHTto row 0 and column 4
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 ||p |p |p ||x |p |c |
@@ -77,7 +44,7 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved to row 0 and column 5
+MovedRIGHTto row 0 and column 5
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 ||p |p |p |p |x |p |c |
@@ -89,7 +56,7 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved to row 0 and column 6
+MovedRIGHTto row 0 and column 6
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 ||p |p |p |p |x ||c |
@@ -113,7 +80,7 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved to row 0 and column 5
+MovedLEFTto row 0 and column 5
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 ||p |p |p |p |x |p |c |
@@ -167,7 +134,16 @@ ________________
 
 Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
 
-
-Time is up!
-
-
+Incoming and outgoing pipes should be different.
+The direction changed.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+||p |p |p |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________

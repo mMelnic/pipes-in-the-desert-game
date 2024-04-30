@@ -105,7 +105,7 @@ public abstract class MovablePlayer {
                         currentCell.setPlayerOn(false);
                     }
                     currentCell = targetCell;
-                    String message = "Moved to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
+                    String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                     handleOutput(message);
                 } else {
                     handleOutput("You cannot move there.");
@@ -115,7 +115,7 @@ public abstract class MovablePlayer {
                     currentCell.setPlayerOn(false);
                 }
                 currentCell = targetCell;
-                String message = "Moved to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
+                String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                 handleOutput(message);
             } else {
                 handleOutput("You cannot move there.");
@@ -143,6 +143,7 @@ public abstract class MovablePlayer {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
+                return;
                 // throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
             }
 
@@ -153,6 +154,7 @@ public abstract class MovablePlayer {
             handleOutput("The direction changed.");
         } else {
             handleOutput("You are not standing on a pump.");
+            return;
             // throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
     }

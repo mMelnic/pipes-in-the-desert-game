@@ -4,12 +4,11 @@ import components.Cistern;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
-import java.io.File;  // Import the File class
+import java.io.File; // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import enumerations.Direction;
 import exceptions.CisternMultipleComponentsConnectedException;
 import exceptions.PumpConnectablePipeNumberExceedException;
@@ -19,8 +18,10 @@ import player.Plumber;
 import player.Saboteur;
 
 /**
- * The Map class represents the game map consisting of cells, cisterns, pipes, pumps, and springs.
- * It facilitates various map-related operations such as initialization, updating water flow, and providing neighboring cells.
+ * The Map class represents the game map consisting of cells, cisterns, pipes,
+ * pumps, and springs.
+ * It facilitates various map-related operations such as initialization,
+ * updating water flow, and providing neighboring cells.
  */
 public class Map {
     private int rows = 8; // temporary number
@@ -31,59 +32,55 @@ public class Map {
     private List<Pump> pumps = new ArrayList<Pump>();
     private int numberOfCisterns = 0; // must be a multiple of 4
     private int numberOfSprings = numberOfCisterns / 4;
-
     public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
-
-
     String size;
 
-    public Map(int sizeN, int sizeM){
+    public Map(int sizeN, int sizeM) {
         // rows = sizeN;
         // columns = sizeM;
-
-        for (int i = 0; i < cells.length; i++)
-        {
+        for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
-                /* 
-                try {
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.LEFT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.RIGHT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.DOWN);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.UP);
-                } catch (PumpConnectablePipeNumberExceedException e) {
-                    e.printStackTrace();
-                } catch (CisternMultipleComponentsConnectedException e) {
-                    e.printStackTrace();
-                } catch (SpringMultipleComponensConnectedException e) {
-                    e.printStackTrace();
-                }
-                */
+                /*
+                 * try {
+                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
+                 * Direction.LEFT);
+                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
+                 * Direction.RIGHT);
+                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
+                 * Direction.DOWN);
+                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
+                 * Direction.UP);
+                 * } catch (PumpConnectablePipeNumberExceedException e) {
+                 * e.printStackTrace();
+                 * } catch (CisternMultipleComponentsConnectedException e) {
+                 * e.printStackTrace();
+                 * } catch (SpringMultipleComponensConnectedException e) {
+                 * e.printStackTrace();
+                 * }
+                 */
             }
-
-
         }
     }
 
-     /**
-     * Initializes the map by placing cisterns, springs, pipes, and pumps on the map grid.
+    /**
+     * Initializes the map by placing cisterns, springs, pipes, and pumps on the map
+     * grid.
      */
-    public void initializeMap(){
+    public void initializeMap() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (j == rows - 1 && (i % 2) == 0){
+                if (j == rows - 1 && (i % 2) == 0) {
                     Cistern newCistern = new Cistern(cells[i][j]);
                     cells[i][j].placeComponent(newCistern);
                     cisterns.add(newCistern);
-                }
-                else if (i == 2 && j == 2 || i == 5 && j == 6){
+                } else if (i == 2 && j == 2 || i == 5 && j == 6) {
                     Spring newSpring = new Spring(cells[i][j]);
                     cells[i][j].placeComponent(newSpring);
                     springs.add(newSpring);
-                }
-                else if (i == 0 && (j != columns - 1) ){
+                } else if (i == 0 && (j != columns - 1)) {
                     if (j == 5) {
                         Pump newPump = new Pump(3, cells[i][j]);
                         cells[i][j].placeComponent(newPump);
@@ -92,7 +89,12 @@ public class Map {
                         cells[i][j].placeComponent(newPipe);
                     }
                 }
-                
+
+            }
+        }
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 if (cells[i][j].getComponent() != null) {
                     // Check if left cell exists and has a component
                     if (j > 0 && cells[i][j - 1].getComponent() != null) {
@@ -140,10 +142,9 @@ public class Map {
         }
     }
 
-    public Cell getUpwardCell(Cell currentCell){
+    public Cell getUpwardCell(Cell currentCell) {
         int row = -1;
         int col = -1;
-
         // Find the coordinates of the given cell
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
@@ -157,7 +158,6 @@ public class Map {
                 break;
             }
         }
-
         // Check if the cell has an upward neighbor
         if (row > 0) {
             return cells[row - 1][col];
@@ -166,15 +166,17 @@ public class Map {
             return null;
         }
     }
+
     /**
      * Retrieves the cell located below the specified cell on the map grid.
+     * 
      * @param currentCell The cell for which to find the downward neighbor.
-     * @return The cell located below the specified cell, or null if no downward neighbor exists.
+     * @return The cell located below the specified cell, or null if no downward
+     *         neighbor exists.
      */
-    public Cell getDownwardCell(Cell currentCell){
+    public Cell getDownwardCell(Cell currentCell) {
         int row = -1;
         int col = -1;
-
         // Find the coordinates of the given cell
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
@@ -188,7 +190,6 @@ public class Map {
                 break;
             }
         }
-
         // Check if the cell has a downward neighbor
         if (row < cells.length - 1) {
             return cells[row + 1][col];
@@ -197,11 +198,10 @@ public class Map {
             return null;
         }
     }
-    
+
     public Cell getLeftwardCell(Cell currentCell) {
         int row = -1;
         int col = -1;
-
         // Find the coordinates of the given cell
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
@@ -215,7 +215,6 @@ public class Map {
                 break;
             }
         }
-
         // Check if the cell has a left neighbor
         if (row != -1 && col > 0) {
             return cells[row][col - 1];
@@ -225,10 +224,9 @@ public class Map {
         }
     }
 
-    public Cell getRightwardCell(Cell currentCell){
+    public Cell getRightwardCell(Cell currentCell) {
         int row = -1;
         int col = -1;
-
         // Find the coordinates of the given cell
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
@@ -242,7 +240,6 @@ public class Map {
                 break;
             }
         }
-
         // Check if the cell has a right neighbor
         if (row != -1 && col < cells[row].length - 1) {
             return cells[row][col + 1];
@@ -252,18 +249,19 @@ public class Map {
         }
     }
 
-    public boolean isNeighbouringCell(Cell cell1, Cell cell2){
+    public boolean isNeighbouringCell(Cell cell1, Cell cell2) {
         Cell upCell = getUpwardCell(cell1);
         Cell downCell = getDownwardCell(cell1);
         Cell leftCell = getLeftwardCell(cell1);
         Cell rightCell = getRightwardCell(cell1);
-
-        if (cell2.equals(upCell) || cell2.equals(downCell) || cell2.equals(leftCell) || cell2.equals(rightCell)){
+        if (cell2.equals(upCell) || cell2.equals(downCell) || cell2.equals(leftCell) || cell2.equals(rightCell)) {
             return true;
+        } else {
+            return false;
         }
-        else {return false;}
     }
-    public List<Cell> getNeighbouringCells(Cell cell){
+
+    public List<Cell> getNeighbouringCells(Cell cell) {
         List<Cell> returnList = new ArrayList<>();
         returnList.add(getDownwardCell(cell));
         returnList.add(getUpwardCell(cell));
@@ -271,21 +269,23 @@ public class Map {
         returnList.add(getRightwardCell(cell));
         return returnList;
     }
+
     /**
-     * Updates the water flow on the map by simulating the flow from springs through pipes.
+     * Updates the water flow on the map by simulating the flow from springs through
+     * pipes.
      */
-    public void updateWaterFlow(){
+    public void updateWaterFlow() {
         List<Cell> queue = findSprings();
         List<Cell> visitedCells = new ArrayList<>();
-
-        while(!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             List<Cell> neighbouringCells = getNeighbouringCells(queue.get(0));
             visitedCells.add(queue.get(0));
             for (int i = 0; i < neighbouringCells.size(); i++) {
-                if (neighbouringCells.get(i).getComponent() instanceof Pipe){
+                if (neighbouringCells.get(i).getComponent() instanceof Pipe) {
                     queue.add(neighbouringCells.get(i));
                     visitedCells.add(neighbouringCells.get(i));
-                    Pipe pipe = (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column].getComponent();
+                    Pipe pipe = (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column]
+                            .getComponent();
                     pipe.setWaterFlowing(true);
                 } else if (neighbouringCells.get(i).getComponent() instanceof Pump) {
                     queue.add(neighbouringCells.get(i));
@@ -295,41 +295,43 @@ public class Map {
             queue.remove(0);
         }
     }
-//    public void checkForFreeEnds(){
-//
-//    }
+
+    // public void checkForFreeEnds(){
+    //
+    // }
     public String getSize() {
         return size;
     }
 
-     /**
+    /**
      * Retrieves the list of pumps present on the map.
+     * 
      * @return The list of pumps.
      */
-    public List<Pump> getPumps()
-    {
-        for (int i = 0; i < 8; i++)
-        {
-            for (Cell cell : cells[i])
-            {
-                if (cell.getComponent() instanceof Pump)
-                {
-                    pumps.add((Pump)cell.getComponent());
+    public List<Pump> getPumps() {
+        for (int i = 0; i < 8; i++) {
+            for (Cell cell : cells[i]) {
+                if (cell.getComponent() instanceof Pump) {
+                    pumps.add((Pump) cell.getComponent());
                 }
             }
         }
         return pumps;
     }
-/**
-     * Draws the map by printing its contents to the console and writing them to a file.
+
+    /**
+     * Draws the map by printing its contents to the console and writing them to a
+     * file.
      */
-    public void draw(){
+    public void draw() {
         printMap();
         outputMap();
     }
- /**
+
+    /**
      * Prints the map to the console.
-     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
+     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe,
+     * 'x' represents pump, 's' represents spring,
      * '*' represents plumber, and '+' represents saboteur.
      */
     public void printMap() {
@@ -350,7 +352,7 @@ public class Map {
                     } else if (cells[i][j].getComponent() instanceof Pump) {
                         Pump pump = (Pump) cells[i][j].getComponent();
                         if (pump.isBroken()) {
-                            System.out.print("|-x"); 
+                            System.out.print("|-x");
                         } else {
                             System.out.print("|x");
                         }
@@ -369,21 +371,23 @@ public class Map {
             System.out.println("|");
         }
     }
-     /**
+
+    /**
      * Outputs the map to a text file named "output.txt".
-     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
+     * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe,
+     * 'x' represents pump, 's' represents spring,
      * '*' represents plumber, and '+' represents saboteur.
      */
     private void outputMap() {
         try {
             FileWriter myWriter = new FileWriter("output.txt", true);
             myWriter.append("c - cistern; p - pipe; x - pump; s - spring\n");
-    
+
             for (int i = 0; i < columns; i++) {
                 myWriter.append("__");
             }
             myWriter.append("\n");
-    
+
             for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < columns; j++) {
                     myWriter.append("|");
@@ -407,12 +411,12 @@ public class Map {
                 }
                 myWriter.append("|\n");
             }
-    
+
             for (int i = 0; i < columns; i++) {
                 myWriter.append("__");
             }
             myWriter.append("\n");
-    
+
             myWriter.close();
             System.out.println("Successfully wrote to the file.");
         } catch (IOException e) {
@@ -420,26 +424,28 @@ public class Map {
             e.printStackTrace();
         }
     }
- /**
+
+    /**
      * Retrieves the list of cisterns present on the map.
+     * 
      * @return The list of cisterns.
      */
-    public List<Cistern> getCisterns() 
-    {
+    public List<Cistern> getCisterns() {
         return cisterns;
     }
 
     /**
      * Retrieves the list of springs present on the map.
+     * 
      * @return The list of springs.
      */
-    public List<Spring> getSprings()
-    {
+    public List<Spring> getSprings() {
         return springs;
     }
-    
- /**
+
+    /**
      * Finds and returns a list of cells containing springs.
+     * 
      * @return A list of cells containing springs.
      */
     private List<Cell> findSprings() {
@@ -454,8 +460,7 @@ public class Map {
         return springs;
     }
 
-    public Cell getCells(int row, int col)
-    {
+    public Cell getCells(int row, int col) {
         return cells[row][col];
     }
 }
