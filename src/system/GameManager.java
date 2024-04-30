@@ -360,6 +360,9 @@ public class GameManager
                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                     }
                 }
+                case "StartSandstorm" -> {
+                    startSandstorm();
+                }
                 case "Exit" -> {
                     break GAME_LOOP;
                 }
