@@ -105,13 +105,6 @@ public class Component {
         catch(Exception e){
             return false;
         }
-        try {
-            //if the cell is not empty i.e. occupied, an exception is thrown, and returns false
-            if(this.location.getMap().getCells(newRow, newColumn).isEmpty()){
-                throw new CellOccupiedException("the cell is empty!");
-            }
-            else 
-            {
                 //if the component that is receiving a new component to its neighbouring cell
                 //is a pipe we add them
                 if(this instanceof Pipe){
@@ -157,10 +150,6 @@ public class Component {
                         throw new SpringMultipleComponensConnectedException("the Spring is already connected to a component.");
                     }
                 }
-            }
-        } catch (CellOccupiedException e) {
-            return false;
-        }
         return false;
     }
     /**
