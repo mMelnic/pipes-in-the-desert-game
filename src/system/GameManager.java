@@ -101,6 +101,8 @@ public class GameManager
         map.getCells(0, 0).setMovablePlayer(map.players.get(2));
         map.getCells(0, 1).setMovablePlayer(map.players.get(0));
         map.initializeMap();
+    
+      
 
         startTimer();
         manufactureComponents();

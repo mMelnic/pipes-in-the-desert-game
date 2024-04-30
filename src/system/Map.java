@@ -333,23 +333,19 @@ public class Map {
      * '*' represents plumber, and '+' represents saboteur.
      */
     private void printMap() {
-        System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
-    
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring");
+
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
-    
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
                 } else if (cells[i][j].isPlayerOn()) {
-                    if (cells[i][j].getPlayerOn() instanceof Plumber) {
-                        System.out.print("|*");
-                    } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
-                        System.out.print("|+");
-                    }
+                    System.out.print("|*");
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
