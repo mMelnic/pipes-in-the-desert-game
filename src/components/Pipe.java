@@ -50,7 +50,7 @@ public class Pipe extends Component implements ILeakage {
         if (!isLeaking) {
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            stopFlow();
+            //stopFlow();
         }
     }
 

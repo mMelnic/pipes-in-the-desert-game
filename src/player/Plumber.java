@@ -157,6 +157,7 @@ public class Plumber extends MovablePlayer {
                     // TODO add a getOppositeDirection method to Direction
                     carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
                 } catch (Exception e) {
+                    e.printStackTrace();
                     System.out.println("Could not connect the components.");
                     return false;
                 }
