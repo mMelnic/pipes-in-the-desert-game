@@ -122,14 +122,16 @@ public class Pump extends Component implements ILeakage {
     /**
      * Stops the leaking of the pump.
      */
-    public void stopLeaking() {
+    public long stopLeaking() {
         if (isLeaking) {
             isLeaking = false;
             long leakDuration = System.currentTimeMillis() - leakStartTime;
             leakStartTime = 0;
-            saboteursScore.updateScore(leakDuration);
+            // saboteursScore.updateScore(leakDuration);
             stopOrStartFlowRecursive(outgoingPipe, true);
+            return leakDuration;
         }
+        return 0;
     }
 
     /**

@@ -15,6 +15,6 @@ public interface ILeakage {
      * Stops the leakage.
      * Implementing classes should define the behavior of stopping the leakage.
      */
-    void stopLeaking();
+    long stopLeaking();
     
 }
