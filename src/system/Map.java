@@ -23,42 +23,20 @@ import player.Saboteur;
  * It facilitates various map-related operations such as initialization, updating water flow, and providing neighboring cells.
  */
 public class Map {
-   /** The number of rows in the map grid. */
-   private int rows;
-    
-   /** The number of columns in the map grid. */
-   private int columns;
-   
-   /** The matrix of Cell objects representing the game map. */
-   private Cell[][] cells;
-   
-   /** The list of cisterns present on the map. */
-   private List<Cistern> cisterns;
-   
-   /** The list of springs present on the map. */
-   private List<Spring> springs;
-   
-   /** The list of pumps present on the map. */
-   private List<Pump> pumps;
-   
-   /** The number of cisterns in the map. It must be a multiple of 4. */
-   private int numberOfCisterns;
-   
-   /** The number of springs in the map. */
-   private int numberOfSprings;
+    private int rows = 8; // temporary number
+    private int columns = 8; // temporary number
+    private Cell[][] cells = new Cell[rows][columns];
+    private List<Cistern> cisterns = new ArrayList<Cistern>();
+    private List<Spring> springs = new ArrayList<Spring>();
+    private List<Pump> pumps = new ArrayList<Pump>();
+    private int numberOfCisterns = 0; // must be a multiple of 4
+    private int numberOfSprings = numberOfCisterns / 4;
 
-   /** The list of movable players present on the map. */
-   public List<MovablePlayer> players;
+    public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
 
-   /** The size of the map. */
-   String size;
 
-   /**
-     * Constructs a Map object with the specified size.
-     * Initializes the map grid and populates it with empty cells.
-     * @param sizeN The number of rows in the map.
-     * @param sizeM The number of columns in the map.
-     */
+    String size;
+
     public Map(int sizeN, int sizeM){
         // rows = sizeN;
         // columns = sizeM;
@@ -355,19 +333,23 @@ public class Map {
      * '*' represents plumber, and '+' represents saboteur.
      */
     private void printMap() {
-        System.out.println("c - cistern; p - pipe; x - pump; s - spring");
-
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
+    
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
-
+    
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
                 } else if (cells[i][j].isPlayerOn()) {
-                    System.out.print("|*");
+                    if (cells[i][j].getPlayerOn() instanceof Plumber) {
+                        System.out.print("|*");
+                    } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
+                        System.out.print("|+");
+                    }
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
@@ -381,7 +363,6 @@ public class Map {
             System.out.println("|");
         }
     }
-
      /**
      * Outputs the map to a text file named "output.txt".
      * '|' represents cell boundaries, 'c' represents cistern, 'p' represents pipe, 'x' represents pump, 's' represents spring,
