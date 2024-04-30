@@ -92,7 +92,11 @@ public class Map {
                         cells[i][j].placeComponent(newPipe);
                     }
                 }
-                
+            }
+        }
+
+        for(int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
                 if (cells[i][j].getComponent() != null) {
                     // Check if left cell exists and has a component
                     if (j > 0 && cells[i][j - 1].getComponent() != null) {
@@ -135,7 +139,6 @@ public class Map {
                         }
                     }
                 }
-
             }
         }
     }

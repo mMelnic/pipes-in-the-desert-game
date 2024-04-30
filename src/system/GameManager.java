@@ -110,7 +110,6 @@ public class GameManager
         manufactureComponents();
 
         String inputText;
-        activePlayer = teams.get(0).getPlayers().get(0); 
         GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
         {
             map.draw();
