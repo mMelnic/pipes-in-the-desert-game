@@ -394,11 +394,7 @@ public class Map {
                     if (cells[i][j].isEmpty) {
                         myWriter.append("  ");
                     } else if (cells[i][j].isPlayerOn()) {
-                        if (cells[i][j].getPlayerOn() instanceof Plumber) {
                             myWriter.append("* ");
-                        } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
-                            myWriter.append("+ ");
-                        }
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
                         myWriter.append("c ");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
