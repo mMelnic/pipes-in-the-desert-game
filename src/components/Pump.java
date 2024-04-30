@@ -7,6 +7,7 @@ import java.util.UUID;
 import enumerations.Direction;
 import interfaces.ILeakage;
 import player.SaboteurScorer;
+import system.Cell;
 
 /**
  * Represents a pump component in the game.
@@ -27,8 +28,8 @@ public class Pump extends Component implements ILeakage {
      * @param connectablePipesNumber the number of pipes that can be connected to
      *                               the pump.
      */
-    public Pump(int connectablePipesNumber) {
-        super();
+    public Pump(int connectablePipesNumber, Cell cell) {
+        super(cell);
         this.connectablePipesNumber = connectablePipesNumber;
         this.isReservoirFull = false;
         this.leakStartTime = 0;
@@ -38,8 +39,8 @@ public class Pump extends Component implements ILeakage {
     /**
      * Constructs a new Pump object with a default number of connectable pipes.
      */
-    public Pump() {
-        super();
+    public Pump(Cell cell) {
+        super(cell);
         this.isReservoirFull = false;
         this.leakStartTime = 0;
         this.isLeaking = false;

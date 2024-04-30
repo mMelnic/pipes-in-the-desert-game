@@ -1,4 +1,7 @@
 package components;
+
+import system.Cell;
+
 /**
  * a Spring class represents springs in tha game
  */
@@ -9,9 +12,9 @@ public class Spring extends Component
 	/**
 	 * constructor of the class
 	 */
-	public Spring() 
+	public Spring(Cell cell) 
 	{
-		super();
+		super(cell);
 		isWaterFlowing = false;
 	}
 	/**

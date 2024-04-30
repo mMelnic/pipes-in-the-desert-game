@@ -1,5 +1,7 @@
 package components;
 import interfaces.ICisternListener;
+import system.Cell;
+
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -20,8 +22,8 @@ public class Cistern extends Component implements ICisternListener {
     /**
      * a constructor of the class cistern that sets certion attributes
      */
-    public Cistern(){
-        super();
+    public Cistern(Cell cell){
+        super(cell);
         this.isCisternFull = false;
         this.manufacturedComponent = null;
         this.currentwater = 0;
@@ -98,7 +100,7 @@ public class Cistern extends Component implements ICisternListener {
      */
     public Pipe manufacturePipe(){
         writeMessageToCMD("pipe successfully manufactured.");
-        Pipe newPipe = new Pipe();
+        Pipe newPipe = new Pipe(location);
         this.manufacturedComponent = newPipe;
         return newPipe;
     }
@@ -108,7 +110,7 @@ public class Cistern extends Component implements ICisternListener {
      */
     public Pump manufacturePump(){
         writeMessageToCMD("pump successfully manufactured.");
-        Pump newPump = new Pump();
+        Pump newPump = new Pump(location);
         this.manufacturedComponent = newPump;
         return newPump;
     }

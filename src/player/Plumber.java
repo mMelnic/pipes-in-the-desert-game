@@ -45,7 +45,8 @@ public class Plumber extends MovablePlayer {
                 handleOutput("The pipe is repaired.");
                 // Check if the pipe is leaking and stop the leaking
                 if (pipe.isLeaking()) {
-                    pipe.stopLeaking();
+                    long duration = pipe.stopLeaking();
+                    ((PlumberScorer)team.getTeamScore()).updateScore(duration);
                     handleOutput("The pipe is repaired and stopped leaking.");
                 }
                 return true;
@@ -77,7 +78,8 @@ public class Plumber extends MovablePlayer {
                 pump.setBroken(false);
                 handleOutput("The pump is repaired.");
                 if (pump.isLeaking()) {
-                    pump.stopLeaking();
+                    long duration = pump.stopLeaking();
+                    ((PlumberScorer) team.getTeamScore()).updateScore(duration);
                     handleOutput("The pump is repaired and stopped leaking.");
                     if (pump.isReservoirFull()) {
                         pump.setReservoirFull(false);
@@ -182,6 +184,7 @@ public class Plumber extends MovablePlayer {
 
                 // currentCell.getMap().checkForFreeEnds(); // If free ends are found start leaking
                 targetCell.placeComponent(pipe);
+                pipe.setLocation(targetCell);
                 carriedComponent = null;
                 handleOutput("You have successfully installed a Pipe.");
 
@@ -203,6 +206,7 @@ public class Plumber extends MovablePlayer {
                     pump.setIncomingPipe((Pipe)componentInCurrentCell);
                 }
                 targetCell.placeComponent(pump);
+                pump.setLocation(targetCell);
                 carriedComponent = null;
                 handleOutput("You have successfully installed a Pump.");
 

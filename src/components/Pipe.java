@@ -34,8 +34,8 @@ public class Pipe extends Component implements ILeakage {
      /**
      * Constructs a new Pipe object with default values.
      */
-    public Pipe() {
-        super();
+    public Pipe(Cell cell) {
+        super(cell);
         this.shape = Shapes.HORIZONTAL;
         this.isWaterFlowing = false;
         this.leakStartTime = 0;

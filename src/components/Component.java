@@ -20,8 +20,8 @@ public class Component {
     protected HashMap<Direction, Component> connectedComponents;
     /**
      * constructor of Component class, sets appropriate values to certain attributes of the class */
-    public Component(){
-        this.location = null;
+    public Component(Cell cell){
+        this.location = cell;
         this.connectedComponents  = new HashMap<Direction, Component>();
         this.componentID = UUID.randomUUID();
     }
@@ -85,15 +85,19 @@ public class Component {
                 case UP:
                     newRow = this.location.getRow() - 1;
                     newColumn = this.location.getColumn();
+                    break;
                 case DOWN:
                     newRow = this.location.getRow() + 1;
                     newColumn = this.location.getColumn();
+                    break;
                 case LEFT:
                     newRow = this.location.getRow();
                     newColumn = this.location.getColumn() - 1;
+                    break;
                 case RIGHT:
                     newRow = this.location.getRow();
                     newColumn = this.location.getColumn() + 1;
+                    break;
             }
         }
         //the initialization of the row and column is failed an exception is thrown and returns false,
@@ -105,7 +109,7 @@ public class Component {
             //if the cell is not empty i.e. occupied, an exception is thrown, and returns false
             if(this.location.getMap().getCells(newRow, newColumn).isEmpty()){
                 throw new CellOccupiedException("the cell is empty!");
-            } 
+            }
             else 
             {
                 //if the component that is receiving a new component to its neighbouring cell

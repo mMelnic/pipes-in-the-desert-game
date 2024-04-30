@@ -73,24 +73,22 @@ public class Map {
     public void initializeMap(){
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
-                if (j == rows-1){
-                    Cistern newCistern = new Cistern();
+                if (j == rows - 1 && (i % 2) == 0){
+                    Cistern newCistern = new Cistern(cells[i][j]);
                     cells[i][j].placeComponent(newCistern);
                     cisterns.add(newCistern);
                 }
                 else if (i == 2 && j == 2 || i == 5 && j == 6){
-                    Spring newSpring = new Spring();
+                    Spring newSpring = new Spring(cells[i][j]);
                     cells[i][j].placeComponent(newSpring);
                     springs.add(newSpring);
                 }
-                else if (i == 0 || j == columns -1){
-                    if (j != 0){
-                        Pipe newPipe = new Pipe();
-                        cells[i][j].placeComponent(newPipe);
-                    } else if (i != rows -1) {
-                        Pipe newPipe = new Pipe();
-                        cells[i][j].placeComponent(newPipe);
+                else if (i == 0 && (j != columns - 1) ){
+                    if (j == 1) {
+                        
                     }
+                        Pipe newPipe = new Pipe(cells[i][j]);
+                        cells[i][j].placeComponent(newPipe);
                 }
                 
                 if (cells[i][j].getComponent() != null) {

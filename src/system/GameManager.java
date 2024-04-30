@@ -174,7 +174,7 @@ public class GameManager
                 }
                 case "InstallPump" -> {
                     if (activePlumber != null) {
-                        activePlumber.setCarriedComponent(new Pump());
+                        //activePlumber.setCarriedComponent(new Pump());
                         activePlumber.installComponent(activePlayer.getFacingDirection());
                     } else {
                         String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
@@ -188,7 +188,7 @@ public class GameManager
                 }
                 case "InstallPipe" -> {
                     if (activePlumber != null) {
-                        activePlumber.setCarriedComponent(new Pipe());
+                        //activePlumber.setCarriedComponent(new Pipe());
                         activePlumber.installComponent(activePlayer.getFacingDirection());
                     } else {
                         String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
