@@ -110,6 +110,7 @@ public class GameManager
         manufactureComponents();
 
         String inputText;
+       
         GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
         {
             map.draw();
