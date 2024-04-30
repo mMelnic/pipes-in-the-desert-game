@@ -334,12 +334,12 @@ public class Map {
      */
     private void printMap() {
         System.out.println("c - cistern; p - pipe; x - pump; s - spring");
-
+    
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
-
+    
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
@@ -348,12 +348,17 @@ public class Map {
                     System.out.print("|*");
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
-                } else if (cells[i][j].getComponent() instanceof Pipe) {
-                    System.out.print("|p");
                 } else if (cells[i][j].getComponent() instanceof Pump) {
                     System.out.print("|x");
                 } else if (cells[i][j].getComponent() instanceof Spring) {
                     System.out.print("|s");
+                } else if (cells[i][j].getComponent() instanceof Pipe) {
+                    Pipe pipe = (Pipe) cells[i][j].getComponent();
+                    if (pipe.isBroken() == true) {
+                        System.out.print("|-p");
+                    } else {
+                        System.out.print("|p");
+                    }
                 }
             }
             System.out.println("|");

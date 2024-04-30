@@ -95,13 +95,15 @@ public class GameManager
         map.players.add(teams.get(1).getPlayers().get(1));
         map.players.get(2).setCurrentCell(map.getCells(0, 0));
         map.getCells(0, 0).setPlayerOn(true);
-        map.players.get(0).setCurrentCell(map.getCells(0, 1));
-        map.getCells(0, 1).setPlayerOn(true);
-
-        map.getCells(0, 0).setMovablePlayer(map.players.get(2));
-        map.getCells(0, 1).setMovablePlayer(map.players.get(0));
-        map.initializeMap();
     
+        // Put the plumber on row 1, column 3
+        map.players.get(0).setCurrentCell(map.getCells(0, 3));
+        map.getCells(0, 3).setPlayerOn(true);
+    
+        // Remove the previous placement of the saboteur
+        map.getCells(0, 1).setPlayerOn(false);
+    
+        map.initializeMap();
       
 
         startTimer();
