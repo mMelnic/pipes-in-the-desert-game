@@ -84,11 +84,13 @@ public class Map {
                     springs.add(newSpring);
                 }
                 else if (i == 0 && (j != columns - 1) ){
-                    if (j == 1) {
-                        
-                    }
+                    if (j == 5) {
+                        Pump newPump = new Pump(3, cells[i][j]);
+                        cells[i][j].placeComponent(newPump);
+                    } else {
                         Pipe newPipe = new Pipe(cells[i][j]);
                         cells[i][j].placeComponent(newPipe);
+                    }
                 }
                 
                 if (cells[i][j].getComponent() != null) {
