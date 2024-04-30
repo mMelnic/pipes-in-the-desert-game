@@ -1,13 +1,8 @@
 package player;
 
-import components.Cistern;
 import components.Pipe;
-import components.Pump;
-import components.Spring;
-
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
 
 public class Saboteur extends MovablePlayer {
     /**

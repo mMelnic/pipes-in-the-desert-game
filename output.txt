@@ -24,6 +24,7 @@ Choose the map size:
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 |* |p |p |* |p |x |p |c |
+|* |p |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
@@ -34,6 +35,7 @@ ________________
 ________________
 c - cistern; p - pipe; x - pump; s - spring
 ________________
+|* |p |p |* |p |x |p |c |
 |* |p |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
