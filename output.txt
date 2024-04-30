@@ -21,18 +21,14 @@ Choose the map size:
 2. Saboteurs
 3. Return to the main menu.
 
-
-
-
-The game finished. Calculation of points is in progress...
-
-
-
-The game finished. Calculation of points is in progress...
-                === PIPES IN THE DESERT ===               
-
-
-1. Start
-2. Key bindings
-3. Exit
-
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|c |p |p |p |p |  |  |s |
+|  |  |  |  |x |  |  |  |
+|  |  |x |  |  |  |  |  |
+|  |  |p |  |  |  |  |  |
+|  |  |p |p |c |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|s |  |  |  |  |  |  |c |
+________________
