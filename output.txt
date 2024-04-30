@@ -23,7 +23,7 @@ Choose the map size:
 
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-||p |p ||p |x |p |c |
+|* |p |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
@@ -32,10 +32,9 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-MovedRIGHTto row 0 and column 4
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-||p |p |p ||x |p |c |
+|* |p |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
@@ -44,10 +43,10 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-MovedRIGHTto row 0 and column 5
+Moved RIGHT to row 0 and column 1
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-||p |p |p |p |x |p |c |
+|p |* |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
@@ -56,10 +55,9 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-MovedRIGHTto row 0 and column 6
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-||p |p |p |p |x ||c |
+|p |* |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
@@ -68,47 +66,10 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-You have picked a Pipe
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-||p |p |p |p |x ||c |
+|p |* |p |* |p |x |p |c |
 |  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-MovedLEFTto row 0 and column 5
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p |p |p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-You cannot move there.
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p |p |p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-You have successfully installed a Pipe.
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p |p |p |x |p |c |
-|  |  |  |  |  |p |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |c |
@@ -117,33 +78,6 @@ ________________
 |  |  |  |  |  |  |  |  |
 ________________
 
-Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+Time is up!
 
-The direction changed.
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p |p |p |x |p |c |
-|  |  |  |  |  |p |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
 
-Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
-
-Incoming and outgoing pipes should be different.
-The direction changed.
-c - cistern; p - pipe; x - pump; s - spring
-________________
-||p |p |p |p |x |p |c |
-|  |  |  |  |  |p |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
