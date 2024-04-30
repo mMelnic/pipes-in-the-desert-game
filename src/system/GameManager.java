@@ -110,13 +110,19 @@ public class GameManager
         manufactureComponents();
 
         String inputText;
+        activePlayer = teams.get(0).getPlayers().get(0); 
         GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
         {
             map.draw();
             inputText = receiveInput();
+            System.out.println("Current player: " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
 
             switch (inputText)
             {
+                case "SwitchPlayer" -> {
+                    switchActivePlayer();
+                    System.out.println("Switched to " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
+                }
                 case "U" -> {
                     activePlayer.move(Direction.UP);
                     System.out.println("You moved UP");
@@ -413,6 +419,18 @@ public class GameManager
 
         System.out.print(message);
         writeToOutputTxt(message);
+    }
+    public void switchActivePlayer() 
+    {
+        if (activePlayer instanceof Plumber) {
+            activePlayer = teams.get(1).getPlayers().get(0);
+            activeSaboteur = (Saboteur) activePlayer;
+            activePlumber = null;
+        } else if (activePlayer instanceof Saboteur) {
+            activePlayer = teams.get(0).getPlayers().get(0);
+            activePlumber = (Plumber) activePlayer;
+            activeSaboteur = null;
+        }
     }
 
     /**
