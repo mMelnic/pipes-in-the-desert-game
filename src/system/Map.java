@@ -4,16 +4,14 @@ import components.Cistern;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
-import java.io.File;  // Import the File class
+import enumerations.Direction;  // Import the File class
+import exceptions.CisternMultipleComponentsConnectedException;
+import exceptions.PumpConnectablePipeNumberExceedException;
+import exceptions.SpringMultipleComponensConnectedException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import enumerations.Direction;
-import exceptions.CisternMultipleComponentsConnectedException;
-import exceptions.PumpConnectablePipeNumberExceedException;
-import exceptions.SpringMultipleComponensConnectedException;
 import player.MovablePlayer;
 import player.Plumber;
 import player.Saboteur;
@@ -30,16 +28,16 @@ public class Map {
    private int columns;
    
    /** The matrix of Cell objects representing the game map. */
-   private Cell[][] cells;
+   private Cell[][] cells = new Cell[8][8];
    
    /** The list of cisterns present on the map. */
-   private List<Cistern> cisterns;
+   private List<Cistern> cisterns = new ArrayList<Cistern>();
    
    /** The list of springs present on the map. */
-   private List<Spring> springs;
+   private List<Spring> springs = new ArrayList<Spring>();
    
    /** The list of pumps present on the map. */
-   private List<Pump> pumps;
+   private List<Pump> pumps = new ArrayList<Pump>();
    
    /** The number of cisterns in the map. It must be a multiple of 4. */
    private int numberOfCisterns;
@@ -48,7 +46,7 @@ public class Map {
    private int numberOfSprings;
 
    /** The list of movable players present on the map. */
-   public List<MovablePlayer> players;
+   public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
 
    /** The size of the map. */
    String size;
@@ -63,9 +61,9 @@ public class Map {
         // rows = sizeN;
         // columns = sizeM;
 
-        for (int i = 0; i < cells.length; i++)
+        for (int i = 0; i < 8; i++)
         {
-            for (int j = 0; j < cells[i].length; j++) {
+            for (int j = 0; j < 8; j++) {
                 cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
