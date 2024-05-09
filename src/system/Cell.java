@@ -52,6 +52,7 @@ public class Cell {
     public void placeComponent(Component newElement){
         component = newElement;
         isEmpty = false;
+        newElement.setLocation(this);
     }
 
     /**
