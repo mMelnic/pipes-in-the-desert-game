@@ -1,5 +1,8 @@
 package components;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import enumerations.Direction;
 import enumerations.Shapes;
 import interfaces.ILeakage;
@@ -109,8 +112,9 @@ public class Pipe extends Component implements ILeakage {
      */
     public void stopFlow() {
         isWaterFlowing = false;
+        Set<Component> visited = new HashSet<>();
         for (Direction direction : Direction.values()) {
-            stopFlowRecursive(connectedComponents.get(direction));
+            stopFlowRecursive(connectedComponents.get(direction), visited);
         }
     }
 
@@ -118,18 +122,18 @@ public class Pipe extends Component implements ILeakage {
      * Recursively stops the water flow in connected components.
      * @param component the component to stop the flow.
      */
-    private void stopFlowRecursive(Component component) {
-        if (component == null || component instanceof Cistern) {
+    private void stopFlowRecursive(Component component, Set<Component> visited) {
+        if (component == null || component instanceof Cistern || visited.contains(component)) {
             return;
         }
+        visited.add(component);
         if (component instanceof Pipe) {
             ((Pipe) component).isWaterFlowing = false;
             for (Direction direction : Direction.values()) {
-                stopFlowRecursive(component.connectedComponents.get(direction));
+                stopFlowRecursive(component.connectedComponents.get(direction), visited);
             }
         }
     }
-
   
     /**
      * Changes the shape of the pipe based on connected components.
