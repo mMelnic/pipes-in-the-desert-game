@@ -25,7 +25,7 @@ public class Saboteur extends MovablePlayer {
                     if (!pipe.isBroken()) {
                         pipe.startLeaking();
                         pipe.setBroken(true);
-                        pipe.setWaterFlowing(false);
+                        pipe.setWaterFlowing(true);
                         pipe.stopFlow();
                         return true;
                     } else {
