@@ -108,12 +108,22 @@ public class Cistern extends Component implements ICisternListener {
      * e method that manufactures a pump
      * @return returns a pipe that is newly manufactured at a cistern
      */
-    public Pump manufacturePump(){
-        writeMessageToCMD("pump successfully manufactured.");
-        Pump newPump = new Pump(location);
+    public Pump manufacturePump() {
+        writeMessageToCMD("Pump successfully manufactured.");
+        int probability = new Random().nextInt(100) + 1; // Generates a random number between 1 and 10
+        int parameter;
+        if (probability <= 50) {
+            parameter = 4; // Probability of 4: 60%
+        } else if (probability <= 85) {
+            parameter = 3; // Probability of 3: 30%
+        } else {
+            parameter = 2; // Probability of 2: 10%
+        }
+        Pump newPump = new Pump(parameter, location);
         this.manufacturedComponent = newPump;
         return newPump;
     }
+
     /**
      * a method let the cistern leak when it is full
      */
