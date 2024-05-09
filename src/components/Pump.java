@@ -59,6 +59,15 @@ public class Pump extends Component implements ILeakage {
         }
     }
 
+    public void removePipe(Pipe pipeToRemove) {
+        if (incomingPipe == pipeToRemove) {
+            incomingPipe = null;
+        }
+        if (outgoingPipe == pipeToRemove) {
+            outgoingPipe = null;
+        }
+    }
+
     /**
      * Fills the reservoir of the pump.
      */
