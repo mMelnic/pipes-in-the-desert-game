@@ -518,7 +518,7 @@ public class GameManager
                 System.out.print(message);
                 writeToOutputTxt(message);
             }
-        }, 3 * 60 * 1000);
+        }, 20 * 60 * 1000);
     }
 
     /**
