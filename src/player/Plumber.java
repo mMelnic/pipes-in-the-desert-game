@@ -6,7 +6,11 @@ import components.Pipe;
 import components.Pump;
 import components.Spring;
 import enumerations.Direction;
+
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
 import system.Cell;
 
 /**
@@ -121,104 +125,143 @@ public class Plumber extends MovablePlayer {
      * @throws IllegalArgumentException if an invalid direction is specified.
      */
 
-    public boolean installComponent(Direction direction) {
-        Cell targetCell;
-
-        switch (direction) {
-            case UP:
-                targetCell = currentCell.getMap().getUpwardCell(currentCell);
-                break;
-            case DOWN:
-                targetCell = currentCell.getMap().getDownwardCell(currentCell);
-                break;
-            case LEFT:
-                targetCell = currentCell.getMap().getLeftwardCell(currentCell);
-                break;
-            case RIGHT:
-                targetCell = currentCell.getMap().getRightwardCell(currentCell);
-                break;
-            default:
-                throw new IllegalArgumentException("Invalid direction");
-        }
+    public boolean installComponent(Direction direction) { // TODO what if the component in the current cell is a pump,
+                                                           // how to set the outgoing/ incoming pipes?
+        Cell targetCell = calculateTargetCell(direction);
 
         if (carriedComponent != null && targetCell != null) {
             Component componentInCurrentCell = currentCell.getComponent();
             Component componentInTargetCell = targetCell.getComponent();
+
             if (componentInTargetCell != null && !(carriedComponent instanceof Pump)) {
                 handleOutput("The cell is not empty, you cannot install here.");
+                return false;
             }
 
             if (carriedComponent instanceof Pipe && componentInTargetCell == null) {
-                Pipe pipe = (Pipe) carriedComponent;
-                pipe.changeShape();
-
-                try {
-                    componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
-                    // TODO add a getOppositeDirection method to Direction
-                    carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    System.out.println("Could not connect the components.");
-                    return false;
-                }
-
-                if (componentInCurrentCell instanceof Pipe) {
-                    Pipe currentCellPipe = ((Pipe) componentInCurrentCell);
-                    currentCellPipe.changeShape();
-                    if (currentCellPipe.isWaterFlowing()) {
-                        pipe.setWaterFlowing(true);
-                    }
-                } else if (componentInCurrentCell instanceof Pump) {
-                    Pump currentCellPump = (Pump) componentInCurrentCell;
-
-                    // Set outgoing pipe if there is no outgoing pipe
-                    if (currentCellPump.getOutgoingPipe() == null) {
-                        currentCellPump.setOutgoingPipe(pipe);
-                    }
-
-                    // Set incoming pipe if there is no incoming pipe
-                    if (currentCellPump.getIncomingPipe() == null) {
-                        currentCellPump.setIncomingPipe(pipe);
-                    }
-                    // Theoretically there should be no scenario when there is no incoming and no outgoing pipe
-                }
-
-                // currentCell.getMap().checkForFreeEnds(); // If free ends are found start leaking
-                targetCell.placeComponent(pipe);
-                pipe.setLocation(targetCell);
-                carriedComponent = null;
-                handleOutput("You have successfully installed a Pipe.");
-
-                return true;
+                return installPipe(targetCell, componentInCurrentCell, direction);
             } else if (carriedComponent instanceof Pump
                     && (componentInTargetCell == null || componentInTargetCell instanceof Pipe)) {
-                Pump pump = (Pump) carriedComponent;
-
-                try {
-                    componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
-                    carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
-                } catch (Exception e) {
-                    System.out.println("Could not connect the components.");
-                    return false;
-                }
-
-                if (componentInCurrentCell instanceof Pipe) {
-                    ((Pipe) componentInCurrentCell).changeShape();
-                    pump.setIncomingPipe((Pipe)componentInCurrentCell);
-                }
-                targetCell.placeComponent(pump);
-                pump.setLocation(targetCell);
-                carriedComponent = null;
-                handleOutput("You have successfully installed a Pump.");
-
-                return true;
-                // TODO what if the component in the current cell is a pump, how to set the outgoing/ incoming pipes?
+                return installPump(targetCell, componentInCurrentCell, direction);
             }
         } else if (carriedComponent == null) {
             handleOutput("You have no component carried.");
         }
 
         return false;
+    }
+
+    private Cell calculateTargetCell(Direction direction) {
+        switch (direction) {
+            case UP:
+                return currentCell.getMap().getUpwardCell(currentCell);
+            case DOWN:
+                return currentCell.getMap().getDownwardCell(currentCell);
+            case LEFT:
+                return currentCell.getMap().getLeftwardCell(currentCell);
+            case RIGHT:
+                return currentCell.getMap().getRightwardCell(currentCell);
+            default:
+                throw new IllegalArgumentException("Invalid direction");
+        }
+    }
+
+    private boolean installPipe(Cell targetCell, Component componentInCurrentCell, Direction direction) {
+        Pipe pipe = (Pipe) carriedComponent;
+        pipe.changeShape();
+
+        try {
+            componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
+            carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Could not connect the components.");
+            return false;
+        }
+
+        if (componentInCurrentCell instanceof Pipe) {
+            Pipe currentCellPipe = ((Pipe) componentInCurrentCell);
+            currentCellPipe.changeShape();
+            if (currentCellPipe.isWaterFlowing()) {
+                pipe.setWaterFlowing(true);
+            }
+        } else if (componentInCurrentCell instanceof Pump) {
+            Pump currentCellPump = (Pump) componentInCurrentCell;
+            if (currentCellPump.getIncomingPipe() == null) {
+                currentCellPump.setIncomingPipe(pipe);
+                if (currentCellPump.getOutgoingPipe() != null && currentCellPump.getOutgoingPipe().isWaterFlowing()) {
+                    pipe.setWaterFlowing(true);
+                }
+            } else if (currentCellPump.getOutgoingPipe() == null) {
+                currentCellPump.setOutgoingPipe(pipe);
+                if (currentCellPump.getIncomingPipe() != null && currentCellPump.getIncomingPipe().isWaterFlowing()) {
+                    pipe.setWaterFlowing(true);
+                }
+            }
+        }
+
+        targetCell.placeComponent(pipe);
+        carriedComponent = null;
+        handleOutput("You have successfully installed a Pipe.");
+
+        return true;
+    }
+
+    private boolean installPump(Cell targetCell, Component componentInCurrentCell, Direction direction) {
+        Pump pump = (Pump) carriedComponent;
+        // Check if targetCell's component is a Pipe and reconnect its connected components to the Pump
+        if (targetCell.getComponent() instanceof Pipe) {
+            Pipe pipeToBeReplaced = (Pipe) targetCell.getComponent();
+            HashMap<Direction, Component> connectedComponents = pipeToBeReplaced.getConnectedComponents();
+            for (Map.Entry<Direction, Component> entry : connectedComponents.entrySet()) {
+                Direction connectedDirection = entry.getKey();
+                Component connectedComponent = entry.getValue();
+                try {
+                    connectedComponent.removeConnectedComponent(pipeToBeReplaced);
+                    pump.addConnectedComponent(connectedComponent, connectedDirection);
+                    connectedComponent.addConnectedComponent(pump, connectedDirection.getOppositeDirection());
+                    if (connectedComponent instanceof Pump) {
+                        ((Pump)connectedComponent).removePipe(pipeToBeReplaced);
+                    } else if (connectedComponent instanceof Pipe) {
+                        if (pump.getIncomingPipe() == null) {
+                            pump.setIncomingPipe((Pipe) connectedComponent);
+                        } else {
+                            pump.setOutgoingPipe((Pipe) connectedComponent);
+                        }
+                    }
+                } catch (Exception e) {
+                    System.out.println("Could not reconnect the components.");
+                    try {
+                        connectedComponent.addConnectedComponent(pipeToBeReplaced, connectedDirection);
+                    } catch (Exception f) {
+
+                    }
+                    return false;
+                }
+            }
+            targetCell.placeComponent(pump);
+            carriedComponent = null;
+            handleOutput("You have successfully installed a Pump.");
+
+            return true;
+        }
+
+        try {
+            componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
+            carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
+        } catch (Exception e) {
+            System.out.println("Could not connect the components.");
+            return false;
+        }
+
+        if (componentInCurrentCell instanceof Pipe) {
+            pump.connectPipe((Pipe) componentInCurrentCell);
+        }
+        targetCell.placeComponent(pump);
+        carriedComponent = null;
+        handleOutput("You have successfully installed a Pump.");
+
+        return true;
     }
 
     /**
