@@ -26,6 +26,7 @@ public class Saboteur extends MovablePlayer {
                         pipe.startLeaking();
                         pipe.setBroken(true);
                         pipe.setWaterFlowing(true);
+                        pipe.stopFlow();
                         return true;
                     } else {
                         System.out.print("couldn't puncture, because pipe is already broken");

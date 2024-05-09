@@ -344,18 +344,11 @@ public class Map {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
-                } else {
+                }  else {
                     if (cells[i][j].isPlayerOn()) {
                         System.out.print("|*"); // Print player symbol
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
                         System.out.print("|c");
-                    } else if (cells[i][j].getComponent() instanceof Pump) {
-                        Pump pump = (Pump) cells[i][j].getComponent();
-                        if (pump.isBroken()) {
-                            System.out.print("|-x");
-                        } else {
-                            System.out.print("|x");
-                        }
                     } else if (cells[i][j].getComponent() instanceof Spring) {
                         System.out.print("|s");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
@@ -364,6 +357,13 @@ public class Map {
                             System.out.print("|-p");
                         } else {
                             System.out.print("|p");
+                        }
+                    } else if (cells[i][j].getComponent() instanceof Pump) {
+                        Pump pump = (Pump) cells[i][j].getComponent();
+                        if (pump.isBroken()) {
+                            System.out.print("|-X");
+                        } else {
+                            System.out.print("|x");
                         }
                     }
                 }

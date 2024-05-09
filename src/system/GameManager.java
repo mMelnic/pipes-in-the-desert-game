@@ -465,18 +465,25 @@ public class GameManager
     /**
      * Initiates a sandstorm event.
      */
-    public void startSandstorm()
-    {
+    public void startSandstorm() {
         System.out.print("SANDSTORM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-        // writeToOutputTxt(message);
-        for (Pump pump : map.getPumps())
-        {
-            if (Math.random() <= 0.20)
-            {
-                pump.setBroken(true);
-                System.out.print("["+pump.getLocation().getColumn() + "  " + pump.getLocation().getRow()+"]");
-            }
+    
+        List<Pump> pumps = map.getPumps();
+    
+        if (pumps.isEmpty()) {
+            System.out.println("No pumps available.");
+            return;
         }
+    
+        if (pumps.size() == 1) {
+            Pump pump = pumps.get(0);
+            pump.setBroken(true);
+        } else {
+            Random random = new Random();
+            Pump randomPump = pumps.get(random.nextInt(pumps.size()));
+            randomPump.setBroken(true);
+        }
+    
         map.printMap();
     }
     
