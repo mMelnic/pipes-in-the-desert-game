@@ -74,84 +74,61 @@ public class Component {
      * connected to at most 1 component, i.e. a pump or a pipe. The exception is thrown when i plumber tried
      * to connected more that 1 componetn to a cistern.
      */
-    public boolean addConnectedComponent(Component c, Direction d) throws PumpConnectablePipeNumberExceedException, CisternMultipleComponentsConnectedException, SpringMultipleComponensConnectedException{
-        //integer storing row of the cell the new component is to be added.
-        int newRow = 0;
-        //column storing column of the cell the new component is to be added.
-        int newColumn = 0;
-        try{
-            //initialixation of the row an column of the cell the new component is to be added.
-            switch(d){
-                case UP:
-                    newRow = this.location.getRow() - 1;
-                    newColumn = this.location.getColumn();
-                    break;
-                case DOWN:
-                    newRow = this.location.getRow() + 1;
-                    newColumn = this.location.getColumn();
-                    break;
-                case LEFT:
-                    newRow = this.location.getRow();
-                    newColumn = this.location.getColumn() - 1;
-                    break;
-                case RIGHT:
-                    newRow = this.location.getRow();
-                    newColumn = this.location.getColumn() + 1;
-                    break;
+    public boolean addConnectedComponent(Component c, Direction d) throws PumpConnectablePipeNumberExceedException, CisternMultipleComponentsConnectedException,
+                                                                        SpringMultipleComponensConnectedException, PipeMultipleComponentsConnectedException {
+        //if the component that is receiving a new component to its neighbouring cell
+        //is a pipe we add them
+        if(this instanceof Pipe){
+            if (this.connectedComponents.size() < 2) {
+                this.connectedComponents.put(d, c);
+                writeMessageToCMD("component successfully added.");
+                return true;
+            } else {
+                throw new PipeMultipleComponentsConnectedException(
+                        "the cistern is already connected to a component.");
+            }
+        } 
+        //if the component that is receiving a new component to its neighbouring cell
+        //is a pump, prior to add
+        //first checks connectable pipe number and currently connected pipe
+        else if(this instanceof Pump) {
+            if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
+                this.connectedComponents.put(d, c);
+                if (c instanceof Pipe) {
+                    ((Pump)this).connectPipe((Pipe)c);
+                }
+                writeMessageToCMD("component successfully added.");
+                return true;
+            }
+            else{
+                throw new PumpConnectablePipeNumberExceedException("the pump is connected to max number of pipes already.");
             }
         }
-        //the initialization of the row and column is failed an exception is thrown and returns false,
-        //implying the process was unsuccessful.
-        catch(Exception e){
-            return false;
+        //if the component that is receiving a new component to its neighbouring cell is a cistern
+        //prior to add, first checks if it is already connected to a component.
+        else if(this instanceof Cistern) {
+            if(this.connectedComponents.size() < 1){
+                this.connectedComponents.put(d, c);
+                writeMessageToCMD("component successfully added.");
+                return true;
+            } else {
+                throw new CisternMultipleComponentsConnectedException("the cistern is already connected to a component.");
+            }
         }
-                //if the component that is receiving a new component to its neighbouring cell
-                //is a pipe we add them
-                if(this instanceof Pipe){
-                    this.connectedComponents.put(d, c);
-                    writeMessageToCMD("component successfully added.");
-                } 
-                //if the component that is receiving a new component to its neighbouring cell
-                //is a pump, prior to add
-                //first checks connectable pipe number and currently connected pipe
-                else if(this instanceof Pump) {
-                    if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
-                        this.connectedComponents.put(d, c);
-                        writeMessageToCMD("component successfully added.");
-                        return true;
-                    }
-                    else{
-                        throw new PumpConnectablePipeNumberExceedException("the pump is connected to max number of pipes already.");
-                    }
-                }
-                //if the component that is receiving a new component to its neighbouring cell is a cistern
-                //prior to add, first checks if it is already connected to a component.
-                else if(this instanceof Cistern) {
-                    if(this.connectedComponents.size() < 1){
-                        this.connectedComponents.put(d, c);
-                        if((c instanceof Pipe) && ((Pipe) c).isWaterFlowing()){
-                            ((Cistern) this).fillCistern();
-                        }
-                        writeMessageToCMD("component successfully added.");
-                        return true;
-                    } else {
-                        throw new CisternMultipleComponentsConnectedException("the cistern is already connected to a component.");
-                    }
-                }
-                //if the component that is receiving a new component to its neighbouring cell is a spring
-                //prior to add, first checks if it is already connected to a component.
-                else if(this instanceof Spring){
-                    if(this.connectedComponents.size() < 1){
-                        this.connectedComponents.put(d ,c);
-                        ((Spring) this).startWaterSupply();
-                        writeMessageToCMD("component successfully added.");
-                        return true;
-                    } else {
-                        throw new SpringMultipleComponensConnectedException("the Spring is already connected to a component.");
-                    }
-                }
+        //if the component that is receiving a new component to its neighbouring cell is a spring
+        //prior to add, first checks if it is already connected to a component.
+        else if(this instanceof Spring){
+            if(this.connectedComponents.size() < 1){
+                this.connectedComponents.put(d ,c);
+                writeMessageToCMD("component successfully added.");
+                return true;
+            } else {
+                throw new SpringMultipleComponensConnectedException("the Spring is already connected to a component.");
+            }
+        }
         return false;
     }
+
     /**
      * a method that is used to deconnect a certain component from a component, i.e. to remove a pair of
      * direction and a component (c) from a Hashmap storing pairs of a direction and a component representing
@@ -165,6 +142,9 @@ public class Component {
             Map.Entry<Direction, Component> entry = iterator.next();
             if (entry.getValue() == c) {
                 iterator.remove();
+                if (this instanceof Pump && c instanceof Pipe) {
+                    ((Pump) this).removePipe((Pipe) c);
+                }
                 writeMessageToCMD("component successfully removed.");
                 return true;
             }
