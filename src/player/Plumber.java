@@ -174,7 +174,6 @@ public class Plumber extends MovablePlayer {
             componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
             carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
         } catch (Exception e) {
-            e.printStackTrace();
             System.out.println("Could not connect the components.");
             return false;
         }
@@ -332,22 +331,22 @@ public class Plumber extends MovablePlayer {
                     Direction newComponentRelativeToPipe = newComponent.getLocation()
                             .getRelativeDirection(pipe.getLocation());
 
-                    // Check if the pipe has water flowing
-                    if (pipe.isWaterFlowing()) {
-                        currentCell.getMap().updateWaterFlow(); // TODO add a method to the Map class
-                    }
-
                     // Update connected components
                     pipe.removeConnectedComponent(oldComponent);
                     oldComponent.removeConnectedComponent(pipe);
                     pipe.addConnectedComponent(newComponent, newComponentRelativeToPipe);
                     newComponent.addConnectedComponent(pipe, pipeRelativeToNewComponent);
                     pipe.changeShape();
+                    // ToDo think if it is necessary to call fillCistern,startWaterFlow
+                    if (pipe.isWaterFlowing()) {
+                        currentCell.getMap().updateWaterFlow(); // TODO add a method to the Map class
+                    }
                     handleOutput("You successfully redirected an end of a pipe.");
                     return true;
                 }
             } catch (Exception e) {
                 System.out.println("Could not detach the pipe");
+                // TODO return to the state before exception
                 return false;
             }
         } else {
