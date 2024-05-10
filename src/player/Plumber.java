@@ -187,16 +187,9 @@ public class Plumber extends MovablePlayer {
             }
         } else if (componentInCurrentCell instanceof Pump) {
             Pump currentCellPump = (Pump) componentInCurrentCell;
-            if (currentCellPump.getIncomingPipe() == null) {
-                currentCellPump.setIncomingPipe(pipe);
-                if (currentCellPump.getOutgoingPipe() != null && currentCellPump.getOutgoingPipe().isWaterFlowing()) {
-                    pipe.setWaterFlowing(true);
-                }
-            } else if (currentCellPump.getOutgoingPipe() == null) {
-                currentCellPump.setOutgoingPipe(pipe);
-                if (currentCellPump.getIncomingPipe() != null && currentCellPump.getIncomingPipe().isWaterFlowing()) {
-                    pipe.setWaterFlowing(true);
-                }
+            if ((currentCellPump.getOutgoingPipe() != null && currentCellPump.getOutgoingPipe().isWaterFlowing()) ||
+                    (currentCellPump.getIncomingPipe() != null && currentCellPump.getIncomingPipe().isWaterFlowing())) {
+                pipe.setWaterFlowing(true);
             }
         }
 
@@ -222,12 +215,6 @@ public class Plumber extends MovablePlayer {
                     connectedComponent.addConnectedComponent(pump, connectedDirection.getOppositeDirection());
                     if (connectedComponent instanceof Pump) {
                         ((Pump)connectedComponent).removePipe(pipeToBeReplaced);
-                    } else if (connectedComponent instanceof Pipe) {
-                        if (pump.getIncomingPipe() == null) {
-                            pump.setIncomingPipe((Pipe) connectedComponent);
-                        } else {
-                            pump.setOutgoingPipe((Pipe) connectedComponent);
-                        }
                     }
                 } catch (Exception e) {
                     System.out.println("Could not reconnect the components.");
@@ -252,10 +239,6 @@ public class Plumber extends MovablePlayer {
         } catch (Exception e) {
             System.out.println("Could not connect the components.");
             return false;
-        }
-
-        if (componentInCurrentCell instanceof Pipe) {
-            pump.connectPipe((Pipe) componentInCurrentCell);
         }
         targetCell.placeComponent(pump);
         carriedComponent = null;
@@ -364,39 +347,10 @@ public class Plumber extends MovablePlayer {
                     newComponent.addConnectedComponent(pipe, pipeRelativeToNewComponent);
                     pipe.changeShape();
 
-                    // Handle Pump logic
-                    if (newComponent instanceof Pump) {
-                        Pump newPump = (Pump) newComponent;
-
-                        // If the pump has no incoming pipe, set the pipe as incoming
-                        if (newPump.getIncomingPipe() == null) {
-                            newPump.setIncomingPipe(pipe);
-                        }
-
-                        // If the pump has no outgoing pipe, set it as outgoing
-                        if (newPump.getOutgoingPipe() == null) {
-                            newPump.setOutgoingPipe(pipe);
-                        }
-
-                        // If no outgoing or incoming, set it as incoming
-                        if (newPump.getIncomingPipe() == null && newPump.getOutgoingPipe() == null) {
-                            newPump.setIncomingPipe(pipe);
-                        }
-                    }
-
                     // Handle Pump removal logic
                     if (oldComponent instanceof Pump) {
                         Pump oldPump = (Pump) oldComponent;
-
-                        // If the pipe was outgoing or incoming, set the outgoing or incoming pipe to
-                        // null
-                        if (oldPump.getOutgoingPipe() == pipe) {
-                            oldPump.setOutgoingPipe(null);
-                        }
-
-                        if (oldPump.getIncomingPipe() == pipe) {
-                            oldPump.setIncomingPipe(null);
-                        }
+                        oldPump.removePipe(pipe);
                     }
 
                     handleOutput("You successfully redirected an end of a pipe.");
