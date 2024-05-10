@@ -23,10 +23,10 @@ public class Saboteur extends MovablePlayer {
                 if (currentCell.getComponent() instanceof Pipe) {
                     Pipe pipe = (Pipe) currentCell.getComponent();
                     if (!pipe.isBroken()) {
-                        pipe.startLeaking();
                         pipe.setBroken(true);
-                        pipe.setWaterFlowing(true);
-                        pipe.stopFlow();
+                        if (pipe.isWaterFlowing()) {
+                            pipe.startLeaking();
+                        }
                         return true;
                     } else {
                         System.out.print("couldn't puncture, because pipe is already broken");

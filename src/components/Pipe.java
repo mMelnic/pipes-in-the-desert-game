@@ -53,7 +53,7 @@ public class Pipe extends Component implements ILeakage {
         if (!isLeaking) {
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            //stopFlow();
+            stopFlow();
         }
     }
 
@@ -67,7 +67,6 @@ public class Pipe extends Component implements ILeakage {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
             undoStopFlow();
-            // plumbersScore.updateScore(duration);
             return duration;
         }
         return 0;
