@@ -101,8 +101,7 @@ public class Map {
                         try {
                             cells[i][j].getComponent().addConnectedComponent(cells[i][j - 1].getComponent(),
                                     Direction.LEFT);
-                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
-                                | SpringMultipleComponensConnectedException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -111,8 +110,7 @@ public class Map {
                         try {
                             cells[i][j].getComponent().addConnectedComponent(cells[i][j + 1].getComponent(),
                                     Direction.RIGHT);
-                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
-                                | SpringMultipleComponensConnectedException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -121,8 +119,7 @@ public class Map {
                         try {
                             cells[i][j].getComponent().addConnectedComponent(cells[i + 1][j].getComponent(),
                                     Direction.DOWN);
-                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
-                                | SpringMultipleComponensConnectedException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -131,8 +128,7 @@ public class Map {
                         try {
                             cells[i][j].getComponent().addConnectedComponent(cells[i - 1][j].getComponent(),
                                     Direction.UP);
-                        } catch (PumpConnectablePipeNumberExceedException | CisternMultipleComponentsConnectedException
-                                | SpringMultipleComponensConnectedException e) {
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }
@@ -361,7 +357,7 @@ public class Map {
                     } else if (cells[i][j].getComponent() instanceof Pump) {
                         Pump pump = (Pump) cells[i][j].getComponent();
                         if (pump.isBroken()) {
-                            System.out.print("|-X");
+                            System.out.print("|X");
                         } else {
                             System.out.print("|x");
                         }
