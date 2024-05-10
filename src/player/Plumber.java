@@ -213,9 +213,6 @@ public class Plumber extends MovablePlayer {
                     connectedComponent.removeConnectedComponent(pipeToBeReplaced);
                     pump.addConnectedComponent(connectedComponent, connectedDirection);
                     connectedComponent.addConnectedComponent(pump, connectedDirection.getOppositeDirection());
-                    if (connectedComponent instanceof Pump) {
-                        ((Pump)connectedComponent).removePipe(pipeToBeReplaced);
-                    }
                 } catch (Exception e) {
                     System.out.println("Could not reconnect the components.");
                     try {
@@ -346,13 +343,6 @@ public class Plumber extends MovablePlayer {
                     pipe.addConnectedComponent(newComponent, newComponentRelativeToPipe);
                     newComponent.addConnectedComponent(pipe, pipeRelativeToNewComponent);
                     pipe.changeShape();
-
-                    // Handle Pump removal logic
-                    if (oldComponent instanceof Pump) {
-                        Pump oldPump = (Pump) oldComponent;
-                        oldPump.removePipe(pipe);
-                    }
-
                     handleOutput("You successfully redirected an end of a pipe.");
                     return true;
                 }
