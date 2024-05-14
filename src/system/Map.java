@@ -351,6 +351,10 @@ public class Map {
                         Pipe pipe = (Pipe) cells[i][j].getComponent();
                         if (pipe.isBroken()) {
                             System.out.print("|-p");
+                        } else if (pipe.isWaterFlowing()) {
+                            System.out.print("|w");
+                        } else if (pipe.isLeaking()) {
+                            System.out.print("|l");
                         } else {
                             System.out.print("|p");
                         }
@@ -358,6 +362,8 @@ public class Map {
                         Pump pump = (Pump) cells[i][j].getComponent();
                         if (pump.isBroken()) {
                             System.out.print("|X");
+                        } else if (pump.isLeaking()) {
+                            System.out.print("|L");
                         } else {
                             System.out.print("|x");
                         }

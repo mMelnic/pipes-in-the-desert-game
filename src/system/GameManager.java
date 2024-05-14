@@ -363,6 +363,55 @@ public class GameManager
                 case "StartSandstorm" -> {
                     startSandstorm();
                 }
+                case "ConnectPSC" -> {
+                    if (activePlumber != null) {
+                        String message = "\n Cistern/Spring direction  (e.g. L, 'L' (left) - for the spring/cistern's):\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        inputText = receiveInput();
+
+                        if (inputText.length() != 1) {
+                            String errorMessage = "\nIncorrect input\n\n\n";
+                            System.out.print(errorMessage);
+                            writeToOutputTxt(errorMessage);
+                            continue;
+                        }
+
+                        Component oldComponent = null;
+
+                        switch (inputText.charAt(0)) {
+                            case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'R' ->
+                                oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'D' ->
+                                oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+                            case 'L' ->
+                                oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+                            default -> {
+                                if (oldComponent == null) {
+                                    String errorMessage = "\nIncorrect input.\n\n\n";
+                                    System.out.print(errorMessage);
+                                    writeToOutputTxt(errorMessage);
+                                    try {
+                                        Thread.sleep(1500);
+                                    } catch (InterruptedException interruptedException) {
+                                    }
+                                    continue;
+                                }
+                            }
+                        }
+
+                        activePlumber.connectPipeWithComponent((Pipe)activePlumber.getCurrentCell().getComponent(), oldComponent);
+                    } else {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException interruptedException) {
+                        }
+                    }
+                }
                 case "Exit" -> {
                     break GAME_LOOP;
                 }
