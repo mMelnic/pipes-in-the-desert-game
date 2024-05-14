@@ -24,6 +24,7 @@ public class Spring extends Component
 	 * a method that starts water supply from a spring which sets an attribute isWaterFlowing to true.
 	 */
 	public void startWaterSupply() {
+		isWaterFlowing = true;
 		// Initialize a set to keep track of visited components
 		Set<Component> visited = new HashSet<>();
 		// Call the recursive method to start water supply
@@ -31,7 +32,7 @@ public class Spring extends Component
 	}
 
 	// Recursive method to start water supply using depth-first search (DFS)
-	private void startWaterSupplyDFS(Component component, Set<Component> visited) {
+	public void startWaterSupplyDFS(Component component, Set<Component> visited) {
 		// Mark the current component as visited
 		visited.add(component);
 
@@ -41,9 +42,22 @@ public class Spring extends Component
 			pipe.setWaterFlowing(true);
 			if (pipe.isBroken()) {
 				pipe.startLeaking();
+				return;
 			}
-		} else if (component instanceof Pump && ((Pump)component).isBroken()) {
-			((Pump) component).fillReservoir();
+			// Check if the pipe has only one connected component
+			if (pipe.getConnectedComponents().size() == 1) {
+				return; // Stop traversal if the pipe has only one connected component
+			}
+		} else if (component instanceof Pump) {
+			Pump pump = (Pump) component;
+        	if (pump.isBroken()) {
+            	pump.fillReservoir();
+            	return; // Stop traversal if the pump is broken
+			}
+			// Check if the pump has only one connected component
+			if (pump.getConnectedComponents().size() == 1) {
+				return; // Stop traversal if the pump has only one connected component
+			}
 		}
 		
 		// Traverse the connected components recursively
@@ -66,6 +80,13 @@ public class Spring extends Component
 
 	private void handlePumpComponent(Component component, Pump connectedPump, Set<Component> visited) {
 		visited.add(connectedPump);
+		if (connectedPump.isBroken()) {
+			connectedPump.fillReservoir();
+			return;
+		}
+		if (connectedPump.getConnectedComponents().size() == 1) {
+			return;
+		}
 		Pipe incomingPipe = connectedPump.getIncomingPipe();
 		Pipe outgoingPipe = connectedPump.getOutgoingPipe();
 
@@ -93,5 +114,9 @@ public class Spring extends Component
 	 */
 	public void onPipeConnected(){
 		this.startWaterSupply();
+	}
+
+	public boolean isWaterFlowing() {
+		return isWaterFlowing;
 	}
 }

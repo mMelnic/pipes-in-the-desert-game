@@ -1,6 +1,7 @@
 package system;
 
 import components.Cistern;
+import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
@@ -8,7 +9,10 @@ import java.io.File; // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import enumerations.Direction;
 import exceptions.CisternMultipleComponentsConnectedException;
 import exceptions.PumpConnectablePipeNumberExceedException;
@@ -27,12 +31,10 @@ public class Map {
     private int rows = 8; // temporary number
     private int columns = 8; // temporary number
     private Cell[][] cells = new Cell[rows][columns];
-    private List<Cistern> cisterns = new ArrayList<Cistern>();
-    private List<Spring> springs = new ArrayList<Spring>();
-    private List<Pump> pumps = new ArrayList<Pump>();
-    private int numberOfCisterns = 0; // must be a multiple of 4
-    private int numberOfSprings = numberOfCisterns / 4;
-    public List<MovablePlayer> players = new ArrayList<MovablePlayer>();
+    private List<Cistern> cisterns = new ArrayList<>();
+    private List<Spring> springs = new ArrayList<>();
+    private List<Pump> pumps = new ArrayList<>();
+    public List<MovablePlayer> players = new ArrayList<>();
     String size;
 
     public Map(int sizeN, int sizeM) {
@@ -43,24 +45,6 @@ public class Map {
                 cells[i][j] = new Cell(i, j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
-                /*
-                 * try {
-                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
-                 * Direction.LEFT);
-                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
-                 * Direction.RIGHT);
-                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
-                 * Direction.DOWN);
-                 * cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(),
-                 * Direction.UP);
-                 * } catch (PumpConnectablePipeNumberExceedException e) {
-                 * e.printStackTrace();
-                 * } catch (CisternMultipleComponentsConnectedException e) {
-                 * e.printStackTrace();
-                 * } catch (SpringMultipleComponensConnectedException e) {
-                 * e.printStackTrace();
-                 * }
-                 */
             }
         }
     }
@@ -271,24 +255,38 @@ public class Map {
      * pipes.
      */
     public void updateWaterFlow() {
-        List<Cell> queue = findSprings();
-        List<Cell> visitedCells = new ArrayList<>();
-        while (!queue.isEmpty()) {
-            List<Cell> neighbouringCells = getNeighbouringCells(queue.get(0));
-            visitedCells.add(queue.get(0));
-            for (int i = 0; i < neighbouringCells.size(); i++) {
-                if (neighbouringCells.get(i).getComponent() instanceof Pipe) {
-                    queue.add(neighbouringCells.get(i));
-                    visitedCells.add(neighbouringCells.get(i));
-                    Pipe pipe = (Pipe) cells[neighbouringCells.get(i).row][neighbouringCells.get(i).column]
-                            .getComponent();
-                    pipe.setWaterFlowing(true);
-                } else if (neighbouringCells.get(i).getComponent() instanceof Pump) {
-                    queue.add(neighbouringCells.get(i));
-                    visitedCells.add(neighbouringCells.get(i));
+        // Initialize a set to keep track of visited components
+        Set<Component> visited = new HashSet<>();
+
+        // Step 1: Start water supply from springs that are already supplying water
+        for (Spring spring : springs) {
+            if (spring.isWaterFlowing()) {
+                spring.startWaterSupplyDFS(spring, visited);
+            }
+        }
+
+        // Step 2: Set unvisited components to not have water flow and not leaking
+        for (int row = 0; row < cells.length; row++) {
+            for (int col = 0; col < cells[row].length; col++) {
+                Cell cell = cells[row][col];
+                if (cell != null) {
+                    Component component = cell.getComponent();
+                    if (component != null && !visited.contains(component)) {
+                        resetComponentState(component);
+                    }
                 }
             }
-            queue.remove(0);
+        }
+    }
+
+    private void resetComponentState(Component component) {
+        if (component instanceof Pipe) {
+            Pipe pipe = (Pipe) component;
+            pipe.setWaterFlowing(false);
+            pipe.stopLeaking();
+        } else if (component instanceof Pump) {
+            Pump pump = (Pump) component;
+            pump.stopLeaking();
         }
     }
 
@@ -349,21 +347,21 @@ public class Map {
                         System.out.print("|s");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
                         Pipe pipe = (Pipe) cells[i][j].getComponent();
-                        if (pipe.isBroken()) {
-                            System.out.print("|-p");
+                        if (pipe.isLeaking()) {
+                            System.out.print("|l");
+                        } else if (pipe.isBroken()) {
+                            System.out.print("|b");
                         } else if (pipe.isWaterFlowing()) {
                             System.out.print("|w");
-                        } else if (pipe.isLeaking()) {
-                            System.out.print("|l");
                         } else {
                             System.out.print("|p");
                         }
                     } else if (cells[i][j].getComponent() instanceof Pump) {
                         Pump pump = (Pump) cells[i][j].getComponent();
-                        if (pump.isBroken()) {
-                            System.out.print("|X");
-                        } else if (pump.isLeaking()) {
+                        if (pump.isLeaking()) {
                             System.out.print("|L");
+                        } else if (pump.isBroken()) {
+                            System.out.print("|X");
                         } else {
                             System.out.print("|x");
                         }

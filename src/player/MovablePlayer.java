@@ -150,7 +150,7 @@ public abstract class MovablePlayer {
             Pump pump = (Pump) currentCell.getComponent();
             pump.setIncomingPipe(newIncomingPipe);
             pump.setOutgoingPipe(newOutgoingPipe);
-            //currentCell.getMap().updateWaterFlow();
+            currentCell.getMap().updateWaterFlow();
             handleOutput("The direction changed.");
         } else {
             handleOutput("You are not standing on a pump.");
