@@ -265,10 +265,10 @@ public class Plumber extends MovablePlayer {
 
         try {
             // Add pipe to the connected components of the component
-            component.addConnectedComponent(pipe, pipe.getLocation().getRelativeDirection(component.getLocation()));
+            component.addConnectedComponent(pipe, component.getLocation().getRelativeDirection(pipe.getLocation()));
 
             // Add component to the connected components of the pipe
-            pipe.addConnectedComponent(component, component.getLocation().getRelativeDirection(pipe.getLocation()));
+            pipe.addConnectedComponent(component, pipe.getLocation().getRelativeDirection(component.getLocation()));
 
             // Change shape of the pipe
             pipe.changeShape();
