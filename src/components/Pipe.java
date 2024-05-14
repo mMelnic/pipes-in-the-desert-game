@@ -6,6 +6,7 @@ import java.util.Set;
 import enumerations.Direction;
 import enumerations.Shapes;
 import interfaces.ILeakage;
+import interfaces.IWaterFlowListener;
 import player.PlumberScorer;
 import system.Cell;
 
@@ -22,6 +23,7 @@ public class Pipe extends Component implements ILeakage {
     private boolean isBroken;
     private boolean isPlayerOn;
     private PlumberScorer plumbersScore;
+    private Set<IWaterFlowListener> listeners = new HashSet<>();
 
 
     // public Pipe(Cell location) {
@@ -71,6 +73,20 @@ public class Pipe extends Component implements ILeakage {
         }
         return 0;
         
+    }
+
+    public void addWaterFlowListener(IWaterFlowListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeWaterFlowListener(IWaterFlowListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyWaterFlowListeners() {
+        for (IWaterFlowListener listener : listeners) {
+            listener.onWaterFlowChanged(this);
+        }
     }
 
     /**
@@ -213,8 +229,11 @@ public class Pipe extends Component implements ILeakage {
      * Sets whether water is flowing through the pipe.
      * @param set true to set water flowing, false otherwise.
      */
-    public void setWaterFlowing(boolean set){
-        isWaterFlowing = set;
+    public void setWaterFlowing(boolean isWaterFlowing) {
+        this.isWaterFlowing = isWaterFlowing;
+        if (isWaterFlowing) {
+            notifyWaterFlowListeners();
+        }
     }
 
     

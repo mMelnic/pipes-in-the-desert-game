@@ -24,30 +24,68 @@ public class Spring extends Component
 	 * a method that starts water supply from a spring which sets an attribute isWaterFlowing to true.
 	 */
 	public void startWaterSupply() {
-    // Initialize a set to keep track of visited components
-    Set<Component> visited = new HashSet<>();
-    // Call the recursive method to start water supply
-    startWaterSupplyDFS(this, visited);
-}
+		// Initialize a set to keep track of visited components
+		Set<Component> visited = new HashSet<>();
+		// Call the recursive method to start water supply
+		startWaterSupplyDFS(this, visited);
+	}
 
-// Recursive method to start water supply using depth-first search (DFS)
-private void startWaterSupplyDFS(Component component, Set<Component> visited) {
-    // Mark the current component as visited
-    visited.add(component);
+	// Recursive method to start water supply using depth-first search (DFS)
+	private void startWaterSupplyDFS(Component component, Set<Component> visited) {
+		// Mark the current component as visited
+		visited.add(component);
 
-    // If the current component is a pipe, set its isWaterFlowing attribute to true
-    if (component instanceof Pipe) {
-        ((Pipe) component).setWaterFlowing(true);
-    }
+		// If the current component is a pipe, set its isWaterFlowing attribute to true
+		if (component instanceof Pipe) {
+			Pipe pipe = (Pipe) component;
+			pipe.setWaterFlowing(true);
+			if (pipe.isBroken()) {
+				pipe.startLeaking();
+			}
+		} else if (component instanceof Pump && ((Pump)component).isBroken()) {
+			((Pump) component).fillReservoir();
+		}
+		
+		// Traverse the connected components recursively
+		for (Component connectedComponent : component.getConnectedComponents().values()) {
+			// Skip if the connected component has already been visited
+			if (!visited.contains(connectedComponent)) {
+				handleConnectedComponent(component, connectedComponent, visited);
+			}
+		}
+	}
 
-    // Traverse the connected components recursively
-    for (Component connectedComponent : component.getConnectedComponents().values()) {
-        // Skip if the connected component has already been visited
-        if (!visited.contains(connectedComponent) && (!(connectedComponent instanceof Pump) || (connectedComponent instanceof Pump))) { // TODO bred
-                startWaterSupplyDFS(connectedComponent, visited);
-            }
-    }
-}
+	private void handleConnectedComponent(Component component, Component connectedComponent, Set<Component> visited) {
+		if (connectedComponent instanceof Pump) {
+			handlePumpComponent(component, (Pump) connectedComponent, visited);
+		} else {
+			// Continue traversing for other components
+			startWaterSupplyDFS(connectedComponent, visited);
+		}
+	}
+
+	private void handlePumpComponent(Component component, Pump connectedPump, Set<Component> visited) {
+		visited.add(connectedPump);
+		Pipe incomingPipe = connectedPump.getIncomingPipe();
+		Pipe outgoingPipe = connectedPump.getOutgoingPipe();
+
+		if (incomingPipe != null && !visited.contains(incomingPipe)) {
+			startWaterSupplyDFS(incomingPipe, visited);
+		}
+		if (outgoingPipe != null && !visited.contains(outgoingPipe)) {
+			startWaterSupplyDFS(outgoingPipe, visited);
+		}
+
+		// Special case: If both component and connectedComponent are pumps and
+		// component has only one pipe
+		if (component instanceof Pump) {
+			Pump currentPump = (Pump) component;
+			if ((currentPump.getIncomingPipe() != null && currentPump.getOutgoingPipe() == null) ||
+					(currentPump.getIncomingPipe() == null && currentPump.getOutgoingPipe() != null)) {
+				startWaterSupplyDFS(connectedPump, visited);
+			}
+		}
+	}
 
 	/**
 	 * a method that is invoked when a pipe is connected to a spring, which calls the 
