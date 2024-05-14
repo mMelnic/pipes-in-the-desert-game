@@ -87,6 +87,14 @@ public class Spring extends Component
 		if (connectedPump.getConnectedComponents().size() == 1) {
 			return;
 		}
+		// Check if the current component is a pipe
+		if (component instanceof Pipe) {
+			Pipe currentPipe = (Pipe) component;
+			// Check if the current pipe is neither the incoming nor outgoing pipe
+			if (!currentPipe.equals(connectedPump.getIncomingPipe()) && !currentPipe.equals(connectedPump.getOutgoingPipe())) {
+				return; // Return if it's neither incoming nor outgoing
+			}
+		}
 		Pipe incomingPipe = connectedPump.getIncomingPipe();
 		Pipe outgoingPipe = connectedPump.getOutgoingPipe();
 

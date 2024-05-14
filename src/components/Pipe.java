@@ -231,10 +231,7 @@ public class Pipe extends Component implements ILeakage {
      */
     public void setWaterFlowing(boolean isWaterFlowing) {
         this.isWaterFlowing = isWaterFlowing;
-        if (isWaterFlowing) {
-            notifyWaterFlowListeners();
-        }
+        notifyWaterFlowListeners();
     }
-
     
 }

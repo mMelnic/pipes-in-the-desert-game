@@ -20,6 +20,10 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
     private int capacity;
     //an attribute indicating if a cistern is leaking
     private boolean isLeaking;
+
+    private boolean isFilling;
+    private long startTime;
+    private long elapsedTime;
     /**
      * a constructor of the class cistern that sets certion attributes
      */
@@ -30,6 +34,9 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
         this.currentwater = 0;
         this.capacity = 100; //adjustable
         this.isLeaking = false;
+        this.isFilling = false;
+        this.startTime = 0;
+        this.elapsedTime = 0;
     }
     /**
      * a method that returns is a cistern is full
@@ -76,32 +83,64 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
 
     @Override
     public void onWaterFlowChanged(Pipe pipe) {
+        if (isCisternFull) {
+            return; // If the cistern is full, do nothing
+        }
         if (pipe.isWaterFlowing()) {
             fillCistern();
+        } else {
+            stopFilling();
         }
     }
-    
+
     /**
      * a metho fills a cistern with water
      * @return returns current time in milliseconds.
      */
-    public long fillCistern(){
-        writeMessageToCMD("started filling cistern.");
-        Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (currentwater + 1 <= capacity) {
-                    currentwater++;
-                }
-                else{
-                    timer.cancel();
-                    onCisternFull();
+    public synchronized void fillCistern() {
+        if (isCisternFull) {
+            System.out.println("Cistern is already full and cannot be filled again.");
+            return;
+        }
+        if (isFilling) {
+            System.out.println("Cistern is already being filled.");
+            return;
+        }
+        isFilling = true;
+
+        new Thread(() -> {
+            try {
+                long remainingTime = 60000 - elapsedTime;
+                long fillStartTime = System.currentTimeMillis();
+
+                while (isFilling && remainingTime > 0) {
+                    Thread.sleep(remainingTime);
+                    remainingTime -= System.currentTimeMillis() - fillStartTime;
+                    fillStartTime = System.currentTimeMillis();
                 }
 
+                if (isFilling) {
+                    System.out.println("Cistern filled.");
+                    isFilling = false;
+                    isCisternFull = true; // Set the flag to true when the cistern is filled
+                    elapsedTime = 0;
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                elapsedTime += System.currentTimeMillis() - startTime;
             }
-        }, 0, 1000);
-        return System.currentTimeMillis();
+        }).start();
+    }
+
+    public synchronized long stopFilling() {
+        if (isCisternFull) {
+            System.out.println("Cistern is full and cannot be stopped.");
+            return elapsedTime;
+        }
+        System.out.println("Stopping the filling of the cistern due to no water flow.");
+        isFilling = false;
+        elapsedTime += System.currentTimeMillis() - startTime;
+        return elapsedTime;
     }
     /**
      * a method manufactures a pipe at a cistern
