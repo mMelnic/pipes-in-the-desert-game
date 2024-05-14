@@ -1,5 +1,6 @@
 package components;
 import interfaces.ICisternListener;
+import interfaces.IWaterFlowListener;
 import system.Cell;
 
 import java.util.Random;
@@ -8,7 +9,7 @@ import java.util.TimerTask;
 /**
  * a class Cistern represents cistern in the game, extends class component
  */
-public class Cistern extends Component implements ICisternListener {
+public class Cistern extends Component implements ICisternListener, IWaterFlowListener {
     //an attribute indicating if a cistern is full
     private boolean isCisternFull;
     //an ttribute storing manufactured component that is avaible to pick from a cistern
@@ -72,6 +73,14 @@ public class Cistern extends Component implements ICisternListener {
     public void setIsLeaking(boolean bool){
         isLeaking = bool;
     }
+
+    @Override
+    public void onWaterFlowChanged(Pipe pipe) {
+        if (pipe.isWaterFlowing()) {
+            fillCistern();
+        }
+    }
+    
     /**
      * a metho fills a cistern with water
      * @return returns current time in milliseconds.

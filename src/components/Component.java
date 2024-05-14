@@ -106,9 +106,10 @@ public class Component {
         }
         //if the component that is receiving a new component to its neighbouring cell is a cistern
         //prior to add, first checks if it is already connected to a component.
-        else if(this instanceof Cistern) {
+        else if(this instanceof Cistern && c instanceof Pipe) {
             if(this.connectedComponents.size() < 1){
                 this.connectedComponents.put(d, c);
+                ((Pipe) c).addWaterFlowListener((Cistern) this);
                 writeMessageToCMD("component successfully added.");
                 return true;
             } else {
