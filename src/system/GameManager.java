@@ -88,7 +88,7 @@ public class GameManager
      */
     public void startGame() 
     {
-        
+        map.setPlumberScorer(plumberScorer);
         map.players.add(teams.get(0).getPlayers().get(0));
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));

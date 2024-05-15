@@ -136,9 +136,10 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
                     while (isFilling && elapsedTime < 180000) {
                         Thread.sleep(100); // Check every 100ms
                         long currentTime = System.currentTimeMillis();
-                        elapsedTime += currentTime - startTime; // Accumulate elapsed time
+                        long elapsedUpdate = currentTime - startTime;
+                        elapsedTime += elapsedUpdate; // Accumulate elapsed time
                         startTime = currentTime; // Update startTime to current time
-                        notifyScorers(currentTime - startTime); // Notify listeners of the update
+                        notifyScorers(elapsedUpdate); // Notify listeners of the update
                     }
 
                     if (elapsedTime >= 180000) {
