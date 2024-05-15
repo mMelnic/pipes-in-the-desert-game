@@ -1,5 +1,7 @@
 package components;
 
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
@@ -142,6 +144,46 @@ public class Pump extends Component implements ILeakage {
             return leakDuration;
         }
         return 0;
+    }
+
+    public void undoFullPipes() {
+        Pipe fullPipe = findFullPipe();
+        if (fullPipe != null) {
+            // Start the recursive traversal from the full pipe
+            undoFullPipesRecursive(fullPipe, new HashSet<>());
+        }
+    }
+
+    private void undoFullPipesRecursive(Component currentComponent, Set<Component> visited) {
+        // Base case: If the currentComponent is a Pipe
+        if (currentComponent instanceof Pipe) {
+            Pipe pipe = (Pipe) currentComponent;
+            // Reset attributes
+            pipe.setFull(false);
+            pipe.setWaterFlowing(false);
+        }
+
+        // Mark the current component as visited
+        visited.add(currentComponent);
+
+        // Traverse the connected components recursively
+        for (Component connectedComponent : currentComponent.getConnectedComponents().values()) {
+            // Check if the connected component has not been visited before
+            if (!visited.contains(connectedComponent)) {
+                // Recursive call to traverse the connected components of the connected component
+                undoFullPipesRecursive(connectedComponent, visited);
+            }
+        }
+    }
+
+    private Pipe findFullPipe() {
+        if (incomingPipe != null && incomingPipe.isFull()) {
+            return incomingPipe;
+        }
+        if (outgoingPipe != null && outgoingPipe.isFull()) {
+            return outgoingPipe;
+        }
+        return null; // Return null if no full pipe is found
     }
 
     /**

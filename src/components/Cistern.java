@@ -5,14 +5,16 @@ import interfaces.IWaterFlowListener;
 import system.Cell;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 /**
  * a class Cistern represents cistern in the game, extends class component
  */
-public class Cistern extends Component implements ICisternListener, IWaterFlowListener {
+public class Cistern extends Component implements IWaterFlowListener {
     //an attribute indicating if a cistern is full
     private boolean isCisternFull;
     //an ttribute storing manufactured component that is avaible to pick from a cistern
@@ -106,6 +108,7 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
     public void onWaterFlowChanged(Pipe pipe) {
         if (isCisternFull) {
             System.out.println("Cistern is already full and cannot be filled again.");
+            onCisternFull(this);
             return; // If the cistern is full, do nothing
         }
         if (pipe.isWaterFlowing()) {
@@ -133,7 +136,7 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
         if (fillingThread == null || !fillingThread.isAlive()) {
             fillingThread = new Thread(() -> {
                 try {
-                    while (isFilling && elapsedTime < 180000) {
+                    while (isFilling && elapsedTime < 60000) {
                         Thread.sleep(100); // Check every 100ms
                         long currentTime = System.currentTimeMillis();
                         long elapsedUpdate = currentTime - startTime;
@@ -142,11 +145,12 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
                         notifyScorers(elapsedUpdate); // Notify listeners of the update
                     }
 
-                    if (elapsedTime >= 180000) {
+                    if (elapsedTime >= 60000) {
                         System.out.println("Cistern filled.");
                         isCisternFull = true; // Set the flag to true when the cistern is filled
                         isFilling = false;
                         elapsedTime = 0;
+                        onCisternFull(this);
                     }
                 } catch (InterruptedException e) {
                     Thread.currentThread().interrupt();
@@ -200,12 +204,41 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
     /**
      * a method let the cistern leak when it is full
      */
-    public void onCisternFull(){
-        isLeaking = true;
-        while(isLeaking){
-            //update saboteur score
+    public void onCisternFull(Component startComponent) {
+        Set<Component> visited = new HashSet<>();
+        onCisternFullRecursive(startComponent, visited);
+    }
+    
+    private void onCisternFullRecursive(Component startComponent, Set<Component> visited) {
+        // Base case: If the startComponent is a Pump, call its fillReservoir method
+        if (startComponent instanceof Pump) {
+            ((Pump) startComponent).fillReservoir();
+            return;
+        }
+    
+        // Mark the current component as visited
+        visited.add(startComponent);
+    
+        // Traverse the connected components recursively
+        for (Component connectedComponent : startComponent.getConnectedComponents().values()) {
+            // Check if the connected component has not been visited before
+            if (!visited.contains(connectedComponent) && connectedComponent instanceof Pipe) {
+                Pipe pipe = (Pipe) connectedComponent;
+                // Check if water is flowing in the pipe
+                if (pipe.isWaterFlowing()) {
+                    // Set the isFull attribute to true for the Pipe
+                    pipe.setFull(true);
+                    // Recursive call to traverse the connected components of the connected component
+                    onCisternFullRecursive(connectedComponent, visited);
+                } else {
+                    // If water is not flowing, stop the method
+                    return;
+                }
+            }
+            
         }
     }
+
     /**
      * a method that manufactures a random component, i.e. a pipe or a pump, at a cistern
      * @return returns newly manufactured component at cistern

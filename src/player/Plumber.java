@@ -87,7 +87,9 @@ public class Plumber extends MovablePlayer {
                     handleOutput("The pump is repaired and stopped leaking.");
                     if (pump.isReservoirFull()) {
                         pump.setReservoirFull(false);
-                        pump.stopFlow();
+                        if (pump.getOutgoingPipe().isFull() || pump.getIncomingPipe().isFull()) {
+                            pump.undoFullPipes();
+                        }
                         handleOutput("The reservoir emptied.");
                     }
                 }
@@ -217,7 +219,7 @@ public class Plumber extends MovablePlayer {
                     try {
                         connectedComponent.addConnectedComponent(pipeToBeReplaced, connectedDirection);
                     } catch (Exception f) {
-
+                        // Surpressing the exception
                     }
                     return false;
                 }
