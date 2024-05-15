@@ -29,6 +29,7 @@ public class Spring extends Component
 		Set<Component> visited = new HashSet<>();
 		// Call the recursive method to start water supply
 		startWaterSupplyDFS(this, visited);
+		this.getLocation().getMap().checkForFreeEnds();
 	}
 
 	// Recursive method to start water supply using depth-first search (DFS)

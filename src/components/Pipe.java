@@ -18,9 +18,11 @@ public class Pipe extends Component implements ILeakage {
     private Shapes shape;
     private boolean isWaterFlowing;
     private long leakStartTime;
+    private long freeEndLeakingStartTime;
     private boolean isLeaking;
     private boolean isFull;
     private boolean isBroken;
+    private boolean freeEndLeaking;
     private boolean isPlayerOn;
     private PlumberScorer plumbersScore;
     private Set<IWaterFlowListener> listeners = new HashSet<>();
@@ -41,10 +43,14 @@ public class Pipe extends Component implements ILeakage {
      */
     public Pipe(Cell cell) {
         super(cell);
-        this.shape = Shapes.HORIZONTAL;
-        this.isWaterFlowing = false;
-        this.leakStartTime = 0;
-        this.isLeaking = false;
+        shape = Shapes.HORIZONTAL;
+        isWaterFlowing = false;
+        leakStartTime = 0;
+        isLeaking = false;
+        isBroken = false;
+        isFull = false;
+        freeEndLeaking = false;
+        freeEndLeakingStartTime = 0;
     }
 
     /**
@@ -233,5 +239,24 @@ public class Pipe extends Component implements ILeakage {
         this.isWaterFlowing = isWaterFlowing;
         notifyWaterFlowListeners();
     }
+
+    public void setFull(boolean isFull) {
+        this.isFull = isFull;
+    }
+
+    public boolean isFreeEndLeaking() {
+        return freeEndLeaking;
+    }
     
+    public void setFreeEndLeaking(boolean value) {
+        // If the value is changing to true
+        if (value && !freeEndLeaking) {
+            freeEndLeaking = true;
+            freeEndLeakingStartTime = System.currentTimeMillis(); // Record the start time
+        } else if (!value && freeEndLeaking) { // If the value is changing to false
+            freeEndLeaking = false;
+            long duration = System.currentTimeMillis() - freeEndLeakingStartTime; // Calculate the duration
+            System.out.println("Leaking duration: " + duration + " milliseconds");
+        }
+    }
 }

@@ -286,16 +286,51 @@ public class Map {
                 }
             }
         }
+        checkForFreeEnds();
     }
 
     private void resetComponentState(Component component) {
         if (component instanceof Pipe) {
             Pipe pipe = (Pipe) component;
             pipe.setWaterFlowing(false);
+            pipe.setFull(false);
             pipe.stopLeaking();
         } else if (component instanceof Pump) {
             Pump pump = (Pump) component;
             pump.stopLeaking();
+        }
+    }
+
+    public void checkForFreeEnds() {
+        // Iterate over all cells in the map
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cells[i][j];
+                if (cell != null) {
+                    // Iterate over components in the cell
+                    Component component = cell.getComponent();
+                    if (component instanceof Pipe) {
+                        Pipe pipe = (Pipe) component;
+                        if (pipe.getConnectedComponents().size() == 1 && pipe.isWaterFlowing()) {
+                            // Set freeEndLeaking attribute to true for the pipe
+                            pipe.setFreeEndLeaking(true);
+                        } else {
+                            pipe.setFreeEndLeaking(false);
+                        }
+                    } 
+                    // else if (component instanceof Pump) {
+                    //     Pump pump = (Pump) component;
+                    //     if (pump.getConnectedComponents().size() == 1) {
+                    //         Component connectedComponent = pump.getConnectedComponents().values().iterator().next();
+                    //         if (connectedComponent instanceof Pipe
+                    //                 && ((Pipe) connectedComponent).isWaterFlowing()) {
+                    //             // Call fillReservoir method for the pump
+                    //             pump.fillReservoir();
+                    //         }
+                    //     }
+                    // }
+                }
+            }
         }
     }
 
@@ -356,10 +391,14 @@ public class Map {
                         System.out.print("|s");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
                         Pipe pipe = (Pipe) cells[i][j].getComponent();
-                        if (pipe.isLeaking()) {
+                        if (pipe.isFreeEndLeaking()) {
+                            System.out.print("|e");
+                        } else if (pipe.isLeaking()) {
                             System.out.print("|l");
                         } else if (pipe.isBroken()) {
                             System.out.print("|b");
+                        } else if (pipe.isFull()) {
+                            System.out.print("|f");
                         } else if (pipe.isWaterFlowing()) {
                             System.out.print("|w");
                         } else {
@@ -367,7 +406,9 @@ public class Map {
                         }
                     } else if (cells[i][j].getComponent() instanceof Pump) {
                         Pump pump = (Pump) cells[i][j].getComponent();
-                        if (pump.isLeaking()) {
+                        if (pump.isReservoirFull()) {
+                            System.out.print("|F");
+                        } else if (pump.isLeaking()) {
                             System.out.print("|L");
                         } else if (pump.isBroken()) {
                             System.out.print("|X");
