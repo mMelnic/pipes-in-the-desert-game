@@ -1,5 +1,7 @@
 package player;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import interfaces.IScorer;
 
 /**
@@ -9,7 +11,7 @@ import interfaces.IScorer;
  * score.
  */
 public class PlumberScorer implements IScorer {
-    private static int score = 0;
+    private static AtomicInteger score = new AtomicInteger(0);
 
     /**
      * Constructs a new {@code PlumberScorer}.
@@ -23,7 +25,7 @@ public class PlumberScorer implements IScorer {
      */
     @Override
     public int getScore() {
-        return score;
+        return score.get();
     }
 
     /**
@@ -36,7 +38,7 @@ public class PlumberScorer implements IScorer {
     @Override
     public void updateScore(long fillingDuration) {
         int scoreIncrement = (int) (fillingDuration / 100);
-        score += scoreIncrement;
+        score.addAndGet(scoreIncrement);
         System.out.println("Score updated: " + score); // For debugging purposes
     }
 }
