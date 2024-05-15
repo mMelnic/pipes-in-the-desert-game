@@ -531,6 +531,9 @@ public class GameManager
             Random random = new Random();
             Pump randomPump = pumps.get(random.nextInt(pumps.size()));
             randomPump.setBroken(true);
+            if (randomPump.getIncomingPipe().isWaterFlowing() || randomPump.getOutgoingPipe().isWaterFlowing()) {
+                randomPump.fillReservoir();
+            }
         }
     
         map.printMap();
