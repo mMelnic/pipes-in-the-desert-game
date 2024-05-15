@@ -210,6 +210,9 @@ public class Plumber extends MovablePlayer {
             for (Map.Entry<Direction, Component> entry : connectedComponents.entrySet()) {
                 Direction connectedDirection = entry.getKey();
                 Component connectedComponent = entry.getValue();
+                if (connectedComponent instanceof Spring || connectedComponent instanceof Cistern) {
+                    return false;
+                }
                 try {
                     connectedComponent.removeConnectedComponent(pipeToBeReplaced);
                     pump.addConnectedComponent(connectedComponent, connectedDirection);
