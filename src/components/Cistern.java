@@ -1,8 +1,11 @@
 package components;
 import interfaces.ICisternListener;
+import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
 import system.Cell;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -24,6 +27,9 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
     private boolean isFilling;
     private long startTime;
     private long elapsedTime;
+    private Thread fillingThread;
+    private List<IScorer> scorers = new ArrayList<>();
+
     /**
      * a constructor of the class cistern that sets certion attributes
      */
@@ -37,6 +43,21 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
         this.isFilling = false;
         this.startTime = 0;
         this.elapsedTime = 0;
+        this.fillingThread = null;
+    }
+
+    public void addScorer(IScorer scorer) {
+        scorers.add(scorer);
+    }
+
+    public void removeScorer(IScorer scorer) {
+        scorers.remove(scorer);
+    }
+
+    private void notifyScorers(long fillingDuration) {
+        for (IScorer scorer : scorers) {
+            scorer.updateScore(fillingDuration);
+        }
     }
     /**
      * a method that returns is a cistern is full
@@ -84,6 +105,7 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
     @Override
     public void onWaterFlowChanged(Pipe pipe) {
         if (isCisternFull) {
+            System.out.println("Cistern is already full and cannot be filled again.");
             return; // If the cistern is full, do nothing
         }
         if (pipe.isWaterFlowing()) {
@@ -99,7 +121,6 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
      */
     public synchronized void fillCistern() {
         if (isCisternFull) {
-            System.out.println("Cistern is already full and cannot be filled again.");
             return;
         }
         if (isFilling) {
@@ -107,29 +128,32 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
             return;
         }
         isFilling = true;
+        startTime = System.currentTimeMillis();
 
-        new Thread(() -> {
-            try {
-                long remainingTime = 60000 - elapsedTime;
-                long fillStartTime = System.currentTimeMillis();
+        if (fillingThread == null || !fillingThread.isAlive()) {
+            fillingThread = new Thread(() -> {
+                try {
+                    while (isFilling && elapsedTime < 180000) {
+                        Thread.sleep(100); // Check every 100ms
+                        long currentTime = System.currentTimeMillis();
+                        elapsedTime += currentTime - startTime; // Accumulate elapsed time
+                        startTime = currentTime; // Update startTime to current time
+                        notifyScorers(currentTime - startTime); // Notify listeners of the update
+                    }
 
-                while (isFilling && remainingTime > 0) {
-                    Thread.sleep(remainingTime);
-                    remainingTime -= System.currentTimeMillis() - fillStartTime;
-                    fillStartTime = System.currentTimeMillis();
+                    if (elapsedTime >= 180000) {
+                        System.out.println("Cistern filled.");
+                        isCisternFull = true; // Set the flag to true when the cistern is filled
+                        isFilling = false;
+                        elapsedTime = 0;
+                    }
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    elapsedTime += System.currentTimeMillis() - startTime;
                 }
-
-                if (isFilling) {
-                    System.out.println("Cistern filled.");
-                    isFilling = false;
-                    isCisternFull = true; // Set the flag to true when the cistern is filled
-                    elapsedTime = 0;
-                }
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-                elapsedTime += System.currentTimeMillis() - startTime;
-            }
-        }).start();
+            });
+            fillingThread.start();
+        }
     }
 
     public synchronized long stopFilling() {
@@ -139,7 +163,7 @@ public class Cistern extends Component implements ICisternListener, IWaterFlowLi
         }
         System.out.println("Stopping the filling of the cistern due to no water flow.");
         isFilling = false;
-        elapsedTime += System.currentTimeMillis() - startTime;
+        System.out.println(elapsedTime);
         return elapsedTime;
     }
     /**

@@ -19,6 +19,7 @@ import exceptions.PumpConnectablePipeNumberExceedException;
 import exceptions.SpringMultipleComponensConnectedException;
 import player.MovablePlayer;
 import player.Plumber;
+import player.PlumberScorer;
 import player.Saboteur;
 
 /**
@@ -35,6 +36,7 @@ public class Map {
     private List<Spring> springs = new ArrayList<>();
     private List<Pump> pumps = new ArrayList<>();
     public List<MovablePlayer> players = new ArrayList<>();
+    private PlumberScorer plumberScorer;
     String size;
 
     public Map(int sizeN, int sizeM) {
@@ -58,6 +60,7 @@ public class Map {
             for (int j = 0; j < columns; j++) {
                 if (j == rows - 1 && (i % 2) == 0) {
                     Cistern newCistern = new Cistern(cells[i][j]);
+                    newCistern.addScorer(plumberScorer);
                     cells[i][j].placeComponent(newCistern);
                     cisterns.add(newCistern);
                 } else if (i == 2 && j == 2 || i == 5 && j == 6) {
@@ -259,10 +262,16 @@ public class Map {
         Set<Component> visited = new HashSet<>();
 
         // Step 1: Start water supply from springs that are already supplying water
+        boolean anySpringFlowing = false;
         for (Spring spring : springs) {
             if (spring.isWaterFlowing()) {
                 spring.startWaterSupplyDFS(spring, visited);
+                anySpringFlowing = true;
             }
+        }
+        // Return if no spring has water flowing
+        if (!anySpringFlowing) {
+            return;
         }
 
         // Step 2: Set unvisited components to not have water flow and not leaking
@@ -458,5 +467,9 @@ public class Map {
 
     public Cell getCells(int row, int col) {
         return cells[row][col];
+    }
+
+    public void setPlumberScorer(PlumberScorer plumberScorer) {
+        this.plumberScorer = plumberScorer;
     }
 }

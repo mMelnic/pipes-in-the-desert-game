@@ -35,7 +35,8 @@ public class PlumberScorer implements IScorer {
      */
     @Override
     public void updateScore(long fillingDuration) {
-        int scoreIncrement = (int) (fillingDuration / 1000);
+        int scoreIncrement = (int) (fillingDuration / 100);
         score += scoreIncrement;
+        System.out.println("Score updated: " + score); // For debugging purposes
     }
 }
