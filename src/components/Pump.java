@@ -6,12 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import enumerations.Direction;
 import interfaces.ILeakage;
 import interfaces.IScorer;
-import player.SaboteurScorer;
 import system.Cell;
 
 /**
@@ -25,7 +23,6 @@ public class Pump extends Component implements ILeakage {
     private Pipe incomingPipe;
     private Pipe outgoingPipe;
     private boolean isBroken;
-    private SaboteurScorer saboteursScore;
     private List<IScorer> scorers = new ArrayList<>();
 
     /**
@@ -40,6 +37,7 @@ public class Pump extends Component implements ILeakage {
         this.isReservoirFull = false;
         this.leakStartTime = 0;
         this.isLeaking = false;
+        isBroken = false;
     }
 
     /**
@@ -47,9 +45,11 @@ public class Pump extends Component implements ILeakage {
      */
     public Pump(Cell cell) {
         super(cell);
+        connectablePipesNumber = 4;
         this.isReservoirFull = false;
         this.leakStartTime = 0;
         this.isLeaking = false;
+        isBroken = false;
     }
 
     public void addScorer(IScorer scorer) {

@@ -10,7 +10,6 @@ import enumerations.Shapes;
 import interfaces.ILeakage;
 import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
-import player.PlumberScorer;
 import system.Cell;
 
 /**
@@ -26,21 +25,8 @@ public class Pipe extends Component implements ILeakage {
     private boolean isFull;
     private boolean isBroken;
     private boolean freeEndLeaking;
-    private boolean isPlayerOn;
-    private PlumberScorer plumbersScore;
     private Set<IWaterFlowListener> listeners = new HashSet<>();
     private List<IScorer> scorers = new ArrayList<>();
-
-
-    // public Pipe(Cell location) {
-    //     super(location);
-    //     this.shape = Shapes.HORIZONTAL;
-    //     this.isWaterFlowing = false;
-    //     this.leakStartTime = 0;
-    //     this.isLeaking = false;
-    //     this.isBroken = false;
-    //     this.isPlayerOn = false;
-    // }
 
      /**
      * Constructs a new Pipe object with default values.
@@ -55,35 +41,6 @@ public class Pipe extends Component implements ILeakage {
         isFull = false;
         freeEndLeaking = false;
         freeEndLeakingStartTime = 0;
-    }
-
-    /**
-     * Starts the leaking of the pipe.
-     */
-    @Override
-    public void startLeaking() {
-        if (!isLeaking) {
-            isLeaking = true;
-            leakStartTime = System.currentTimeMillis();
-            stopFlow();
-        }
-    }
-
-
-    /**
-     * Stops the leaking of the pipe.
-     */
-    @Override
-    public long stopLeaking() {
-        if (isLeaking) {
-            isLeaking = false;
-            long duration = System.currentTimeMillis() - leakStartTime;
-            undoStopFlow();
-            notifyScorers(duration);
-            return duration;
-        }
-        return 0;
-        
     }
 
     public void addWaterFlowListener(IWaterFlowListener listener) {
@@ -115,19 +72,31 @@ public class Pipe extends Component implements ILeakage {
     }
 
     /**
-     * Checks if the pipe is full.
-     * @return true if the pipe is full, false otherwise.
+     * Starts the leaking of the pipe.
      */
-    public boolean isFull() {
-
-        return isFull;
+    @Override
+    public void startLeaking() {
+        if (!isLeaking) {
+            isLeaking = true;
+            leakStartTime = System.currentTimeMillis();
+            stopFlow();
+        }
     }
-     /**
-     * Sets whether water is flowing through the pipe.
-     * @param set true to set water flowing, false otherwise.
+
+    /**
+     * Stops the leaking of the pipe.
      */
-    public void isWaterFlowing(boolean set){
-        isWaterFlowing = set;
+    @Override
+    public long stopLeaking() {
+        if (isLeaking) {
+            isLeaking = false;
+            long duration = System.currentTimeMillis() - leakStartTime;
+            undoStopFlow();
+            notifyScorers(duration);
+            return duration;
+        }
+        return 0;
+        
     }
 
     /**
@@ -250,6 +219,25 @@ public class Pipe extends Component implements ILeakage {
     public boolean isWaterFlowing(){
         return isWaterFlowing;
     }
+    
+    /**
+     * Checks if the pipe is full.
+     * 
+     * @return true if the pipe is full, false otherwise.
+     */
+    public boolean isFull() {
+        return isFull;
+    }
+
+    /**
+     * Sets whether water is flowing through the pipe.
+     * 
+     * @param set true to set water flowing, false otherwise.
+     */
+    public void isWaterFlowing(boolean set) {
+        isWaterFlowing = set;
+    }
+
     /**
      * Sets whether water is flowing through the pipe.
      * @param set true to set water flowing, false otherwise.

@@ -5,7 +5,6 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
-import java.io.File; // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,13 +13,8 @@ import java.util.List;
 import java.util.Set;
 
 import enumerations.Direction;
-import exceptions.CisternMultipleComponentsConnectedException;
-import exceptions.PumpConnectablePipeNumberExceedException;
-import exceptions.SpringMultipleComponensConnectedException;
 import player.MovablePlayer;
-import player.Plumber;
 import player.PlumberScorer;
-import player.Saboteur;
 
 /**
  * The Map class represents the game map consisting of cells, cisterns, pipes,
@@ -121,6 +115,124 @@ public class Map {
                     }
                 }
 
+            }
+        }
+    }
+
+    /**
+     * Updates the water flow on the map by simulating the flow from springs through
+     * pipes.
+     */
+    public void updateWaterFlow() {
+        // Initialize a set to keep track of visited components
+        Set<Component> visited = new HashSet<>();
+
+        // Step 1: Start water supply from springs that are already supplying water
+        boolean anySpringFlowing = false;
+        for (Spring spring : springs) {
+            if (spring.isWaterFlowing()) {
+                spring.startWaterSupplyDFS(spring, visited);
+                anySpringFlowing = true;
+            }
+        }
+        // Return if no spring has water flowing
+        if (!anySpringFlowing) {
+            return;
+        }
+
+        // Step 2: Set unvisited components to not have water flow and not leaking
+        for (int row = 0; row < cells.length; row++) {
+            for (int col = 0; col < cells[row].length; col++) {
+                Cell cell = cells[row][col];
+                if (cell != null) {
+                    Component component = cell.getComponent();
+                    if (component != null && !visited.contains(component)) {
+                        resetComponentState(component);
+                    }
+                }
+            }
+        }
+        checkForFreeEnds();
+    }
+
+    private void resetComponentState(Component component) {
+        if (component instanceof Pipe) {
+            Pipe pipe = (Pipe) component;
+            pipe.setWaterFlowing(false);
+            pipe.setFull(false);
+            pipe.stopLeaking();
+        } else if (component instanceof Pump) {
+            Pump pump = (Pump) component;
+            pump.stopLeaking();
+        }
+    }
+
+    public void checkForFreeEnds() {
+        List<Pipe> pipesWithFreeEndLeaking = findPipesWithFreeEndLeaking();
+        updatePipesNotInList(pipesWithFreeEndLeaking);
+    }
+
+    private List<Pipe> findPipesWithFreeEndLeaking() {
+        List<Pipe> pipesWithFreeEndLeaking = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cells[i][j];
+                if (cell != null) {
+                    Component component = cell.getComponent();
+                    if (component instanceof Pipe) {
+                        Pipe pipe = (Pipe) component;
+                        if (pipe.getConnectedComponents().size() == 1 && pipe.isWaterFlowing()) {
+                            pipe.setFreeEndLeaking(true);
+                            pipesWithFreeEndLeaking.add(pipe);
+                        }
+                    } else if (component instanceof Pump) {
+                        Pump pump = (Pump) component;
+                        checkPumpConnectedPipes(pump, pipesWithFreeEndLeaking);
+                    }
+                }
+            }
+        }
+        return pipesWithFreeEndLeaking;
+    }
+
+    private void checkPumpConnectedPipes(Pump pump, List<Pipe> pipesWithFreeEndLeaking) {
+        for (Component connectedComponent : pump.getConnectedComponents().values()) {
+            if (connectedComponent instanceof Pipe
+                    && ((Pipe) connectedComponent).isWaterFlowing()) {
+                Pipe pipe = (Pipe) connectedComponent;
+                if (pipe != pump.getIncomingPipe() && pipe != pump.getOutgoingPipe()) {
+                    pipe.setFreeEndLeaking(true);
+                    pipesWithFreeEndLeaking.add(pipe);
+                }
+            }
+        }
+        // else if (component instanceof Pump) {
+        // Pump pump = (Pump) component;
+        // if (pump.getConnectedComponents().size() == 1) {
+        // Component connectedComponent =
+        // pump.getConnectedComponents().values().iterator().next();
+        // if (connectedComponent instanceof Pipe
+        // && ((Pipe) connectedComponent).isWaterFlowing()) {
+        // // Call fillReservoir method for the pump
+        // pump.fillReservoir();
+        // }
+        // }
+        // }
+    }
+
+    private void updatePipesNotInList(List<Pipe> pipesWithFreeEndLeaking) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cells[i][j];
+                if (cell != null) {
+                    Component component = cell.getComponent();
+                    if (component instanceof Pipe) {
+                        Pipe pipe = (Pipe) component;
+                        if (!pipesWithFreeEndLeaking.contains(pipe)) {
+                            pipe.setFreeEndLeaking(false);
+                        }
+                    }
+                }
             }
         }
     }
@@ -251,131 +363,6 @@ public class Map {
         returnList.add(getLeftwardCell(cell));
         returnList.add(getRightwardCell(cell));
         return returnList;
-    }
-
-    /**
-     * Updates the water flow on the map by simulating the flow from springs through
-     * pipes.
-     */
-    public void updateWaterFlow() {
-        // Initialize a set to keep track of visited components
-        Set<Component> visited = new HashSet<>();
-
-        // Step 1: Start water supply from springs that are already supplying water
-        boolean anySpringFlowing = false;
-        for (Spring spring : springs) {
-            if (spring.isWaterFlowing()) {
-                spring.startWaterSupplyDFS(spring, visited);
-                anySpringFlowing = true;
-            }
-        }
-        // Return if no spring has water flowing
-        if (!anySpringFlowing) {
-            return;
-        }
-
-        // Step 2: Set unvisited components to not have water flow and not leaking
-        for (int row = 0; row < cells.length; row++) {
-            for (int col = 0; col < cells[row].length; col++) {
-                Cell cell = cells[row][col];
-                if (cell != null) {
-                    Component component = cell.getComponent();
-                    if (component != null && !visited.contains(component)) {
-                        resetComponentState(component);
-                    }
-                }
-            }
-        }
-        checkForFreeEnds();
-    }
-
-    private void resetComponentState(Component component) {
-        if (component instanceof Pipe) {
-            Pipe pipe = (Pipe) component;
-            pipe.setWaterFlowing(false);
-            pipe.setFull(false);
-            pipe.stopLeaking();
-        } else if (component instanceof Pump) {
-            Pump pump = (Pump) component;
-            pump.stopLeaking();
-        }
-    }
-    
-    public void checkForFreeEnds() {
-        List<Pipe> pipesWithFreeEndLeaking = findPipesWithFreeEndLeaking();
-        updatePipesNotInList(pipesWithFreeEndLeaking);
-    }
-
-    private List<Pipe> findPipesWithFreeEndLeaking() {
-        List<Pipe> pipesWithFreeEndLeaking = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                Cell cell = cells[i][j];
-                if (cell != null) {
-                    Component component = cell.getComponent();
-                    if (component instanceof Pipe) {
-                        Pipe pipe = (Pipe) component;
-                        if (pipe.getConnectedComponents().size() == 1 && pipe.isWaterFlowing()) {
-                            pipe.setFreeEndLeaking(true);
-                            pipesWithFreeEndLeaking.add(pipe);
-                        }
-                    } else if (component instanceof Pump) {
-                        Pump pump = (Pump) component;
-                        checkPumpConnectedPipes(pump, pipesWithFreeEndLeaking);
-                    }
-                }
-            }
-        }
-        return pipesWithFreeEndLeaking;
-    }
-
-    private void checkPumpConnectedPipes(Pump pump, List<Pipe> pipesWithFreeEndLeaking) {
-        for (Component connectedComponent : pump.getConnectedComponents().values()) {
-            if (connectedComponent instanceof Pipe
-                    && ((Pipe) connectedComponent).isWaterFlowing()) {
-                Pipe pipe = (Pipe) connectedComponent;
-                if (pipe != pump.getIncomingPipe() && pipe != pump.getOutgoingPipe()) {
-                    pipe.setFreeEndLeaking(true);
-                    pipesWithFreeEndLeaking.add(pipe);
-                }
-            }
-        }
-        // else if (component instanceof Pump) {
-        // Pump pump = (Pump) component;
-        // if (pump.getConnectedComponents().size() == 1) {
-        // Component connectedComponent =
-        // pump.getConnectedComponents().values().iterator().next();
-        // if (connectedComponent instanceof Pipe
-        // && ((Pipe) connectedComponent).isWaterFlowing()) {
-        // // Call fillReservoir method for the pump
-        // pump.fillReservoir();
-        // }
-        // }
-        // }
-    }
-
-    private void updatePipesNotInList(List<Pipe> pipesWithFreeEndLeaking) {
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                Cell cell = cells[i][j];
-                if (cell != null) {
-                    Component component = cell.getComponent();
-                    if (component instanceof Pipe) {
-                        Pipe pipe = (Pipe) component;
-                        if (!pipesWithFreeEndLeaking.contains(pipe)) {
-                            pipe.setFreeEndLeaking(false);
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    // public void checkForFreeEnds(){
-    //
-    // }
-    public String getSize() {
-        return size;
     }
 
     /**
@@ -526,28 +513,15 @@ public class Map {
         return springs;
     }
 
-    /**
-     * Finds and returns a list of cells containing springs.
-     * 
-     * @return A list of cells containing springs.
-     */
-    private List<Cell> findSprings() {
-        List<Cell> springs = new ArrayList<>();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (cells[i][j].getComponent() instanceof Spring) {
-                    springs.add(cells[i][j]);
-                }
-            }
-        }
-        return springs;
-    }
-
     public Cell getCells(int row, int col) {
         return cells[row][col];
     }
 
     public void setPlumberScorer(PlumberScorer plumberScorer) {
         this.plumberScorer = plumberScorer;
+    }
+
+    public String getSize() {
+        return size;
     }
 }

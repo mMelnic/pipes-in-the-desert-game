@@ -28,17 +28,7 @@ public class Cell {
      */
     public int column;
     public Map map;
-   
-
     private MovablePlayer playerOn;
-
-    /**
-     * Retrieves the component currently occupying the cell for further interaction. [Component]
-     * @return Component
-     */
-    public Component getComponent() {
-        return component;
-    }
 
     public Cell(int row, int column){
         this.row = row;
@@ -109,6 +99,16 @@ public class Cell {
 
     public boolean isPlayerOn() {
         return isPlayerOn;
+    }
+
+    /**
+     * Retrieves the component currently occupying the cell for further interaction.
+     * [Component]
+     * 
+     * @return Component
+     */
+    public Component getComponent() {
+        return component;
     }
 
     public void setPlayerOn(boolean isPlayerOn) {
