@@ -1,11 +1,14 @@
 package components;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import enumerations.Direction;
 import enumerations.Shapes;
 import interfaces.ILeakage;
+import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
 import player.PlumberScorer;
 import system.Cell;
@@ -26,6 +29,7 @@ public class Pipe extends Component implements ILeakage {
     private boolean isPlayerOn;
     private PlumberScorer plumbersScore;
     private Set<IWaterFlowListener> listeners = new HashSet<>();
+    private List<IScorer> scorers = new ArrayList<>();
 
 
     // public Pipe(Cell location) {
@@ -75,6 +79,7 @@ public class Pipe extends Component implements ILeakage {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
             undoStopFlow();
+            notifyScorers(duration);
             return duration;
         }
         return 0;
@@ -92,6 +97,20 @@ public class Pipe extends Component implements ILeakage {
     private void notifyWaterFlowListeners() {
         for (IWaterFlowListener listener : listeners) {
             listener.onWaterFlowChanged(this);
+        }
+    }
+
+    public void addScorer(IScorer scorer) {
+        scorers.add(scorer);
+    }
+
+    public void removeScorer(IScorer scorer) {
+        scorers.remove(scorer);
+    }
+
+    private void notifyScorers(long leakTime) {
+        for (IScorer scorer : scorers) {
+            scorer.updateScore(leakTime);
         }
     }
 
@@ -257,6 +276,7 @@ public class Pipe extends Component implements ILeakage {
             freeEndLeaking = false;
             long duration = System.currentTimeMillis() - freeEndLeakingStartTime; // Calculate the duration
             System.out.println("Leaking duration: " + duration + " milliseconds");
+            notifyScorers(duration);
         }
     }
 }

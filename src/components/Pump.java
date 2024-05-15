@@ -1,6 +1,8 @@
 package components;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -8,6 +10,7 @@ import java.util.UUID;
 
 import enumerations.Direction;
 import interfaces.ILeakage;
+import interfaces.IScorer;
 import player.SaboteurScorer;
 import system.Cell;
 
@@ -23,6 +26,7 @@ public class Pump extends Component implements ILeakage {
     private Pipe outgoingPipe;
     private boolean isBroken;
     private SaboteurScorer saboteursScore;
+    private List<IScorer> scorers = new ArrayList<>();
 
     /**
      * Constructs a new Pump object with a specified number of connectable pipes.
@@ -46,6 +50,20 @@ public class Pump extends Component implements ILeakage {
         this.isReservoirFull = false;
         this.leakStartTime = 0;
         this.isLeaking = false;
+    }
+
+    public void addScorer(IScorer scorer) {
+        scorers.add(scorer);
+    }
+
+    public void removeScorer(IScorer scorer) {
+        scorers.remove(scorer);
+    }
+
+    private void notifyScorers(long leakTime) {
+        for (IScorer scorer : scorers) {
+            scorer.updateScore(leakTime);
+        }
     }
 
     /**
@@ -141,6 +159,7 @@ public class Pump extends Component implements ILeakage {
             leakStartTime = 0;
             // saboteursScore.updateScore(leakDuration);
             stopOrStartFlowRecursive(outgoingPipe, true);
+            notifyScorers(leakDuration);
             return leakDuration;
         }
         return 0;

@@ -1,9 +1,11 @@
 package player;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import interfaces.IScorer;
 
 public class SaboteurScorer implements IScorer{
-    private static int score = 0;
+    private static AtomicInteger score = new AtomicInteger(0);
 
     public SaboteurScorer(){}
 
@@ -14,7 +16,7 @@ public class SaboteurScorer implements IScorer{
      */
     @Override
     public int getScore() {
-        return score;
+        return score.get();
     }
 
      /**
@@ -24,7 +26,7 @@ public class SaboteurScorer implements IScorer{
      */
     @Override
     public void updateScore(long leakDuration) {
-        int scoreIncrease = (int) (leakDuration / 1000); // Convert milliseconds to seconds
-         score += scoreIncrease;
+        int scoreIncrement = (int) (leakDuration / 100); // Convert milliseconds to seconds
+        score.addAndGet(scoreIncrement);
     }
 }
