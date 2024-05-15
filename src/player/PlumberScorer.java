@@ -39,6 +39,6 @@ public class PlumberScorer implements IScorer {
     public void updateScore(long fillingDuration) {
         int scoreIncrement = (int) (fillingDuration / 100);
         score.addAndGet(scoreIncrement);
-        System.out.println("Score updated: " + score); // For debugging purposes
+        // System.out.println("Score updated: " + score); // For debugging purposes
     }
 }
