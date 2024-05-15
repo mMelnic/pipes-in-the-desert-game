@@ -300,35 +300,72 @@ public class Map {
             pump.stopLeaking();
         }
     }
-
+    
     public void checkForFreeEnds() {
-        // Iterate over all cells in the map
+        List<Pipe> pipesWithFreeEndLeaking = findPipesWithFreeEndLeaking();
+        updatePipesNotInList(pipesWithFreeEndLeaking);
+    }
+
+    private List<Pipe> findPipesWithFreeEndLeaking() {
+        List<Pipe> pipesWithFreeEndLeaking = new ArrayList<>();
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 Cell cell = cells[i][j];
                 if (cell != null) {
-                    // Iterate over components in the cell
                     Component component = cell.getComponent();
                     if (component instanceof Pipe) {
                         Pipe pipe = (Pipe) component;
                         if (pipe.getConnectedComponents().size() == 1 && pipe.isWaterFlowing()) {
-                            // Set freeEndLeaking attribute to true for the pipe
                             pipe.setFreeEndLeaking(true);
-                        } else {
+                            pipesWithFreeEndLeaking.add(pipe);
+                        }
+                    } else if (component instanceof Pump) {
+                        Pump pump = (Pump) component;
+                        checkPumpConnectedPipes(pump, pipesWithFreeEndLeaking);
+                    }
+                }
+            }
+        }
+        return pipesWithFreeEndLeaking;
+    }
+
+    private void checkPumpConnectedPipes(Pump pump, List<Pipe> pipesWithFreeEndLeaking) {
+        for (Component connectedComponent : pump.getConnectedComponents().values()) {
+            if (connectedComponent instanceof Pipe
+                    && ((Pipe) connectedComponent).isWaterFlowing()) {
+                Pipe pipe = (Pipe) connectedComponent;
+                if (pipe != pump.getIncomingPipe() && pipe != pump.getOutgoingPipe()) {
+                    pipe.setFreeEndLeaking(true);
+                    pipesWithFreeEndLeaking.add(pipe);
+                }
+            }
+        }
+        // else if (component instanceof Pump) {
+        // Pump pump = (Pump) component;
+        // if (pump.getConnectedComponents().size() == 1) {
+        // Component connectedComponent =
+        // pump.getConnectedComponents().values().iterator().next();
+        // if (connectedComponent instanceof Pipe
+        // && ((Pipe) connectedComponent).isWaterFlowing()) {
+        // // Call fillReservoir method for the pump
+        // pump.fillReservoir();
+        // }
+        // }
+        // }
+    }
+
+    private void updatePipesNotInList(List<Pipe> pipesWithFreeEndLeaking) {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cells[i][j];
+                if (cell != null) {
+                    Component component = cell.getComponent();
+                    if (component instanceof Pipe) {
+                        Pipe pipe = (Pipe) component;
+                        if (!pipesWithFreeEndLeaking.contains(pipe)) {
                             pipe.setFreeEndLeaking(false);
                         }
-                    } 
-                    // else if (component instanceof Pump) {
-                    //     Pump pump = (Pump) component;
-                    //     if (pump.getConnectedComponents().size() == 1) {
-                    //         Component connectedComponent = pump.getConnectedComponents().values().iterator().next();
-                    //         if (connectedComponent instanceof Pipe
-                    //                 && ((Pipe) connectedComponent).isWaterFlowing()) {
-                    //             // Call fillReservoir method for the pump
-                    //             pump.fillReservoir();
-                    //         }
-                    //     }
-                    // }
+                    }
                 }
             }
         }
