@@ -316,7 +316,7 @@ public class Plumber extends MovablePlayer {
         } else if (newComponent instanceof Pipe) {
             handleOutput("The component that you have tried to connect is not an active component.");
         }
-        if (newComponent instanceof Pipe || oldComponent instanceof Pipe) {
+        if (newComponent instanceof Pipe || oldComponent instanceof Pipe || newComponent == null || oldComponent == null) {
             return false;
         }
 

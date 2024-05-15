@@ -140,6 +140,10 @@ public abstract class MovablePlayer {
      */
 
     public void redirectWaterFlow(Pipe newIncomingPipe, Pipe newOutgoingPipe) {
+        if (newIncomingPipe == null || newOutgoingPipe == null) {
+            return;
+        }
+        
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
