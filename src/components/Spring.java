@@ -108,12 +108,9 @@ public class Spring extends Component
 
 		// Special case: If both component and connectedComponent are pumps and
 		// component has only one pipe
-		if (component instanceof Pump) {
-			Pump currentPump = (Pump) component;
-			if ((currentPump.getIncomingPipe() != null && currentPump.getOutgoingPipe() == null) ||
-					(currentPump.getIncomingPipe() == null && currentPump.getOutgoingPipe() != null)) {
-				startWaterSupplyDFS(connectedPump, visited);
-			}
+		if ((connectedPump.getIncomingPipe() != null && connectedPump.getOutgoingPipe() == null) ||
+				(connectedPump.getIncomingPipe() == null && connectedPump.getOutgoingPipe() != null) && (!visited.contains(connectedPump))) {
+			startWaterSupplyDFS(connectedPump, visited);
 		}
 	}
 
