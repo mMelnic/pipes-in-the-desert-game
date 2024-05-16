@@ -81,17 +81,17 @@ public class Plumber extends MovablePlayer {
             if (pump.isBroken()) {
                 pump.setBroken(false);
                 handleOutput("The pump is repaired.");
+                if (pump.isReservoirFull()) {
+                    pump.setReservoirFull(false);
+                    if (pump.getOutgoingPipe().isFull() || pump.getIncomingPipe().isFull()) {
+                        pump.undoFullPipes();
+                    }
+                    handleOutput("The reservoir emptied.");
+                }
                 if (pump.isLeaking()) {
                     long duration = pump.stopLeaking();
                     ((PlumberScorer) team.getTeamScore()).updateScore(duration);
                     handleOutput("The pump is repaired and stopped leaking.");
-                    if (pump.isReservoirFull()) {
-                        pump.setReservoirFull(false);
-                        if (pump.getOutgoingPipe().isFull() || pump.getIncomingPipe().isFull()) {
-                            pump.undoFullPipes();
-                        }
-                        handleOutput("The reservoir emptied.");
-                    }
                 }
                 return true;
             }
