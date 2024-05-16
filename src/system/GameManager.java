@@ -10,9 +10,11 @@ import interfaces.ICisternListener;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 import jdk.jshell.spi.ExecutionControl;
@@ -541,15 +543,15 @@ public class GameManager implements ICisternListener
      * Initiates a sandstorm event.
      */
     public void startSandstorm() {
-        System.out.print("SANDSTORM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-    
+        System.out.println("SANDSTORM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+
         List<Pump> pumps = map.getPumps();
-    
+
         if (pumps.isEmpty()) {
             System.out.println("No pumps available.");
             return;
         }
-    
+
         if (pumps.size() == 1) {
             Pump pump = pumps.get(0);
             pump.setBroken(true);
@@ -557,12 +559,42 @@ public class GameManager implements ICisternListener
             Random random = new Random();
             Pump randomPump = pumps.get(random.nextInt(pumps.size()));
             randomPump.setBroken(true);
-            if (randomPump.getIncomingPipe().isWaterFlowing() || randomPump.getOutgoingPipe().isWaterFlowing()) {
+
+            if (isPumpConnectedToWaterFlowingPipe(randomPump)) {
                 randomPump.fillReservoir();
             }
         }
-    
+
         map.printMap();
+    }
+
+    private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
+        Set<Component> visited = new HashSet<>();
+        return checkPumpConnectedToWaterFlowingPipe(pump, visited);
+    }
+
+    private boolean checkPumpConnectedToWaterFlowingPipe(Pump pump, Set<Component> visited) {
+        if (pump == null || visited.contains(pump)) {
+            return false;
+        }
+
+        visited.add(pump);
+
+        Pipe incomingPipe = pump.getIncomingPipe();
+        Pipe outgoingPipe = pump.getOutgoingPipe();
+
+        if ((incomingPipe != null && incomingPipe.isWaterFlowing()) ||
+            (outgoingPipe != null && outgoingPipe.isWaterFlowing())) {
+            return true;
+        }
+
+        for (Component connectedComponent : pump.getConnectedComponents().values()) {
+            if (connectedComponent instanceof Pump) {
+                checkPumpConnectedToWaterFlowingPipe((Pump) connectedComponent, visited);
+            }
+        }
+
+        return false;
     }
     
 //     /**
