@@ -310,7 +310,7 @@ public class GameManager implements ICisternListener
                     
                     activePlayer.redirectWaterFlow(newIncomingPipe, newOutgoingPipe);
                 }
-                case "DetachPipeFromActiveComponent" -> {
+                case "DetachPipe" -> {
                     if (activePlumber != null)
                     {
                         String message = "\nOld component - new component direction pair (e.g. UL, where 'U' (up) is for the old component's direction, 'L' (left) - for the new one's):\n\n";

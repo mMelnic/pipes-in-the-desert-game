@@ -51,7 +51,7 @@ public class Pipe extends Component implements ILeakage {
         listeners.remove(listener);
     }
 
-    private void notifyWaterFlowListeners() {
+    public void notifyWaterFlowListeners() {
         for (IWaterFlowListener listener : listeners) {
             listener.onWaterFlowChanged(this);
         }
