@@ -169,7 +169,6 @@ public class Plumber extends MovablePlayer {
 
     private boolean installPipe(Cell targetCell, Component componentInCurrentCell, Direction direction) {
         Pipe pipe = (Pipe) carriedComponent;
-        pipe.changeShape();
 
         try {
             componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
@@ -178,6 +177,7 @@ public class Plumber extends MovablePlayer {
             System.out.println("Could not connect the components.");
             return false;
         }
+        pipe.changeShape();
 
         if (componentInCurrentCell instanceof Pipe) {
             Pipe currentCellPipe = ((Pipe) componentInCurrentCell);
@@ -240,6 +240,9 @@ public class Plumber extends MovablePlayer {
         } catch (Exception e) {
             System.out.println("Could not connect the components.");
             return false;
+        }
+        if (componentInCurrentCell instanceof Pipe) {
+            ((Pipe) componentInCurrentCell).changeShape();
         }
         targetCell.placeComponent(pump);
         carriedComponent = null;
