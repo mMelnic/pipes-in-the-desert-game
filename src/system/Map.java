@@ -163,6 +163,9 @@ public class Map {
             pipe.stopLeaking();
         } else if (component instanceof Pump) {
             Pump pump = (Pump) component;
+            if (pump.isReservoirFull()) {
+                pump.setReservoirFull(false);
+            }
             pump.stopLeaking();
         }
     }
