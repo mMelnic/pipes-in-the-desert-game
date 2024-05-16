@@ -200,7 +200,13 @@ public class Cistern extends Component implements IWaterFlowListener {
     private void onCisternFullRecursive(Component startComponent, Set<Component> visited) {
         // Base case: If the startComponent is a Pump, call its fillReservoir method
         if (startComponent instanceof Pump) {
-            ((Pump) startComponent).fillReservoir();
+            Pump pump = (Pump) startComponent;
+            if (!pump.isReservoirFull()) {
+                pump.fillReservoir();
+            }
+            else if (pump.isReservoirFull() && !pump.isLeaking()) {
+                pump.startLeaking();
+            }
             return;
         }
     
@@ -222,8 +228,10 @@ public class Cistern extends Component implements IWaterFlowListener {
                     // If water is not flowing, stop the method
                     return;
                 }
+            } else if (connectedComponent instanceof Pump) {
+                // Recursive call to handle the Pump
+                onCisternFullRecursive(connectedComponent, visited);
             }
-            
         }
     }
 
