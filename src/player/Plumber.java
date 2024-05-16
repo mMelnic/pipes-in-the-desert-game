@@ -127,8 +127,7 @@ public class Plumber extends MovablePlayer {
      * @throws IllegalArgumentException if an invalid direction is specified.
      */
 
-    public boolean installComponent(Direction direction) { // TODO what if the component in the current cell is a pump,
-                                                           // how to set the outgoing/ incoming pipes?
+    public boolean installComponent(Direction direction) {
         Cell targetCell = calculateTargetCell(direction);
 
         if (carriedComponent != null && targetCell != null) {
@@ -287,6 +286,7 @@ public class Plumber extends MovablePlayer {
                 handleOutput("Pipe connected to spring.");
             }
         } catch (Exception e) {
+            // TODO undo the effect of the exception
             handleOutput("Could not connect the components");
         }
     }
@@ -327,31 +327,45 @@ public class Plumber extends MovablePlayer {
             } else if (!(currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation()))) {
                 handleOutput("The component that you have tried to connect is not in an adjacent cell.");
             }
+            if (pipe.getConnectedComponents().containsValue(newComponent)) {
+                handleOutput("The components are already connected.");
+                return false;
+            }
 
             try {
                 if (pipe.getConnectedComponents().containsValue(oldComponent) &&
                         currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation())) {
-                    Direction pipeRelativeToNewComponent = pipe.getLocation()
-                            .getRelativeDirection(newComponent.getLocation());
-                    Direction newComponentRelativeToPipe = newComponent.getLocation()
+                    Direction pipeRelativeToNewComponent = newComponent.getLocation()
                             .getRelativeDirection(pipe.getLocation());
+                    Direction newComponentRelativeToPipe = pipe.getLocation()
+                            .getRelativeDirection(newComponent.getLocation());
 
                     // Update connected components
                     pipe.removeConnectedComponent(oldComponent);
                     oldComponent.removeConnectedComponent(pipe);
                     pipe.addConnectedComponent(newComponent, newComponentRelativeToPipe);
                     newComponent.addConnectedComponent(pipe, pipeRelativeToNewComponent);
+                    pipe.notifyWaterFlowListeners();
                     pipe.changeShape();
-                    // ToDo think if it is necessary to call fillCistern,startWaterFlow
                     if (pipe.isWaterFlowing()) {
-                        currentCell.getMap().updateWaterFlow(); // TODO add a method to the Map class
+                        currentCell.getMap().updateWaterFlow();
+                    }
+                    if (newComponent instanceof Spring) {
+                        ((Spring)newComponent).startWaterSupply();
                     }
                     handleOutput("You successfully redirected an end of a pipe.");
                     return true;
                 }
             } catch (Exception e) {
                 System.out.println("Could not detach the pipe");
-                // TODO return to the state before exception
+                try {
+                    pipe.addConnectedComponent(oldComponent,
+                            pipe.getLocation().getRelativeDirection(oldComponent.getLocation()));
+                    oldComponent.addConnectedComponent(pipe,
+                            oldComponent.getLocation().getRelativeDirection(pipe.getLocation()));
+                } catch (Exception ex) {
+                    // Supress exception
+                }
                 return false;
             }
         } else {
