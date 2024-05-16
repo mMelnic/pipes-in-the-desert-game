@@ -245,8 +245,10 @@ public class Pipe extends Component implements ILeakage {
      * @param set true to set water flowing, false otherwise.
      */
     public void setWaterFlowing(boolean isWaterFlowing) {
-        this.isWaterFlowing = isWaterFlowing;
-        notifyWaterFlowListeners();
+        if (this.isWaterFlowing != isWaterFlowing) {
+            this.isWaterFlowing = isWaterFlowing;
+            notifyWaterFlowListeners();
+        }
     }
 
     public void setFull(boolean isFull) {
