@@ -6,6 +6,10 @@ import java.util.List;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.TimeUnit;
 
 import enumerations.Direction;
 import interfaces.ILeakage;
@@ -23,6 +27,10 @@ public class Pump extends Component implements ILeakage {
     private Pipe incomingPipe;
     private Pipe outgoingPipe;
     private boolean isBroken;
+    private long fillStartTime;
+    private long fillElapsedTime = 0;
+    private ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+    private ScheduledFuture<?> fillingTask;
     private List<IScorer> scorers = new ArrayList<>();
 
     /**
@@ -93,19 +101,31 @@ public class Pump extends Component implements ILeakage {
      */
     public void fillReservoir() {
         if (!isReservoirFull) {
-            Timer timer = new Timer();
-            TimerTask task = new TimerTask() {
+            fillStartTime = System.currentTimeMillis();
+            fillingTask = scheduler.scheduleAtFixedRate(new Runnable() {
                 @Override
                 public void run() {
-                    // Fill the reservoir first
-                    isReservoirFull = true;
+                    if (incomingPipe.isWaterFlowing() || outgoingPipe.isWaterFlowing()) {
+                        long currentTime = System.currentTimeMillis();
+                        fillElapsedTime += currentTime - fillStartTime;
+                        fillStartTime = currentTime;
 
-                    // Once the reservoir is full, start leaking
-                    startLeaking();
+                        if (fillElapsedTime >= 20000) {
+                            isReservoirFull = true;
+                            startLeaking();
+                            stopFillingTask();
+                        }
+                    } else {
+                        fillStartTime = System.currentTimeMillis(); // Reset the start time when the water flow stops
+                    }
                 }
-            };
-            long delay = 20000; // Delay for filling the reservoir
-            timer.schedule(task, delay);
+            }, 0, 100, TimeUnit.MILLISECONDS); // Check every 100 milliseconds
+        }
+    }
+
+    private void stopFillingTask() {
+        if (fillingTask != null && !fillingTask.isCancelled()) {
+            fillingTask.cancel(true);
         }
     }
 
@@ -113,10 +133,12 @@ public class Pump extends Component implements ILeakage {
      * Starts the leaking of the pump if the reservoir is full.
      */
     public void startLeaking() {
-        if (isReservoirFull) {
+        if (isReservoirFull && !isLeaking) {
+            isBroken = true;
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            stopFlow();
+            //stopFlow();
+            location.getMap().updateWaterFlow();
         }
     }
 
@@ -156,7 +178,7 @@ public class Pump extends Component implements ILeakage {
             long leakDuration = System.currentTimeMillis() - leakStartTime;
             leakStartTime = 0;
             // saboteursScore.updateScore(leakDuration);
-            stopOrStartFlowRecursive(outgoingPipe, true);
+            location.getMap().updateWaterFlow();
             notifyScorers(leakDuration);
             return leakDuration;
         }
