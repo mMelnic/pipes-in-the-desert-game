@@ -93,6 +93,7 @@ public class Pipe extends Component implements ILeakage {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
             //undoStopFlow();
+            System.out.println("Leaking duration: " + duration + " milliseconds");
             notifyScorers(duration);
             location.getMap().updateWaterFlow();
             return duration;

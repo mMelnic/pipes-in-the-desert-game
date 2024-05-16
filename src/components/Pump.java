@@ -179,6 +179,7 @@ public class Pump extends Component implements ILeakage {
             leakStartTime = 0;
             // saboteursScore.updateScore(leakDuration);
             location.getMap().updateWaterFlow();
+            System.out.println("Leaking duration: " + leakDuration + " milliseconds");
             notifyScorers(leakDuration);
             return leakDuration;
         }
