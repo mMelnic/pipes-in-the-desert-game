@@ -79,7 +79,8 @@ public class Pipe extends Component implements ILeakage {
         if (!isLeaking) {
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            stopFlow();
+            location.getMap().updateWaterFlow();
+            //stopFlow();
         }
     }
 
@@ -91,8 +92,9 @@ public class Pipe extends Component implements ILeakage {
         if (isLeaking) {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
-            undoStopFlow();
+            //undoStopFlow();
             notifyScorers(duration);
+            location.getMap().updateWaterFlow();
             return duration;
         }
         return 0;

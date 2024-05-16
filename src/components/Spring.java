@@ -42,7 +42,9 @@ public class Spring extends Component
 			Pipe pipe = (Pipe) component;
 			pipe.setWaterFlowing(true);
 			if (pipe.isBroken()) {
-				pipe.startLeaking();
+				if (!pipe.isLeaking()) {
+					pipe.startLeaking();
+				}
 				return;
 			}
 			// Check if the pipe has only one connected component
@@ -52,7 +54,11 @@ public class Spring extends Component
 		} else if (component instanceof Pump) {
 			Pump pump = (Pump) component;
         	if (pump.isBroken()) {
-            	pump.fillReservoir();
+				if (!pump.isReservoirFull()) {
+					pump.fillReservoir();
+				} else if (pump.isReservoirFull() && !pump.isLeaking()) {
+					pump.startLeaking();
+				}
             	return; // Stop traversal if the pump is broken
 			}
 			// Check if the pump has only one connected component
@@ -82,8 +88,12 @@ public class Spring extends Component
 	private void handlePumpComponent(Component component, Pump connectedPump, Set<Component> visited) {
 		visited.add(connectedPump);
 		if (connectedPump.isBroken()) {
-			connectedPump.fillReservoir();
-			return;
+			if (!connectedPump.isReservoirFull()) {
+				connectedPump.fillReservoir();
+			} else if (connectedPump.isReservoirFull() && !connectedPump.isLeaking()) {
+				connectedPump.startLeaking();
+			}
+			return; // Stop traversal if the pump is broken
 		}
 		if (connectedPump.getConnectedComponents().size() == 1) {
 			return;
