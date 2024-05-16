@@ -17,6 +17,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import GUI.MainWindow;
 import jdk.jshell.spi.ExecutionControl;
 import player.MovablePlayer;
 import player.Plumber;
@@ -497,46 +499,50 @@ public class GameManager implements ICisternListener
     /**
      * Opens the main menu.
      */
-    public void openMenu()
-    {
-        String inputText = "";
-        int input = 0;
+    // public void openMenu()
+    // {
+    //     String inputText = "";
+    //     int input = 0;
 
-        MENU_LOOP: do
-        {
-            try
-            {
-                printMainMenuContents();
-                inputText = receiveInput();
-                input = Integer.parseInt(inputText);
-            }
-            catch(Exception exception)
-            {
-                String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                input = 0;
-                continue;
-            }
+    //     MENU_LOOP: do
+    //     {
+    //         try
+    //         {
+    //             printMainMenuContents();
+    //             inputText = receiveInput();
+    //             input = Integer.parseInt(inputText);
+    //         }
+    //         catch(Exception exception)
+    //         {
+    //             String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+    //             System.out.print(message);
+    //             writeToOutputTxt(message);
+    //             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //             input = 0;
+    //             continue;
+    //         }
 
             
-            switch (input)
-            {
-                case 1 -> showMaps();
-                case 2 -> showKeyBindings();
-                case 3 -> {
-                    break MENU_LOOP;
-                }
-                default -> {
-                    String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                    System.out.print(message);
-                    writeToOutputTxt(message);
-                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                }
-            }
-        }
-        while (true);
+    //         switch (input)
+    //         {
+    //             case 1 -> showMaps();
+    //             case 2 -> showKeyBindings();
+    //             case 3 -> {
+    //                 break MENU_LOOP;
+    //             }
+    //             default -> {
+    //                 String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+    //                 System.out.print(message);
+    //                 writeToOutputTxt(message);
+    //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //             }
+    //         }
+    //     }
+    //     while (true);
+    // }
+    public void openMenu() {
+        MainWindow mainWindow = new MainWindow(this);
+        mainWindow.show();
     }
 
     /**
