@@ -97,16 +97,14 @@ public class Pump extends Component implements ILeakage {
             TimerTask task = new TimerTask() {
                 @Override
                 public void run() {
-                    if (outgoingPipe.isFull() == true) {
-                        startLeaking();
-                        isReservoirFull = true;
+                    // Fill the reservoir first
+                    isReservoirFull = true;
 
-                    } else {
-                        isReservoirFull = false;
-                    }
+                    // Once the reservoir is full, start leaking
+                    startLeaking();
                 }
             };
-            long delay = 8000;
+            long delay = 20000; // Delay for filling the reservoir
             timer.schedule(task, delay);
         }
     }
