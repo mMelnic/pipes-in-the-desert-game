@@ -40,7 +40,7 @@ public class MainWindow {
         JButton keyBindingsButton = new JButton("Key bindings");
         keyBindingsButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gameManager.showKeyBindings(); 
+                showKeyBindingsWindow();
             }
         });
         frame.getContentPane().add(keyBindingsButton);
@@ -49,11 +49,16 @@ public class MainWindow {
         JButton exitButton = new JButton("Exit");
         exitButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.exit(0); // Handle Exit button click
+                System.exit(0);
             }
         });
         frame.getContentPane().add(exitButton);
     }
+    private void showKeyBindingsWindow() {
+        KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow();
+        keyBindingsWindow.show();
+    }
+
 
     public void show() {
         frame.setVisible(true);
