@@ -55,6 +55,7 @@ public class MainWindow {
         frame.getContentPane().add(exitButton);
     }
     private void showKeyBindingsWindow() {
+        frame.dispose(); 
         KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow();
         keyBindingsWindow.show();
     }
