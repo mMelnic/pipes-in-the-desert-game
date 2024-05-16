@@ -124,11 +124,14 @@ public class Cistern extends Component implements IWaterFlowListener {
      */
     public Component manufactureComponent() {
         if (manufacturedComponent == null) {
-            int random = new Random().nextInt();
-            if (random % 2 == 0) {
+            Random random = new Random();
+            int randomValue = random.nextInt(100); // Generate a random number between 0 and 99
+
+            if (randomValue < 65) {
                 return manufacturePipe();
+            } else {
+                return manufacturePump();
             }
-            return manufacturePump();
         }
         return null;
     }
