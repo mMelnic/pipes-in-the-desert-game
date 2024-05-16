@@ -1,4 +1,5 @@
 package components;
+import interfaces.ICisternListener;
 import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
 import system.Cell;
@@ -22,6 +23,7 @@ public class Cistern extends Component implements IWaterFlowListener {
     private long elapsedTime;
     private Thread fillingThread;
     private List<IScorer> scorers = new ArrayList<>();
+    private List<ICisternListener> listeners = new ArrayList<>();
 
     /**
      * a constructor of the class cistern that sets certion attributes
@@ -47,6 +49,20 @@ public class Cistern extends Component implements IWaterFlowListener {
     private void notifyScorers(long fillingDuration) {
         for (IScorer scorer : scorers) {
             scorer.updateScore(fillingDuration);
+        }
+    }
+
+    public void addCisternFullListener(ICisternListener listener) {
+        listeners.add(listener);
+    }
+
+    public void removeCisternFullListener(ICisternListener listener) {
+        listeners.remove(listener);
+    }
+
+    private void notifyListeners() {
+        for (ICisternListener listener : listeners) {
+            listener.onCisternFullCheck();
         }
     }
 
@@ -146,6 +162,7 @@ public class Cistern extends Component implements IWaterFlowListener {
                         isCisternFull = true; // Set the flag to true when the cistern is filled
                         isFilling = false;
                         elapsedTime = 0;
+                        notifyListeners();
                         onCisternFull(this);
                     }
                 } catch (InterruptedException e) {

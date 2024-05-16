@@ -5,6 +5,8 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import enumerations.Direction;
+import interfaces.ICisternListener;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -24,7 +26,7 @@ import player.Team;
 /**
  * The GameManager class manages the game's flow and logic.
  */
-public class GameManager 
+public class GameManager implements ICisternListener
 {
     private Map map;
     private Timer timer;
@@ -83,6 +85,15 @@ public class GameManager
         teams.get(1).assignPlayer(saboteur2);
     }
 
+    @Override
+    public void onCisternFullCheck() {
+        if (checkIfAllCisternsAreFull()) {
+            // Handle the event when all cisterns are full
+            System.out.println("All cisterns are full!");
+            // TODO compare score
+        }
+    }
+
     /**
      * Starts the game.
      */
@@ -104,7 +115,10 @@ public class GameManager
         map.getCells(0, 1).setPlayerOn(false);
     
         map.initializeMap();
-      
+
+        for (Cistern cistern : map.getCisterns()) {
+            cistern.addCisternFullListener(this);
+        }
 
         startTimer();
         manufactureComponents();
