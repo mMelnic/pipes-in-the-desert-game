@@ -215,6 +215,18 @@ public class GameManager implements ICisternListener
                         writeToOutputTxt(message);
                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
                     }
+                }case "DropComponent" -> {
+                    if (activePlumber != null) {
+                        activePlumber.dropComponent();
+                    } else {
+                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+                        System.out.print(message);
+                        writeToOutputTxt(message);
+                        try {
+                            Thread.sleep(1500);
+                        } catch (InterruptedException interruptedException) {
+                        }
+                    }
                 }
                 case "ChangePumpDirection" -> {
                     String message = "\nIncoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):\n\n";

@@ -415,6 +415,15 @@ public class Plumber extends MovablePlayer {
         System.out.println("No cistern with available component found in neighbouring cells.");
     }
 
+    public void dropComponent() {
+        if (carriedComponent != null) {
+            setCarriedComponent(null);
+            handleOutput("You have dropped the component.");
+        } else {
+            handleOutput("You are not carrying any component to drop.");
+        }
+    }
+
     /**
      * Gets the currently carried component by the plumber.
      * 
