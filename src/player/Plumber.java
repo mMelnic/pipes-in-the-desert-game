@@ -225,6 +225,7 @@ public class Plumber extends MovablePlayer {
                     }
                     return false;
                 }
+                pipeToBeReplaced.stopLeaking();
             }
             targetCell.placeComponent(pump);
             carriedComponent = null;
