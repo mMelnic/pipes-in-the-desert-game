@@ -6,6 +6,7 @@ import system.GameManager;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Map;
 
 public class MainWindow {
     private JFrame frame;
@@ -31,7 +32,8 @@ public class MainWindow {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                gameManager.showMaps(); 
+                showMapWindow();
+                
             }
         });
         frame.getContentPane().add(startButton);
@@ -59,7 +61,11 @@ public class MainWindow {
         KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow();
         keyBindingsWindow.show();
     }
-
+    private void showMapWindow() {
+        frame.dispose(); 
+    MapWindow mapWindow = new MapWindow();
+    mapWindow.show();
+    }
 
     public void show() {
         frame.setVisible(true);
