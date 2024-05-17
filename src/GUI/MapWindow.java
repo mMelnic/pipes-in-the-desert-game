@@ -54,8 +54,8 @@ public class MapWindow {
     }
 
     private void drawGrid(Graphics g, int squareSize) {
-        int rows = 8;
-        int columns = 8;
+        int rows = map.getRows();
+        int columns = map.getColumns();
 
         // Draw vertical lines
         for (int i = 0; i <= columns; i++) {

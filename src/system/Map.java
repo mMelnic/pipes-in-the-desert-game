@@ -520,6 +520,12 @@ public class Map {
     public void setPlumberScorer(PlumberScorer plumberScorer) {
         this.plumberScorer = plumberScorer;
     }
+    public int getRows(){
+        return rows;
+    }
+    public int getColumns(){
+        return columns;
+    }
 
     public String getSize() {
         return size;

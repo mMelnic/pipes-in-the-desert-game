@@ -68,6 +68,7 @@ public class MainWindow {
     // }
 
     public void showTeams() {
+        frame.dispose();
         TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager, this);
         teamSelectionWindow.show();
     }
