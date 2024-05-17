@@ -443,5 +443,14 @@ public class Plumber extends MovablePlayer {
     public void setCarriedComponent(Component carriedComponent) {
         this.carriedComponent = carriedComponent;
     }
+    @Override
+    public boolean isSaboteur() {
+        return false;
+    }
+
+    @Override
+    public boolean isPlumber() {
+        return true;
+    }
 
 }

@@ -17,6 +17,9 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import GUI.MainWindow;
+import GUI.MapWindow;
 import jdk.jshell.spi.ExecutionControl;
 import player.MovablePlayer;
 import player.Plumber;
@@ -117,354 +120,357 @@ public class GameManager implements ICisternListener
         map.getCells(0, 1).setPlayerOn(false);
     
         map.initializeMap();
-
-        for (Cistern cistern : map.getCisterns()) {
-            cistern.addCisternFullListener(this);
-        }
-
-        startTimer();
-        manufactureComponents();
-
-        String inputText;
        
-        GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
-        {
-            map.draw();
-            inputText = receiveInput();
-            System.out.println("Current player: " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
 
-            switch (inputText)
-            {
-                case "SwitchPlayer" -> {
-                    switchActivePlayer();
-                    System.out.println("Switched to " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
-                }
-                case "U" -> {
-                    activePlayer.move(Direction.UP);
-                }
-                case "R" -> {
-                    activePlayer.move(Direction.RIGHT);
-                }
-                case "D" -> {
-                    activePlayer.move(Direction.DOWN);
-                }
-                case "L" -> {
-                    activePlayer.move(Direction.LEFT);
-                }
-                case "RepairPipe" -> {
-                    if (activePlumber != null)
-                    {
-                        activePlumber.repairPipe();
-                    }
-                    else
-                    {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                }
-                case "RepairPump" -> {
-                    if (activePlumber != null)
-                    {
-                        activePlumber.repairPump();
-                    }
-                    else
-                    {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                }
-                case "PuncturePipe" -> {
-                    if (activeSaboteur != null)
-                    {
-                        activeSaboteur.puncturePipe();
-                    }
-                    else
-                    {
-                        String message = "\nYou are not a saboteur: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                }
-                case "InstallComponent" -> {
-                    if (activePlumber != null) {
-                        activePlumber.installComponent(activePlayer.getFacingDirection());
-                    } else {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {
-                            Thread.sleep(1500);
-                        } catch (InterruptedException interruptedException) {
-                        }
-                    }
-                }
-                case "PickComponent" -> {
-                    if (activePlumber != null)
-                    {
-                        activePlumber.pickComponent();
-                    }
-                    else
-                    {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                }case "DropComponent" -> {
-                    if (activePlumber != null) {
-                        activePlumber.dropComponent();
-                    } else {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {
-                            Thread.sleep(1500);
-                        } catch (InterruptedException interruptedException) {
-                        }
-                    }
-                }
-                case "ChangePumpDirection" -> {
-                    String message = "\nIncoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):\n\n";
-                    System.out.print(message);
-                    writeToOutputTxt(message);
-                    inputText = receiveInput();
+        // for (Cistern cistern : map.getCisterns()) {
+        //     cistern.addCisternFullListener(this);
+        // }
 
-                    if (inputText.length() != 2) 
-                    {
-                        String errorMessage = "\nIncorrect input\n\n\n";
-                        System.out.print(errorMessage);
-                        writeToOutputTxt(errorMessage);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                        continue;
-                    }
+        // startTimer();
+        // manufactureComponents();
 
-                    Pipe newIncomingPipe = null;
-                    Pipe newOutgoingPipe = null;
-                    boolean[] checkPumpOrPipe;
+        // String inputText;
 
-                    switch (inputText.charAt(0))
-                    {
-                        case 'U' -> {
-                            if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newIncomingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'R' -> {
-                            if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newIncomingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'D' -> {
-                            if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newIncomingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'L' -> {
-                            if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newIncomingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        default -> {
-                            if (newIncomingPipe == null)
-                            {
-                                String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the incoming pipe.\n\n\n";
-                                System.out.print(errorMessage);
-                                writeToOutputTxt(errorMessage);
-                                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                                continue;
-                            }
-                        }
-                    }
-                    switch (inputText.charAt(1))
-                    {
-                        case 'U' -> {
-                            if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newOutgoingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'R' -> {
-                            if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newOutgoingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'D' -> {
-                            if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newOutgoingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        case 'L' -> {
-                            if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
-                            {
-                                newOutgoingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
-                            }
-                        }
-                        default -> {
-                            if (newOutgoingPipe == null)
-                            {
-                                String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the outgoing pipe.\n\n\n";
-                                System.out.print(errorMessage);
-                                writeToOutputTxt(errorMessage);
-                                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                                continue;
-                            }
-                        }
-                    }
+        
+       
+        // GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
+        // {
+        //     map.draw();
+        //     inputText = receiveInput();
+        //     System.out.println("Current player: " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
+
+        //     switch (inputText)
+        //     {
+        //         case "SwitchPlayer" -> {
+        //             switchActivePlayer();
+        //             System.out.println("Switched to " + (activePlayer instanceof Plumber ? "Plumber" : "Saboteur"));
+        //         }
+        //         case "U" -> {
+        //             activePlayer.move(Direction.UP);
+        //         }
+        //         case "R" -> {
+        //             activePlayer.move(Direction.RIGHT);
+        //         }
+        //         case "D" -> {
+        //             activePlayer.move(Direction.DOWN);
+        //         }
+        //         case "L" -> {
+        //             activePlayer.move(Direction.LEFT);
+        //         }
+        //         case "RepairPipe" -> {
+        //             if (activePlumber != null)
+        //             {
+        //                 activePlumber.repairPipe();
+        //             }
+        //             else
+        //             {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //             }
+        //         }
+        //         case "RepairPump" -> {
+        //             if (activePlumber != null)
+        //             {
+        //                 activePlumber.repairPump();
+        //             }
+        //             else
+        //             {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //             }
+        //         }
+        //         case "PuncturePipe" -> {
+        //             if (activeSaboteur != null)
+        //             {
+        //                 activeSaboteur.puncturePipe();
+        //             }
+        //             else
+        //             {
+        //                 String message = "\nYou are not a saboteur: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //             }
+        //         }
+        //         case "InstallComponent" -> {
+        //             if (activePlumber != null) {
+        //                 activePlumber.installComponent(activePlayer.getFacingDirection());
+        //             } else {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {
+        //                     Thread.sleep(1500);
+        //                 } catch (InterruptedException interruptedException) {
+        //                 }
+        //             }
+        //         }
+        //         case "PickComponent" -> {
+        //             if (activePlumber != null)
+        //             {
+        //                 activePlumber.pickComponent();
+        //             }
+        //             else
+        //             {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //             }
+        //         }case "DropComponent" -> {
+        //             if (activePlumber != null) {
+        //                 activePlumber.dropComponent();
+        //             } else {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {
+        //                     Thread.sleep(1500);
+        //                 } catch (InterruptedException interruptedException) {
+        //                 }
+        //             }
+        //         }
+        //         case "ChangePumpDirection" -> {
+        //             String message = "\nIncoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):\n\n";
+        //             System.out.print(message);
+        //             writeToOutputTxt(message);
+        //             inputText = receiveInput();
+
+        //             if (inputText.length() != 2) 
+        //             {
+        //                 String errorMessage = "\nIncorrect input\n\n\n";
+        //                 System.out.print(errorMessage);
+        //                 writeToOutputTxt(errorMessage);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                 continue;
+        //             }
+
+        //             Pipe newIncomingPipe = null;
+        //             Pipe newOutgoingPipe = null;
+        //             boolean[] checkPumpOrPipe;
+
+        //             switch (inputText.charAt(0))
+        //             {
+        //                 case 'U' -> {
+        //                     if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newIncomingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'R' -> {
+        //                     if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newIncomingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'D' -> {
+        //                     if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newIncomingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'L' -> {
+        //                     if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newIncomingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 default -> {
+        //                     if (newIncomingPipe == null)
+        //                     {
+        //                         String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the incoming pipe.\n\n\n";
+        //                         System.out.print(errorMessage);
+        //                         writeToOutputTxt(errorMessage);
+        //                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                         continue;
+        //                     }
+        //                 }
+        //             }
+        //             switch (inputText.charAt(1))
+        //             {
+        //                 case 'U' -> {
+        //                     if (map.getUpwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newOutgoingPipe = (Pipe)map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'R' -> {
+        //                     if (map.getRightwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newOutgoingPipe = (Pipe)map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'D' -> {
+        //                     if (map.getDownwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newOutgoingPipe = (Pipe)map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 case 'L' -> {
+        //                     if (map.getLeftwardCell(activePlayer.getCurrentCell()).checkPumpOrPipe()[0])
+        //                     {
+        //                         newOutgoingPipe = (Pipe)map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     }
+        //                 }
+        //                 default -> {
+        //                     if (newOutgoingPipe == null)
+        //                     {
+        //                         String errorMessage = "\nIncorrect input, or there is no pipe in the chosen direction for the outgoing pipe.\n\n\n";
+        //                         System.out.print(errorMessage);
+        //                         writeToOutputTxt(errorMessage);
+        //                         try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                         continue;
+        //                     }
+        //                 }
+        //             }
                     
-                    activePlayer.redirectWaterFlow(newIncomingPipe, newOutgoingPipe);
-                }
-                case "DetachPipe" -> {
-                    if (activePlumber != null)
-                    {
-                        String message = "\nOld component - new component direction pair (e.g. UL, where 'U' (up) is for the old component's direction, 'L' (left) - for the new one's):\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        inputText = receiveInput();
+        //             activePlayer.redirectWaterFlow(newIncomingPipe, newOutgoingPipe);
+        //         }
+        //         case "DetachPipe" -> {
+        //             if (activePlumber != null)
+        //             {
+        //                 String message = "\nOld component - new component direction pair (e.g. UL, where 'U' (up) is for the old component's direction, 'L' (left) - for the new one's):\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 inputText = receiveInput();
 
-                        if (inputText.length() != 2) 
-                        {
-                            String errorMessage = "\nIncorrect input\n\n\n";
-                            System.out.print(errorMessage);
-                            writeToOutputTxt(errorMessage);
-                            continue;
-                        }
+        //                 if (inputText.length() != 2) 
+        //                 {
+        //                     String errorMessage = "\nIncorrect input\n\n\n";
+        //                     System.out.print(errorMessage);
+        //                     writeToOutputTxt(errorMessage);
+        //                     continue;
+        //                 }
     
-                        Component oldComponent = null;
-                        Component newComponent = null;
+        //                 Component oldComponent = null;
+        //                 Component newComponent = null;
     
-                        switch (inputText.charAt(0))
-                        {
-                            case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'R' -> oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'D' -> oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'L' -> oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
-                            default -> {
-                                if (oldComponent == null)
-                                {
-                                    String errorMessage = "\nIncorrect input.\n\n\n";
-                                    System.out.print(errorMessage);
-                                    writeToOutputTxt(errorMessage);
-                                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                                    continue;
-                                }
-                            }
-                        }
-                        switch (inputText.charAt(1))
-                        {
-                            case 'U' -> newComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'R' -> newComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'D' -> newComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'L' -> newComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
-                            default -> {
-                                if (newComponent == null)
-                                {
-                                    String errorMessage = "\nIncorrect input.\n\n\n";
-                                    System.out.print(errorMessage);
-                                    writeToOutputTxt(errorMessage);
-                                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                                    continue;
-                                }
-                            }
-                        }
+        //                 switch (inputText.charAt(0))
+        //                 {
+        //                     case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'R' -> oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'D' -> oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'L' -> oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     default -> {
+        //                         if (oldComponent == null)
+        //                         {
+        //                             String errorMessage = "\nIncorrect input.\n\n\n";
+        //                             System.out.print(errorMessage);
+        //                             writeToOutputTxt(errorMessage);
+        //                             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                             continue;
+        //                         }
+        //                     }
+        //                 }
+        //                 switch (inputText.charAt(1))
+        //                 {
+        //                     case 'U' -> newComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'R' -> newComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'D' -> newComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'L' -> newComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     default -> {
+        //                         if (newComponent == null)
+        //                         {
+        //                             String errorMessage = "\nIncorrect input.\n\n\n";
+        //                             System.out.print(errorMessage);
+        //                             writeToOutputTxt(errorMessage);
+        //                             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                             continue;
+        //                         }
+        //                     }
+        //                 }
 
-                        activePlumber.detachPipe(newComponent, oldComponent);
-                    }
-                    else
-                    {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    }
-                }
-                case "StartSandstorm" -> {
-                    startSandstorm();
-                }
-                case "ConnectPSC" -> {
-                    if (activePlumber != null) {
-                        String message = "\n Cistern/Spring direction  (e.g. L, 'L' (left) - for the spring/cistern's):\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        inputText = receiveInput();
+        //                 activePlumber.detachPipe(newComponent, oldComponent);
+        //             }
+        //             else
+        //             {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //             }
+        //         }
+        //         case "StartSandstorm" -> {
+        //             startSandstorm();
+        //         }
+        //         case "ConnectPSC" -> {
+        //             if (activePlumber != null) {
+        //                 String message = "\n Cistern/Spring direction  (e.g. L, 'L' (left) - for the spring/cistern's):\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 inputText = receiveInput();
 
-                        if (inputText.length() != 1) {
-                            String errorMessage = "\nIncorrect input\n\n\n";
-                            System.out.print(errorMessage);
-                            writeToOutputTxt(errorMessage);
-                            continue;
-                        }
+        //                 if (inputText.length() != 1) {
+        //                     String errorMessage = "\nIncorrect input\n\n\n";
+        //                     System.out.print(errorMessage);
+        //                     writeToOutputTxt(errorMessage);
+        //                     continue;
+        //                 }
 
-                        Component oldComponent = null;
+        //                 Component oldComponent = null;
 
-                        switch (inputText.charAt(0)) {
-                            case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'R' ->
-                                oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'D' ->
-                                oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
-                            case 'L' ->
-                                oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
-                            default -> {
-                                if (oldComponent == null) {
-                                    String errorMessage = "\nIncorrect input.\n\n\n";
-                                    System.out.print(errorMessage);
-                                    writeToOutputTxt(errorMessage);
-                                    try {
-                                        Thread.sleep(1500);
-                                    } catch (InterruptedException interruptedException) {
-                                    }
-                                    continue;
-                                }
-                            }
-                        }
+        //                 switch (inputText.charAt(0)) {
+        //                     case 'U' -> oldComponent = map.getUpwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'R' ->
+        //                         oldComponent = map.getRightwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'D' ->
+        //                         oldComponent = map.getDownwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     case 'L' ->
+        //                         oldComponent = map.getLeftwardCell(activePlayer.getCurrentCell()).getComponent();
+        //                     default -> {
+        //                         if (oldComponent == null) {
+        //                             String errorMessage = "\nIncorrect input.\n\n\n";
+        //                             System.out.print(errorMessage);
+        //                             writeToOutputTxt(errorMessage);
+        //                             try {
+        //                                 Thread.sleep(1500);
+        //                             } catch (InterruptedException interruptedException) {
+        //                             }
+        //                             continue;
+        //                         }
+        //                     }
+        //                 }
 
-                        activePlumber.connectPipeWithComponent((Pipe)activePlumber.getCurrentCell().getComponent(), oldComponent);
-                    } else {
-                        String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
-                        System.out.print(message);
-                        writeToOutputTxt(message);
-                        try {
-                            Thread.sleep(1500);
-                        } catch (InterruptedException interruptedException) {
-                        }
-                    }
-                }
-                case "Exit" -> {
-                    break GAME_LOOP;
-                }
-            }
-        }
-        String message = "\n\n\nThe game finished. Calculation of points is in progress...\n";
-        System.out.print(message);
-        writeToOutputTxt(message);
-        try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+        //                 activePlumber.connectPipeWithComponent((Pipe)activePlumber.getCurrentCell().getComponent(), oldComponent);
+        //             } else {
+        //                 String message = "\nYou are not a plumber: the action is not possible!\n\n\n";
+        //                 System.out.print(message);
+        //                 writeToOutputTxt(message);
+        //                 try {
+        //                     Thread.sleep(1500);
+        //                 } catch (InterruptedException interruptedException) {
+        //                 }
+        //             }
+        //         }
+        //         case "Exit" -> {
+        //             break GAME_LOOP;
+        //         }
+        //     }
+        // }
+        // String message = "\n\n\nThe game finished. Calculation of points is in progress...\n";
+        // System.out.print(message);
+        // writeToOutputTxt(message);
+        // try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
 
-        saboteursScore = saboteurScorer.getScore();
-        plumbersScore = plumberScorer.getScore();
+        // saboteursScore = saboteurScorer.getScore();
+        // plumbersScore = plumberScorer.getScore();
 
-        String winMessage;
-        if (plumbersScore >= saboteursScore)
-        {
-            winMessage = "Plumbers won with a lead of " + (plumbersScore - saboteursScore) + " points!\n\n\n";
-        }
-        else
-        {
-            winMessage = "Saboteurs won with a lead of " + (saboteursScore - plumbersScore) + " points!\n\n\n";
-        }
+        // String winMessage;
+        // if (plumbersScore >= saboteursScore)
+        // {
+        //     winMessage = "Plumbers won with a lead of " + (plumbersScore - saboteursScore) + " points!\n\n\n";
+        // }
+        // else
+        // {
+        //     winMessage = "Saboteurs won with a lead of " + (saboteursScore - plumbersScore) + " points!\n\n\n";
+        // }
 
-        System.out.print(winMessage);
-        writeToOutputTxt(message);
+        // System.out.print(winMessage);
+        // writeToOutputTxt(message);
 
     }
 
@@ -494,49 +500,10 @@ public class GameManager implements ICisternListener
         }
     }
 
-    /**
-     * Opens the main menu.
-     */
-    public void openMenu()
-    {
-        String inputText = "";
-        int input = 0;
-
-        MENU_LOOP: do
-        {
-            try
-            {
-                printMainMenuContents();
-                inputText = receiveInput();
-                input = Integer.parseInt(inputText);
-            }
-            catch(Exception exception)
-            {
-                String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                input = 0;
-                continue;
-            }
-
-            
-            switch (input)
-            {
-                case 1 -> showMaps();
-                case 2 -> showKeyBindings();
-                case 3 -> {
-                    break MENU_LOOP;
-                }
-                default -> {
-                    String message = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                    System.out.print(message);
-                    writeToOutputTxt(message);
-                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                }
-            }
-        }
-        while (true);
+  
+    public void openMenu() {
+        MainWindow mainWindow = new MainWindow(this);
+        mainWindow.show();
     }
 
     /**
@@ -650,67 +617,94 @@ public class GameManager implements ICisternListener
         }
         return true;
     }
+    public void selectMapSize(int size) {
+        switch (size) {
+            case 8:
+                map = new Map(8, 8);
+                break;
+            case 9:
+                map = new Map(9, 9);
+                break;
+            case 10:
+                map = new Map(10, 10);
+                break;
+            default:
+                System.out.println("Invalid map size.");
+                break;
+        }
+    }
 
      /**
      * Shows available maps.
      */
-    public void showMaps() 
-    {
-        String message = "                === MAPS ===               \n\n\n"
-                       + "Choose the map size:\n"
-                       + "1. Small\n"
-                       + "2. Medium\n"
-                       + "3. Large\n"
-                       + "4. Return to the main menu.\n\n";
+    // public void showMaps() 
+    // {
+    //     String message = "                === MAPS ===               \n\n\n"
+    //                    + "Choose the map size:\n"
+    //                    + "1. Small\n"
+    //                    + "2. Medium\n"
+    //                    + "3. Large\n"
+    //                    + "4. Return to the main menu.\n\n";
 
-        System.out.print(message);
-        writeToOutputTxt(message);
+    //     System.out.print(message);
+    //     writeToOutputTxt(message);
 
-        String inputText = "";
-        int input = 0;
+    //     String inputText = "";
+    //     int input = 0;
 
-        MAPS_MENU_LOOP: do
-        {
-            try
-            {
-                inputText = receiveInput();
-                input = Integer.parseInt(inputText);
-            }
-            catch (Exception exception)
-            {
-                String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                continue;
-            }
+    //     MAPS_MENU_LOOP: do
+    //     {
+    //         try
+    //         {
+    //             inputText = receiveInput();
+    //             input = Integer.parseInt(inputText);
+    //         }
+    //         catch (Exception exception)
+    //         {
+    //             String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+    //             System.out.print(message);
+    //             writeToOutputTxt(message);
+    //             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //             continue;
+    //         }
 
-            switch (input)
-            {
-                case 1 -> {
-                    map = new Map(5, 5);
-                }
-                case 2 -> {
-                    map = new Map(10, 10);
-                }
-                case 3 -> {
-                    map = new Map(15, 15);
-                }
-                case 4 -> {
-                    break MAPS_MENU_LOOP;
-                }
-                default -> {
-                    String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                    System.out.print(message);
-                    writeToOutputTxt(message);
-                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    continue;
-                }
-            }
-            showTeams();
-        }
-        while (input != 1 && input != 2 && input != 3);
+    //         switch (input)
+    //         {
+    //             case 1 -> {
+    //                 map = new Map(5, 5);
+    //             }
+    //             case 2 -> {
+    //                 map = new Map(10, 10);
+    //             }
+    //             case 3 -> {
+    //                 map = new Map(15, 15);
+    //             }
+    //             case 4 -> {
+    //                 break MAPS_MENU_LOOP;
+    //             }
+    //             default -> {
+    //                 String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+    //                 System.out.print(message);
+    //                 writeToOutputTxt(message);
+    //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //                 continue;
+    //             }
+    //         }
+    //         showTeams();
+    //     }
+    //     while (input != 1 && input != 2 && input != 3);
         
+    // }
+    public void setActiveTeam(int teamIndex) {
+        if (teamIndex == 0) { // Plumbers
+            activePlayer = teams.get(0).getPlayers().get(0);
+            activePlumber = (Plumber) teams.get(0).getPlayers().get(0);
+            activeSaboteur = null;
+        } else if (teamIndex == 1) { // Saboteurs
+            activePlayer = teams.get(1).getPlayers().get(0);
+            activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
+            activePlumber = null;
+        }
     }
 
     /**

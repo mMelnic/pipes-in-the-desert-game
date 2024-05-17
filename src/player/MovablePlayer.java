@@ -221,4 +221,7 @@ public abstract class MovablePlayer {
     public UUID getPlayerID() {
         return playerID;
     }
+    public abstract boolean isSaboteur();
+
+    public abstract boolean isPlumber();
 }

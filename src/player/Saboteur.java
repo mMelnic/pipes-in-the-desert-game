@@ -47,4 +47,13 @@ public class Saboteur extends MovablePlayer {
         System.out.print("couldn't write to file, so function was aborted");
         return false;
     }
+    @Override
+    public boolean isSaboteur() {
+        return true;
+    }
+
+    @Override
+    public boolean isPlumber() {
+        return false;
+    }
 }

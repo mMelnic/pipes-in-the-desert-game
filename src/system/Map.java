@@ -23,8 +23,8 @@ import player.PlumberScorer;
  * updating water flow, and providing neighboring cells.
  */
 public class Map {
-    private int rows = 8; // temporary number
-    private int columns = 8; // temporary number
+    public int rows = 8; // temporary number
+    public int columns = 8; // temporary number
     private Cell[][] cells = new Cell[rows][columns];
     private List<Cistern> cisterns = new ArrayList<>();
     private List<Spring> springs = new ArrayList<>();
@@ -515,13 +515,19 @@ public class Map {
     public List<Spring> getSprings() {
         return springs;
     }
-
+   
     public Cell getCells(int row, int col) {
         return cells[row][col];
     }
 
     public void setPlumberScorer(PlumberScorer plumberScorer) {
         this.plumberScorer = plumberScorer;
+    }
+    public int getRows(){
+        return rows;
+    }
+    public int getColumns(){
+        return columns;
     }
 
     public String getSize() {
