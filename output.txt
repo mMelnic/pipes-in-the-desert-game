@@ -32,6 +32,41 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
+Moved LEFT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |* |p |p |x |p |c |
+|  |  |  |  |  |  |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |* |p |p |x |p |c |
+|  |  |  |  |  |  |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |* |p |x |p |c |
+|  |  |  |  |  |  |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
 Moved RIGHT to row 0 and column 4
 c - cistern; p - pipe; x - pump; s - spring
 ________________
@@ -45,6 +80,18 @@ ________________
 |  |  |  |  |  |  |  |  |
 ________________
 Moved RIGHT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |x |p |c |
+|  |  |  |  |  |  |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pump is repaired.
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 |* |p |p |p |p |x |p |c |
@@ -81,18 +128,6 @@ ________________
 |  |  |  |  |  |  |  |  |
 ________________
 Moved LEFT to row 0 and column 5
-c - cistern; p - pipe; x - pump; s - spring
-________________
-|* |p |p |p |p |x |p |c |
-|  |  |  |  |  |  |  |  |
-|  |  |s |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |s |  |
-|  |  |  |  |  |  |  |c |
-|  |  |  |  |  |  |  |  |
-________________
-The pump is repaired.
 c - cistern; p - pipe; x - pump; s - spring
 ________________
 |* |p |p |p |p |x |p |c |
@@ -152,6 +187,30 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
+You have dropped the component.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |x |* |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+You have picked a Pump
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |p |p |x |* |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
 Moved LEFT to row 0 and column 5
 c - cistern; p - pipe; x - pump; s - spring
 ________________
@@ -164,11 +223,143 @@ ________________
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved DOWN to row 1 and column 5
+Moved LEFT to row 0 and column 4
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-|* |p |p |p |p |x |p |c |
-|  |  |  |  |  |* |  |  |
+|* |p |p |p |* |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |p |* |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+You have successfully installed a Pump.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |* |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |* |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 6
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |* |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+You have picked a Pipe
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |* |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |* |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |* |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |  |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+You cannot move there.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |  |  |  |p |  |  |
 |  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |c |
@@ -179,36 +370,495 @@ ________________
 You have successfully installed a Pipe.
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-|* |p |p |p |p |x |p |c |
-|  |  |  |  |  |* |  |  |
-|  |  |s |  |  |p |  |c |
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |s |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved UP to row 0 and column 5
+
+Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+
+The direction changed.
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-|* |p |p |p |p |x |p |c |
-|  |  |  |  |  |p |  |  |
-|  |  |s |  |  |p |  |c |
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |s |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
-Moved RIGHT to row 0 and column 6
+Moved DOWN to row 1 and column 2
 c - cistern; p - pipe; x - pump; s - spring
 ________________
-|* |p |p |p |p |x |* |c |
-|  |  |  |  |  |p |  |  |
-|  |  |s |  |  |p |  |c |
+|* |p |x |p |p |x |p |c |
+|  |  |* |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |s |  |
 |  |  |  |  |  |  |  |c |
 |  |  |  |  |  |  |  |  |
 ________________
+
+ Cistern/Spring direction  (e.g. L, 'L' (left) - for the spring/cistern's):
+
+Pipe connected to spring.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |* |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved UP to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |* |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pump is repaired.
+The reservoir emptied.
+The pump is repaired and stopped leaking.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |* |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|* |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 1
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |* |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 2
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |* |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pump is repaired.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |* |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved LEFT to row 0 and column 3
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pipe is repaired.
+The pipe is repaired and stopped leaking.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |* |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 4
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |* |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+Moved RIGHT to row 0 and column 5
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+
+Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+
+The direction changed.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pump is repaired.
+The reservoir emptied.
+The pump is repaired and stopped leaking.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+
+Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+
+The direction changed.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+
+Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+
+The direction changed.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+The pump is repaired.
+The reservoir emptied.
+The pump is repaired and stopped leaking.
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|p |p |x |p |p |x |p |c |
+|  |  |p |  |  |p |  |  |
+|  |  |s |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |s |  |
+|  |  |  |  |  |  |  |c |
+|  |  |  |  |  |  |  |  |
+________________
+
+Incoming-outgoing pipes directions (e.g. UL, U (up) - for incoming, L (left) - for outgoing):
+
+
+Time is up!
+
+
+The direction changed.
+
+
+
+The game finished. Calculation of points is in progress...
+
+
+
+The game finished. Calculation of points is in progress...
+                === PIPES IN THE DESERT ===               
+
+
+1. Start
+2. Key bindings
+3. Exit
+

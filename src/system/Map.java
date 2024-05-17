@@ -123,7 +123,7 @@ public class Map {
      * Updates the water flow on the map by simulating the flow from springs through
      * pipes.
      */
-    public void updateWaterFlow() {
+    public synchronized void updateWaterFlow() {
         // Initialize a set to keep track of visited components
         Set<Component> visited = new HashSet<>();
 
@@ -170,7 +170,7 @@ public class Map {
         }
     }
 
-    public void checkForFreeEnds() {
+    public synchronized void checkForFreeEnds() {
         List<Pipe> pipesWithFreeEndLeaking = findPipesWithFreeEndLeaking();
         updatePipesNotInList(pipesWithFreeEndLeaking);
     }
