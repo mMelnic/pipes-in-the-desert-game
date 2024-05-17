@@ -53,7 +53,7 @@ public class Spring extends Component
 			}
 		} else if (component instanceof Pump) {
 			Pump pump = (Pump) component;
-        	if (pump.isBroken()) {
+        	if (pump.isBroken() || pump.getConnectedComponents().size() == 1) {
 				if (!pump.isReservoirFull()) {
 					pump.fillReservoir();
 				} else if (pump.isReservoirFull() && !pump.isLeaking()) {
@@ -62,9 +62,9 @@ public class Spring extends Component
             	return; // Stop traversal if the pump is broken
 			}
 			// Check if the pump has only one connected component
-			if (pump.getConnectedComponents().size() == 1) {
-				return; // Stop traversal if the pump has only one connected component
-			}
+			// if (pump.getConnectedComponents().size() == 1) {
+			// 	return; // Stop traversal if the pump has only one connected component
+			// }
 		}
 		
 		// Traverse the connected components recursively
@@ -87,7 +87,7 @@ public class Spring extends Component
 
 	private void handlePumpComponent(Component component, Pump connectedPump, Set<Component> visited) {
 		visited.add(connectedPump);
-		if (connectedPump.isBroken()) {
+		if (connectedPump.isBroken() || connectedPump.getConnectedComponents().size() == 1) {
 			if (!connectedPump.isReservoirFull()) {
 				connectedPump.fillReservoir();
 			} else if (connectedPump.isReservoirFull() && !connectedPump.isLeaking()) {
@@ -95,9 +95,12 @@ public class Spring extends Component
 			}
 			return; // Stop traversal if the pump is broken
 		}
-		if (connectedPump.getConnectedComponents().size() == 1) {
-			return;
-		}
+		// if (connectedPump.getConnectedComponents().size() == 1) {
+		// 	if (!connectedPump.isReservoirFull()) {
+		// 		connectedPump.fillReservoir();
+		// 	}
+		// 	return;
+		// }
 		// Check if the current component is a pipe
 		if (component instanceof Pipe) {
 			Pipe currentPipe = (Pipe) component;
