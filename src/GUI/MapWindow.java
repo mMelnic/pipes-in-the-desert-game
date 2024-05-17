@@ -1,4 +1,5 @@
 package GUI;
+
 import javax.swing.*;
 
 import components.Cistern;
@@ -9,43 +10,46 @@ import player.MovablePlayer;
 
 import java.util.List;
 
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import system.Cell;
 import system.Map;
+
 public class MapWindow {
 
     private JFrame frame;
     private JPanel mapPanel;
     private Map map;
 
-    public MapWindow() {
-        initialize();
+    public MapWindow(int mapSize) {
+        initialize(mapSize);
     }
 
-    private void initialize() {
+    private void initialize(int mapSize) {
+        int squareSize = 80;
+        int frameSize = mapSize * squareSize;
         frame = new JFrame();
         frame.setTitle("Map Window");
-        frame.setBounds(100, 100, 800, 800);
+        frame.setBounds(100, 100, frameSize + 20, frameSize + 40);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
 
         mapPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
-                drawMap(g);
+                drawMap(g, squareSize);
             }
         };
         frame.getContentPane().add(mapPanel);
-        map = new Map(8, 8); 
-        map.initializeMap(); 
+        map = new Map(mapSize, mapSize);
+        map.initializeMap();
     }
 
-    private void drawMap(Graphics g) {
-        int squareSize = 100;
+    private void drawMap(Graphics g, int squareSize) {
+        // int squareSize = 80;
 
         // Draw the grid
         drawGrid(g, squareSize);
@@ -69,6 +73,7 @@ public class MapWindow {
             g.drawLine(0, y, squareSize * columns, y);
         }
     }
+
     private void drawComponents(Graphics g, int squareSize) {
         for (int i = 0; i < map.rows; i++) {
             for (int j = 0; j < map.columns; j++) {
@@ -79,22 +84,21 @@ public class MapWindow {
                 if (!cell.isEmpty()) {
                     if (cell.isPlayerOn()) {
                         g.setColor(Color.RED);
-                        g.fillOval(x + 10, y + 10, squareSize - 20, squareSize - 20);
+                        g.fillOval(x, y, squareSize, squareSize);
                     } else if (cell.getComponent() instanceof Pipe) {
                         g.setColor(Color.GREEN);
-                        g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3); 
+                        g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3);
                     } else if (cell.getComponent() instanceof Pump) {
                         g.setColor(Color.BLUE);
-                        g.fillRect(x, y, squareSize, squareSize); 
+                        g.fillRect(x, y, squareSize, squareSize);
                     } else if (cell.getComponent() instanceof Cistern) {
                         g.setColor(Color.PINK);
-                        g.fillRect(x, y, squareSize, squareSize); 
+                        g.fillRect(x, y, squareSize, squareSize);
                     } else if (cell.getComponent() instanceof Spring) {
-                        g.setColor(new Color(128, 0, 128)); 
-                        g.fillRect(x, y, squareSize, squareSize); 
+                        g.setColor(new Color(128, 0, 128));
+                        g.fillRect(x, y, squareSize, squareSize);
                     }
-                    
-                  
+
                 }
             }
         }

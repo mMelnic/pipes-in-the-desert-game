@@ -23,6 +23,7 @@ public class MainWindow {
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(4, 1, 0, 0));
+        frame.setLocationRelativeTo(null);
 
         //title
         JLabel titleLabel = new JLabel("=== PIPES IN THE DESERT ===", SwingConstants.CENTER);

@@ -19,7 +19,7 @@ public class MapSelectionWindow {
     private void initUI() {
         frame = new JFrame();
         frame.setTitle("Map Selection");
-        frame.setSize(300, 200);
+        frame.setBounds(100, 100, 450, 300);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
@@ -42,9 +42,9 @@ public class MapSelectionWindow {
         smallMapBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameManager.selectMapSize(5);
+                gameManager.selectMapSize(8);
                 frame.dispose();
-                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager);
+                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager,8);
                 teamSelectionWindow.show();
             }
         });
@@ -52,9 +52,9 @@ public class MapSelectionWindow {
         mediumMapBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameManager.selectMapSize(10);
+                gameManager.selectMapSize(9);
                 frame.dispose();
-                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager);
+                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager,9);
                 teamSelectionWindow.show();
             }
         });
@@ -62,9 +62,9 @@ public class MapSelectionWindow {
         largeMapBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                gameManager.selectMapSize(15);
+                gameManager.selectMapSize(10);
                 frame.dispose();
-                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager);
+                TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager,10);
                 teamSelectionWindow.show();
             }
         });
@@ -73,6 +73,8 @@ public class MapSelectionWindow {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
+                MainWindow main = new MainWindow(gameManager);
+                main.show();
             }
         });
 
