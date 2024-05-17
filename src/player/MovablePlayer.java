@@ -148,7 +148,6 @@ public abstract class MovablePlayer {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
                 return;
-                // throw new IllegalArgumentException("Incoming and outgoing pipes should be different.");
             }
 
             Pump pump = (Pump) currentCell.getComponent();
@@ -158,8 +157,6 @@ public abstract class MovablePlayer {
             handleOutput("The direction changed.");
         } else {
             handleOutput("You are not standing on a pump.");
-            return;
-            // throw new IllegalStateException("Current cell does not contain a pump"); // TODO return instead of exception?
         }
     }
 

@@ -195,7 +195,7 @@ public class Plumber extends MovablePlayer {
 
         targetCell.placeComponent(pipe);
         carriedComponent = null;
-        currentCell.getMap().checkForFreeEnds();
+        currentCell.getMap().updateWaterFlow();
         handleOutput("You have successfully installed a Pipe.");
 
         return true;
@@ -230,7 +230,7 @@ public class Plumber extends MovablePlayer {
             }
             targetCell.placeComponent(pump);
             carriedComponent = null;
-            currentCell.getMap().checkForFreeEnds();
+            currentCell.getMap().updateWaterFlow();
             handleOutput("You have successfully installed a Pump.");
 
             return true;
