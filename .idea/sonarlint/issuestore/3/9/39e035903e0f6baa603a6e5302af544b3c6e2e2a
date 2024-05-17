@@ -1,34 +1,40 @@
 
 ¡
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(…Ğğıÿÿÿÿ8ç‹Íò1J$ea077bba-d15e-47d8-b562-b055bdf9e78a
+java:S2293""YReplace the type specification in this constructor call with the diamond operator ("<>").(…Ğğıÿÿÿÿ8éëÍò1J$5d1889aa-50b9-462c-b168-57aa9302e3a4
 œ
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò¥çÌ8è‹Íò1J$60791321-aa0c-439c-b986-cca6bedce0e7
+java:S2293#"YReplace the type specification in this constructor call with the diamond operator ("<>").(Ò¥çÌ8éëÍò1J$d22966a9-4ea8-4113-bead-bba0b53e1842
 ¡
-java:S2293"YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÂıÿÿÿÿ8è‹Íò1J$9aa59971-d753-4e06-8ffb-8cea78e2b949
+java:S2293$"YReplace the type specification in this constructor call with the diamond operator ("<>").(µÂ–µúÿÿÿÿ8éëÍò1J$1b6c0ae4-217b-4b93-8d72-c3bca0cc1a32
+¡
+java:S2293("YReplace the type specification in this constructor call with the diamond operator ("<>").(ªÂıÿÿÿÿ8éëÍò1J$1ff7090c-0c65-4365-920c-124ea66a228f
 ›
-java:S1104"SMake players a static final constant or non-public and provide accessors if needed.(ªÂıÿÿÿÿ8é‹Íò1J$64955014-e5a7-44e5-84d7-738a04d947f2
+java:S1104("SMake players a static final constant or non-public and provide accessors if needed.(ªÂıÿÿÿÿ8êëÍò1J$4d5c0e8e-dcd5-489e-9e47-d20961ffd9d7
 z
-java:S1172$"7Remove these unused method parameters "sizeN", "sizeM".(®Çæ8ñ‹Íò1J$669473ff-3f2b-44c4-a823-056d08e9f333
-~	java:S125%"<This block of commented-out lines of code should be removed.(Ôàˆ 8ñ‹Íò1J$81e98c83-2d1b-4b92-93f7-617e07249e85
+java:S11722"7Remove these unused method parameters "sizeN", "sizeM".(®Çæ8ñëÍò1J$1f028c8e-2593-4ed8-b768-ff107dde23c8
+~	java:S1253"<This block of commented-out lines of code should be removed.(Ôàˆ 8ñëÍò1J$8d798336-1c6e-46a3-bbb9-310f7ffc84b9
 •
-java:S3776@"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8ô‹Íò1J$a3feae6b-3482-4d6a-8354-97eb2ae91ecf
+java:S3776N"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(‚‡ú®8òëÍò1J$051300b4-4868-4d31-aab4-88a7adcf795b
 
-java:S1871Q"LThis branch's code block is the same as the block for the branch on line 78.(ÉÏÕú8õ‹Íò1J$46500da5-03f9-41f3-8ece-e8ce2117f1f1
+java:S1871_"LThis branch's code block is the same as the block for the branch on line 92.(ÉÏÕú8óëÍò1J$75f049f7-8720-455f-8fb8-2a8058d03c71
 Š
-java:S1126Ë"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8÷‹Íò1J$67680c7e-9ed9-44d4-a0a1-e3128a8438a8
-	java:S125í"<This block of commented-out lines of code should be removed.(£›×€8ù‹Íò1J$85bc12d0-f991-4003-84e3-94538e5ba71c
-m	java:S106ú"+Replace this use of System.out by a logger.(Ù„µO8ú‹Íò1J$6d65a780-2cea-4bbe-ac9b-fa36df6adaf6
-m	java:S106ı"+Replace this use of System.out by a logger.(†ÂÆ+8ú‹Íò1J$c4b183e6-6fab-4619-8851-c5a87623ef05
-s	java:S106ÿ"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ú‹Íò1J$429f17b0-cfe0-4b2b-be03-ffe088d96d57
-s	java:S106„"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8ú‹Íò1J$5a36cd74-fed4-48e2-b8f6-7b1281fb29a4
-s	java:S106†"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8ú‹Íò1J$0dbed6d5-352a-4261-9e03-a3de96525e29
-n	java:S106ˆ"+Replace this use of System.out by a logger.(µ÷°”8û‹Íò1J$c0495dc5-198f-412f-b57e-1dc42666d2cb
-s	java:S106Š"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8û‹Íò1J$daf4bd6d-b9a7-4eff-86a3-0d9f884f7c41
-n	java:S106Œ"+Replace this use of System.out by a logger.(†‘Â“8û‹Íò1J$9f42dadb-79dc-4022-9bc6-d8f4f5500be3
-s	java:S106"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8û‹Íò1J$254c6e6f-d3bc-4155-9a85-8daadcc7eb38
-n	java:S106µ"+Replace this use of System.out by a logger.(’ôÆà8ı‹Íò1J$7f23fac4-a262-4884-892b-88e9ee0e8a9f
-n	java:S106·"+Replace this use of System.out by a logger.(Àûå 8ı‹Íò1J$7c8495ae-0dc2-45b2-acb7-a7140f482fbf
+java:S1126Ù"AReplace this if-then-else statement by a single return statement.(úî¶Ãşÿÿÿÿ8õëÍò1J$b0664a1d-1f20-46e9-979c-2a0939f9ad97
+	java:S125û"<This block of commented-out lines of code should be removed.(£›×€8øëÍò1J$a0c7faa6-e8b2-45f0-aca2-46f5e6237190
+›
+java:S3776–"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(êß®ûÿÿÿÿ8úëÍò1J$446a9201-1190-4c7d-a4a2-129d82f0511f
+n	java:S106—"+Replace this use of System.out by a logger.(Û—ÍÃ8ı‹Íò1J$a17f68b8-7a5d-4ba7-ba5c-ceef2a0ce638
+m	java:S106š"+Replace this use of System.out by a logger.(†ÂÆ+8ı‹Íò1J$ff5d4e06-903c-48e6-9efa-006d88828391
+s	java:S106œ"+Replace this use of System.out by a logger.(ªÓ¼áşÿÿÿÿ8ûëÍò1J$a9518b3c-2ff0-495e-96c4-657cd05363ea
+s	java:S106¡"+Replace this use of System.out by a logger.(ÚŒù²ùÿÿÿÿ8ûëÍò1J$83664062-9672-4bb4-857e-ce5576a2e54b
+n	java:S106¥"+Replace this use of System.out by a logger.(ØÜ¶²8ûëÍò1J$96b38123-138e-4ded-907d-48339d412a4d
+s	java:S106§"+Replace this use of System.out by a logger.(Ğ•ô¡üÿÿÿÿ8ûëÍò1J$d7064af6-e658-43e1-a1af-02079a7a2081
+s	java:S106ª"+Replace this use of System.out by a logger.(‚íš“úÿÿÿÿ8ûëÍò1J$218a981e-9601-4b36-9119-00d2fc5c9060
+n	java:S106¬"+Replace this use of System.out by a logger.(µ÷°”8ûëÍò1J$a2b5bc17-af57-45c8-aaec-889b65b2843e
+s	java:S106®"+Replace this use of System.out by a logger.(‚Õä‚ûÿÿÿÿ8ûëÍò1J$f75f5499-27e1-446a-a36d-26ccab772aa4
+n	java:S106°"+Replace this use of System.out by a logger.(†‘Â“8üëÍò1J$388933b5-372b-4c7f-a165-3c4351a2459f
+s	java:S106³"+Replace this use of System.out by a logger.(„–‘§úÿÿÿÿ8üëÍò1J$4d4e6917-ee86-42db-b365-ecbd76554507
+n	java:S106Û"+Replace this use of System.out by a logger.(’ôÆà8ıëÍò1J$328dd819-fe52-45ca-9f0c-dbde6dcae23e
+n	java:S106İ"+Replace this use of System.out by a logger.(Àûå 8şëÍò1J$55ad0ec6-b355-494e-a55d-13083a2a6ebd
 „
-java:S1117È";Rename "springs" which hides the field declared at line 27.(ÅŠĞ‰üÿÿÿÿ8ş‹Íò1J$b65314ad-5a5a-4346-967a-886751e8a7dc
+java:S1117î";Rename "springs" which hides the field declared at line 35.(ÅŠĞ‰üÿÿÿÿ8ş‹Íò1J$583fbdb6-bfb7-4487-92f8-23e60c3a7344
 {
-java:S1068"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8ÿ‹Íò1J$04bda582-c06e-4e6d-8581-af4597844a3e
+java:S1068&"3Remove this unused "numberOfSprings" private field.(ŞÉçóøÿÿÿÿ8ÿëÍò1J$7f9ed900-c84e-45ad-8e71-0e7cddcae7a1

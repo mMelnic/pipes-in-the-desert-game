@@ -19,12 +19,18 @@ import player.Plumber;
 import player.Saboteur;
 
 public class Map {
+    /**
+     * number of rows in the map
+     */
     private int rows = 8; // temporary number
+    /**
+     * number of folumns in map
+     */
     private int columns = 8; // temporary number
     /**
      * This encapsulated attribute represents the matrix of Cell objects that collectively constitute the game map, facilitating comprehensive spatial data management. Initialized by the constructor with the required components in dependence with the chosen map.
      */
-    private Cell[][] cells = new Cell[rows][columns];
+    private Cell[][] cells = new Cell[rows][columns]; // actual map
     private List<Cistern> cisterns = new ArrayList<Cistern>();
     private List<Spring> springs = new ArrayList<Spring>();
     private List<Pump> pumps = new ArrayList<Pump>();
@@ -36,6 +42,11 @@ public class Map {
 
     String size;
 
+    /**
+     * constructor that 
+     * @param sizeN
+     * @param sizeM
+     */
     public Map(int sizeN, int sizeM){
         // rows = sizeN;
         // columns = sizeM;
