@@ -12,11 +12,9 @@ public class TeamSelectionWindow {
 
     private JFrame frame;
     private GameManager gameManager;
-    private MainWindow mainWindow;
 
-    public TeamSelectionWindow(GameManager gameManager, MainWindow mainWindow) {
+    public TeamSelectionWindow(GameManager gameManager) {
         this.gameManager = gameManager;
-        this.mainWindow = mainWindow;
         initialize();
     }
 
@@ -46,8 +44,8 @@ public class TeamSelectionWindow {
                 gameManager.setActiveTeam(0); // Set to Plumbers
                 gameManager.startGame();
                 frame.dispose();
-                MapWindow mapWindow = new MapWindow();
-                mapWindow.show();
+               
+
             }
         });
 
@@ -57,16 +55,16 @@ public class TeamSelectionWindow {
                 gameManager.setActiveTeam(1); // Set to Saboteurs
                 gameManager.startGame();
                 frame.dispose();
-                MapWindow mapWindow = new MapWindow();
-                mapWindow.show();
+                
+
             }
         });
 
         returnBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose(); 
-            
+                frame.dispose();
+
             }
         });
 

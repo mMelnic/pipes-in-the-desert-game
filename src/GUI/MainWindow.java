@@ -69,7 +69,7 @@ public class MainWindow {
 
     public void showTeams() {
         frame.dispose();
-        TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager, this);
+        MapSelectionWindow teamSelectionWindow = new MapSelectionWindow(gameManager);
         teamSelectionWindow.show();
     }
 

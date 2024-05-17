@@ -19,6 +19,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import GUI.MainWindow;
+import GUI.MapWindow;
 import jdk.jshell.spi.ExecutionControl;
 import player.MovablePlayer;
 import player.Plumber;
@@ -119,6 +120,8 @@ public class GameManager implements ICisternListener
         map.getCells(0, 1).setPlayerOn(false);
     
         map.initializeMap();
+        MapWindow mapWindow = new MapWindow();
+        mapWindow.show();
 
         for (Cistern cistern : map.getCisterns()) {
             cistern.addCisternFullListener(this);
@@ -128,6 +131,8 @@ public class GameManager implements ICisternListener
         manufactureComponents();
 
         String inputText;
+
+        
        
         GAME_LOOP: while (!isTimeUp && !checkIfAllCisternsAreFull())
         {
@@ -613,68 +618,84 @@ public class GameManager implements ICisternListener
         }
         return true;
     }
+    public void selectMapSize(int size) {
+        switch (size) {
+            case 5:
+                map = new Map(8, 8);
+                break;
+            case 10:
+                map = new Map(9, 9);
+                break;
+            case 15:
+                map = new Map(11, 11);
+                break;
+            default:
+                System.out.println("Invalid map size.");
+                break;
+        }
+    }
 
      /**
      * Shows available maps.
      */
-    public void showMaps() 
-    {
-        String message = "                === MAPS ===               \n\n\n"
-                       + "Choose the map size:\n"
-                       + "1. Small\n"
-                       + "2. Medium\n"
-                       + "3. Large\n"
-                       + "4. Return to the main menu.\n\n";
+    // public void showMaps() 
+    // {
+    //     String message = "                === MAPS ===               \n\n\n"
+    //                    + "Choose the map size:\n"
+    //                    + "1. Small\n"
+    //                    + "2. Medium\n"
+    //                    + "3. Large\n"
+    //                    + "4. Return to the main menu.\n\n";
 
-        System.out.print(message);
-        writeToOutputTxt(message);
+    //     System.out.print(message);
+    //     writeToOutputTxt(message);
 
-        String inputText = "";
-        int input = 0;
+    //     String inputText = "";
+    //     int input = 0;
 
-        MAPS_MENU_LOOP: do
-        {
-            try
-            {
-                inputText = receiveInput();
-                input = Integer.parseInt(inputText);
-            }
-            catch (Exception exception)
-            {
-                String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                continue;
-            }
+    //     MAPS_MENU_LOOP: do
+    //     {
+    //         try
+    //         {
+    //             inputText = receiveInput();
+    //             input = Integer.parseInt(inputText);
+    //         }
+    //         catch (Exception exception)
+    //         {
+    //             String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+    //             System.out.print(message);
+    //             writeToOutputTxt(message);
+    //             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //             continue;
+    //         }
 
-            switch (input)
-            {
-                case 1 -> {
-                    map = new Map(5, 5);
-                }
-                case 2 -> {
-                    map = new Map(10, 10);
-                }
-                case 3 -> {
-                    map = new Map(15, 15);
-                }
-                case 4 -> {
-                    break MAPS_MENU_LOOP;
-                }
-                default -> {
-                    String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
-                    System.out.print(message);
-                    writeToOutputTxt(message);
-                    try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                    continue;
-                }
-            }
-            showTeams();
-        }
-        while (input != 1 && input != 2 && input != 3);
+    //         switch (input)
+    //         {
+    //             case 1 -> {
+    //                 map = new Map(5, 5);
+    //             }
+    //             case 2 -> {
+    //                 map = new Map(10, 10);
+    //             }
+    //             case 3 -> {
+    //                 map = new Map(15, 15);
+    //             }
+    //             case 4 -> {
+    //                 break MAPS_MENU_LOOP;
+    //             }
+    //             default -> {
+    //                 String errorMessage = "\nPlease enter 1, 2, 3, or 4.\n\n\n\n\n";
+    //                 System.out.print(message);
+    //                 writeToOutputTxt(message);
+    //                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+    //                 continue;
+    //             }
+    //         }
+    //         showTeams();
+    //     }
+    //     while (input != 1 && input != 2 && input != 3);
         
-    }
+    // }
     public void setActiveTeam(int teamIndex) {
         if (teamIndex == 0) { // Plumbers
             activePlayer = teams.get(0).getPlayers().get(0);
