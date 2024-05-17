@@ -5,6 +5,7 @@ import components.Cistern;
 import components.Pump;
 import components.Pipe;
 import components.Spring;
+import player.MovablePlayer;
 
 import java.util.List;
 
@@ -92,6 +93,8 @@ public class MapWindow {
                         g.setColor(new Color(128, 0, 128)); 
                         g.fillRect(x, y, squareSize, squareSize); 
                     }
+                    
+                  
                 }
             }
         }

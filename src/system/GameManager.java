@@ -675,6 +675,17 @@ public class GameManager implements ICisternListener
         while (input != 1 && input != 2 && input != 3);
         
     }
+    public void setActiveTeam(int teamIndex) {
+        if (teamIndex == 0) { // Plumbers
+            activePlayer = teams.get(0).getPlayers().get(0);
+            activePlumber = (Plumber) teams.get(0).getPlayers().get(0);
+            activeSaboteur = null;
+        } else if (teamIndex == 1) { // Saboteurs
+            activePlayer = teams.get(1).getPlayers().get(0);
+            activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
+            activePlumber = null;
+        }
+    }
 
     /**
      * Shows available teams.

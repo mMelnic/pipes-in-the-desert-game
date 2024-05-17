@@ -32,7 +32,7 @@ public class MainWindow {
         JButton startButton = new JButton("Start");
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                showMapWindow();
+                showTeams();
                 
             }
         });
@@ -61,11 +61,17 @@ public class MainWindow {
         KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow();
         keyBindingsWindow.show();
     }
-    private void showMapWindow() {
-        frame.dispose(); 
-    MapWindow mapWindow = new MapWindow();
-    mapWindow.show();
+    // private void showMapWindow() {
+    //     frame.dispose(); 
+    // MapWindow mapWindow = new MapWindow();
+    // mapWindow.show();
+    // }
+
+    public void showTeams() {
+        TeamSelectionWindow teamSelectionWindow = new TeamSelectionWindow(gameManager, this);
+        teamSelectionWindow.show();
     }
+
 
     public void show() {
         frame.setVisible(true);
