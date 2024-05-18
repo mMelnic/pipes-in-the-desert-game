@@ -114,12 +114,12 @@ public class MapWindow {
                         mapPanel.add(pv);
                         mapPanel.setComponentZOrder(pv, 0); // Places component1 at index 0 in the Z-order
                     } else if (cell.getComponent() instanceof Pump) {
-                        g.setColor(Color.BLUE);
-                        g.fillRect(x, y, squareSize, squareSize);
-                        // PumpView pumpView = new PumpView((Pump)cell.getComponent());
-                        // pumpView.setBounds(x, y, squareSize, squareSize);
-                        // mapPanel.add(pumpView);
-                        // mapPanel.setComponentZOrder(pumpView, 0);
+                        // g.setColor(Color.BLUE);
+                        // g.fillRect(x, y, squareSize, squareSize);
+                        PumpView pumpView = new PumpView((Pump)cell.getComponent());
+                        pumpView.setBounds(x, y, squareSize, squareSize);
+                        mapPanel.add(pumpView);
+                        mapPanel.setComponentZOrder(pumpView, 0);
                     } else if (cell.getComponent() instanceof Cistern) {
                         g.setColor(Color.PINK);
                         g.fillRect(x, y, squareSize, squareSize);
