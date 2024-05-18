@@ -7,15 +7,17 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+import components.Pipe;
 import components.Pump;
+import enumerations.Direction;
 
 public class PumpView extends JPanel {
     private Pump pump;
-    private Map<Integer, BufferedImage> imagesNormal;
-    private Map<Integer, BufferedImage> imagesLeaking;
-    private Map<Integer, BufferedImage> imagesBroken;
-    private Map<Integer, BufferedImage> imagesReservoirFull;
-    private Map<Integer, BufferedImage> imagesReservoirFilling;
+    private BufferedImage imageNormal;
+    private BufferedImage imageLeaking;
+    private BufferedImage imageBroken;
+    private BufferedImage imageReservoirFull;
+    private BufferedImage imageReservoirFilling;
 
     public PumpView(Pump pump) {
         this.pump = pump;
@@ -26,15 +28,12 @@ public class PumpView extends JPanel {
     }
 
     private void initializeImages() {
-        // Load images for each state and number of connectable pipes
         try {
-            for (int i = 1; i <= 4; i++) { // Assuming a pump can have 1 to 4 connectable pipes
-                imagesNormal.put(i, loadImage("/resources/pumpImages/pump_" + i + "_normal.png"));
-                imagesLeaking.put(i, loadImage("/resources/pumpImages/pump_" + i + "_leaking.png"));
-                imagesBroken.put(i, loadImage("/resources/pumpImages/pump_" + i + "_broken.png"));
-                imagesReservoirFull.put(i, loadImage("/resources/pumpImages/pump_" + i + "_reservoir_full.png"));
-                imagesReservoirFilling.put(i, loadImage("/resources/pumpImages/pump_" + i + "_reservoir_filling.png"));
-            }
+            imageNormal = loadImage("/resources/pumpImages/pump_normal.png");
+            imageLeaking = loadImage("/resources/pumpImages/pump_leaking.png");
+            imageBroken = loadImage("/resources/pumpImages/pump_broken.png");
+            imageReservoirFull = loadImage("/resources/pumpImages/pump_reservoir_full.png");
+            imageReservoirFilling = loadImage("/resources/pumpImages/pump_reservoir_filling.png");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,26 +50,78 @@ public class PumpView extends JPanel {
         int openings = pump.getConnectablePipesNumber();
 
         // Determine the image based on the pump's state
-        BufferedImage pumpImage = null;
-        if (pump.isLeaking()) {
-            pumpImage = imagesLeaking.get(openings);
+        BufferedImage imageToDraw = null;
+
+        if (pump.isBroken()) {
+            imageToDraw = imageBroken;
+        } else if (pump.isLeaking()) {
+            imageToDraw = imageLeaking;
         } else if (pump.isReservoirFull()) {
-            pumpImage = imagesReservoirFull.get(openings);
-        } else if (pump.isBroken()) {
-            pumpImage = imagesBroken.get(openings);
-        } else if (pump.isFilling()) { 
-            pumpImage = imagesReservoirFilling.get(openings);
+            imageToDraw = imageReservoirFull;
+        } else if (pump.isFilling()) { // Assuming you have a method to check if the pump is filling
+            imageToDraw = imageReservoirFilling;
         } else {
-            pumpImage = imagesNormal.get(openings);
+            imageToDraw = imageNormal;
         }
 
         // Draw the pump image
-        if (pumpImage != null) {
-            int imageWidth = pumpImage.getWidth();
-            int imageHeight = pumpImage.getHeight();
-            int x = (getWidth() - imageWidth) / 2;
-            int y = (getHeight() - imageHeight) / 2;
-            g.drawImage(pumpImage, x, y, this);
+        if (imageToDraw != null) {
+            int x = (getWidth() - imageToDraw.getWidth()) / 2;
+            int y = (getHeight() - imageToDraw.getHeight()) / 2;
+            g.drawImage(imageToDraw, x, y, this);
+        }
+
+        // Draw the number of openings
+        String openingsText = String.valueOf(openings);
+        FontMetrics fm = g.getFontMetrics();
+        int textWidth = fm.stringWidth(openingsText);
+        int textHeight = fm.getHeight();
+        int textX = (getWidth() - textWidth) / 2;
+        int textY = (getHeight() - textHeight) / 2 + fm.getAscent();
+        g.setColor(Color.WHITE);
+        g.drawString(openingsText, textX, textY);
+        // Draw connected pipes
+        drawConnectedPipes(g);
+    }
+
+    private void drawConnectedPipes(Graphics g) {
+        int margin = 5; // Margin from the edge of the panel
+        int fontSize = 14; // Font size for drawing letters
+        Font font = new Font("Arial", Font.BOLD, fontSize);
+        g.setFont(font);
+
+        for (Direction direction : pump.getConnectedComponents().keySet()) {
+            int x, y;
+
+            // Calculate the position based on the direction
+            switch (direction) {
+                case UP:
+                    x = (getWidth() - fontSize) / 2;
+                    y = margin;
+                    break;
+                case DOWN:
+                    x = (getWidth() - fontSize) / 2;
+                    y = getHeight() - margin - fontSize;
+                    break;
+                case LEFT:
+                    x = margin;
+                    y = (getHeight() - fontSize) / 2 + fontSize;
+                    break;
+                case RIGHT:
+                    x = getWidth() - margin - fontSize;
+                    y = (getHeight() - fontSize) / 2 + fontSize;
+                    break;
+                default:
+                    continue; // Skip if direction is invalid
+            }
+
+            components.Component componentToCheck = pump.getConnectedComponents().get(direction);
+            // Draw the letter "I" or "O" based on the direction
+            if (componentToCheck instanceof Pipe) {
+                Pipe pipe = (Pipe)componentToCheck;
+                String letter = (pipe == pump.getIncomingPipe()) ? "I" : "O";
+                g.drawString(letter, x, y);
+            }
         }
     }
 }
