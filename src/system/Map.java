@@ -5,11 +5,16 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
+
+import enumerations.Direction;
+import java.io.File;  // Import the File class
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
 import java.util.Set;
 
 import enumerations.Direction;
@@ -39,11 +44,13 @@ public class Map {
         for (int i = 0; i < cells.length; i++) {
             for (int j = 0; j < cells[i].length; j++) {
                 cells[i][j] = new Cell(i, j);
+
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
             }
         }
     }
+
 
     /**
      * Initializes the map by placing cisterns, springs, pipes, and pumps on the map
@@ -115,8 +122,55 @@ public class Map {
                     }
                 }
 
-            }
+
+        /*
+        |c|p|p|p| | | |s|
+        | | | | |x| | | |
+        | | |x| | | | | |
+        | | |p| | | | | |
+        | | |p|p|c| | | |
+        | | | | | | | | |
+        | | | | | | | | |
+        |s| | | | | | |c|
+         */
+        try
+        {
+            newCistern1.addConnectedComponent(newPipe1, Direction.RIGHT);
+            newPipe1.addConnectedComponent(newCistern1, Direction.LEFT);
+
+            newPipe1.addConnectedComponent(newPipe2, Direction.RIGHT);
+            newPipe2.addConnectedComponent(newPipe1, Direction.LEFT);
+
+            newPipe2.addConnectedComponent(newPipe3, Direction.RIGHT);
+            newPipe3.addConnectedComponent(newPipe2, Direction.LEFT);
+            
+            newPipe3.addConnectedComponent(newPipe7, Direction.RIGHT);
+            newPipe7.addConnectedComponent(newPipe3, Direction.LEFT);
+
+            newPipe7.addConnectedComponent(pump1, Direction.DOWN);
+            pump1.addConnectedComponent(newPipe7, Direction.UP);
+
+            pump2.addConnectedComponent(newPipe4, Direction.DOWN);
+            newPipe4.addConnectedComponent(pump2, Direction.UP);
+
+            newPipe4.addConnectedComponent(newPipe5, Direction.DOWN);
+            newPipe5.addConnectedComponent(newPipe4, Direction.UP);
+
+            newPipe5.addConnectedComponent(newPipe6, Direction.RIGHT);
+            newPipe6.addConnectedComponent(newPipe5, Direction.LEFT);
+
+            newPipe6.addConnectedComponent(pump2, Direction.RIGHT);
+            pump2.addConnectedComponent(newPipe6, Direction.LEFT);
         }
+        catch (Exception ex) {}
+        
+        
+        cisterns.add(newCistern1);
+        cisterns.add(newCistern2);
+        cisterns.add(newCistern3);
+
+        springs.add(newSpring1);
+        springs.add(newSpring2);
     }
 
     /**
@@ -265,6 +319,7 @@ public class Map {
         }
     }
 
+
     /**
      * Retrieves the cell located below the specified cell on the map grid.
      * 
@@ -273,6 +328,7 @@ public class Map {
      *         neighbor exists.
      */
     public Cell getDownwardCell(Cell currentCell) {
+
         int row = -1;
         int col = -1;
         // Find the coordinates of the given cell
@@ -368,6 +424,7 @@ public class Map {
         return returnList;
     }
 
+
     /**
      * Retrieves the list of pumps present on the map.
      * 
@@ -378,20 +435,24 @@ public class Map {
             for (Cell cell : cells[i]) {
                 if (cell.getComponent() instanceof Pump) {
                     pumps.add((Pump) cell.getComponent());
+
                 }
             }
         }
         return pumps;
     }
 
+
     /**
      * Draws the map by printing its contents to the console and writing them to a
      * file.
      */
     public void draw() {
+
         printMap();
         outputMap();
     }
+
 
     /**
      * Prints the map to the console.
@@ -401,14 +462,17 @@ public class Map {
      */
     public void printMap() {
         System.out.println("c - cistern; p - pipe; x - pump; s - spring");
+
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
         }
         System.out.println();
+
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < columns; j++) {
                 if (cells[i][j].isEmpty) {
                     System.out.print("| ");
+
                 }  else {
                     if (cells[i][j].isPlayerOn()) {
                         System.out.print("|*"); // Print player symbol
@@ -443,11 +507,13 @@ public class Map {
                             System.out.print("|x");
                         }
                     }
+
                 }
             }
             System.out.println("|");
         }
     }
+
 
     /**
      * Outputs the map to a text file named "output.txt".
@@ -471,7 +537,9 @@ public class Map {
                     if (cells[i][j].isEmpty) {
                         myWriter.append("  ");
                     } else if (cells[i][j].isPlayerOn()) {
+
                             myWriter.append("* ");
+
                     } else if (cells[i][j].getComponent() instanceof Cistern) {
                         myWriter.append("c ");
                     } else if (cells[i][j].getComponent() instanceof Pipe) {
@@ -498,6 +566,7 @@ public class Map {
         }
     }
 
+
     /**
      * Retrieves the list of cisterns present on the map.
      * 
@@ -518,6 +587,7 @@ public class Map {
    
     public Cell getCells(int row, int col) {
         return cells[row][col];
+
     }
 
     public void setPlumberScorer(PlumberScorer plumberScorer) {

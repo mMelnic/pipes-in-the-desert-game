@@ -1,8 +1,11 @@
 
 Œ
-java:S2095¤"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ê¨ã‡8÷×Î±ò1J$af97fc14-5637-4316-811d-f91f8aad9453
-r	java:S1061"+Replace this use of System.out by a logger.(Œ¯Š¬ýÿÿÿÿ8«ÖÏÉò1J$06fc9f22-12af-4c3c-8633-d53d24c2090e
+java:S2095©"HUse try-with-resources or close this "FileWriter" in a "finally" clause.(Ê¨ã‡8÷×Î±ò1J$06c923b6-18ec-46df-bddc-98ab678616a3
+r	java:S1061"+Replace this use of System.out by a logger.(Œ¯Š¬ýÿÿÿÿ8«ÖÏÉò1J$0fdd746a-4f7b-4b36-90cf-faafc2a13e92
+t
+java:S3776L"RRefactor this method to reduce its Cognitive Complexity from 17 to the 15 allowed.(ŽÊðÛüÿÿÿÿ8’ìŽÍò1
+^	java:S125’"<This block of commented-out lines of code should be removed.(š¹âöüÿÿÿÿ8”ìŽÍò1
 v
-java:S1135—"2Complete the task associated to this TODO comment.(Ù—Ÿü8„óÇ¼ò1J$aed1c5bc-ddd1-4daa-8a7d-41dc5cccca58
-s	java:S106¢"+Replace this use of System.out by a logger.(øºÑûúÿÿÿÿ8¢›ÙÉò1J$33ed54b3-08f0-4f46-997b-266ca355a6d5
-n	java:S106¨"+Replace this use of System.err by a logger.(šïðÕ8„ØÎ±ò1J$e44d230b-5c8e-42f9-961c-fa9d238ec238
+java:S1135œ"2Complete the task associated to this TODO comment.(´¿š˜8„óÇ¼ò1J$b1e95c21-fd35-4bf2-9088-3c7abedc79e1
+s	java:S106§"+Replace this use of System.out by a logger.(øºÑûúÿÿÿÿ8¢›ÙÉò1J$16f04a19-ee08-416d-95e2-11f6beaa0d89
+n	java:S106­"+Replace this use of System.err by a logger.(šïðÕ8„ØÎ±ò1J$1702a79a-ab75-450a-bcae-6b1379e640b5

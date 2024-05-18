@@ -17,6 +17,7 @@
             "request": "launch",
             "mainClass": "Main",
             "projectName": "pipes-in-the-desert-prototype-correction-branch_81caf9f9"
+
         },
         {
             "type": "java",
