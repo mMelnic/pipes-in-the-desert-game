@@ -1,0 +1,219 @@
+
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+There is no component available at the cistern.
+Moved LEFT to row 0 and column 5
+You cannot move there.
+Moved RIGHT to row 0 and column 6
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You have picked a Pipe
+Moved LEFT to row 0 and column 5
+You cannot move there.
+You have successfully installed a Pipe.
+Moved RIGHT to row 0 and column 6
+You have picked a Pipe
+Moved LEFT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+You cannot move there.
+You cannot move there.
+You have successfully installed a Pipe.
+Moved UP to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You cannot move there.
+Moved LEFT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 1
+Moved LEFT to row 0 and column 0
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+Moved UP to row 0 and column 5
+Moved RIGHT to row 0 and column 1
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You cannot move there.
+Moved RIGHT to row 0 and column 2
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 3
+You cannot move there.
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 6
+You cannot move there.
+Moved RIGHT to row 0 and column 5
+You cannot move there.
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+You cannot move there.
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 0
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 1
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 6
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+You cannot move there.
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 1
+Moved LEFT to row 0 and column 0
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved RIGHT to row 0 and column 1
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 6
+Moved RIGHT to row 0 and column 4
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 5
+You cannot move there.
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+Moved RIGHT to row 0 and column 6
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 4
+Moved DOWN to row 1 and column 4
+Moved UP to row 0 and column 4
+Moved DOWN to row 1 and column 4
+Moved UP to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+Moved LEFT to row 0 and column 0
+Moved LEFT to row 0 and column 5
+You cannot move there.
+Moved RIGHT to row 0 and column 1
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+Moved UP to row 0 and column 5
+                === PIPES IN THE DESERT ===               
+
+
+1. Start
+2. Key bindings
+3. Exit
+
+                === MAPS ===               
+
+
+Choose the map size:
+1. Small
+2. Medium
+3. Large
+4. Return to the main menu.
+
+                === TEAMS ===               
+
+
+1. Plumbers
+2. Saboteurs
+3. Return to the main menu.
+
+c - cistern; p - pipe; x - pump; s - spring
+________________
+|c |p |p |p |p |  |  |s |
+|  |  |  |  |x |  |  |  |
+|  |  |x |  |  |  |  |  |
+|  |  |p |  |  |  |  |  |
+|  |  |p |p |c |  |  |  |
+|  |  |  |  |  |  |  |  |
+|  |  |  |  |  |  |  |  |
+|s |  |  |  |  |  |  |c |
+________________
