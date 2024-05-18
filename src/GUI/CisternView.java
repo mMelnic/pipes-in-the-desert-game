@@ -15,6 +15,8 @@ public class CisternView extends JPanel {
     private BufferedImage cisternWithoutComponentImage;
     private BufferedImage cisternWithPipeImage;
     private BufferedImage cisternWithPumpImage;
+    private BufferedImage cisternFillingImage;
+    private BufferedImage cisternFullImage;
 
     public CisternView(Cistern cistern) {
         this.cistern = cistern;
@@ -26,10 +28,11 @@ public class CisternView extends JPanel {
 
     private void loadImages() {
         try {
-            cisternWithoutComponentImage = ImageIO
-                    .read(getClass().getResource("/resources/images/cistern_without_component.png"));
-            cisternWithPipeImage = ImageIO.read(getClass().getResource("/resources/images/cistern_with_pipe.png"));
-            cisternWithPumpImage = ImageIO.read(getClass().getResource("/resources/images/cistern_with_pump.png"));
+            cisternWithoutComponentImage = ImageIO.read(getClass().getResource("/resources/images/cisternView.png"));
+            cisternWithPipeImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_manufacturedPipe.png"));
+            cisternWithPumpImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_manufacturedPump.png"));
+            cisternFillingImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_filling.png"));
+            cisternFullImage = ImageIO.read(getClass().getResource("/resources/images/citernView_full.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -43,10 +46,18 @@ public class CisternView extends JPanel {
 
     private void renderCistern(Graphics g) {
         BufferedImage imageToDraw = cisternWithoutComponentImage;
+        BufferedImage fillStateImageToDraw = null;
         if (cistern.getManufacturedComponent() instanceof Pipe) {
             imageToDraw = cisternWithPipeImage;
         } else if (cistern.getManufacturedComponent() instanceof Pump) {
             imageToDraw = cisternWithPumpImage;
+        }
+
+        if (cistern.getIsCisternFilling()) {
+            fillStateImageToDraw = cisternFillingImage;
+        }
+        else if (cistern.getIsCisternFull()) {
+            fillStateImageToDraw = cisternFullImage;
         }
 
         if (imageToDraw != null) {
@@ -55,6 +66,9 @@ public class CisternView extends JPanel {
             int x = (getWidth() - imageWidth) / 2;
             int y = (getHeight() - imageHeight) / 2;
             g.drawImage(imageToDraw, x, y, this);
+            if (fillStateImageToDraw != null) {
+                g.drawImage(fillStateImageToDraw, x, y, this);
+            }
         }
     }
 }

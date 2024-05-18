@@ -2,12 +2,14 @@ package GUI;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import system.Map;
+
 
 import components.Cistern;
 import components.Component;
@@ -22,13 +24,16 @@ public class PlumberController extends KeyAdapter {
     private Plumber plumberPlayer1;
     private PlumberView plumberView1;
     private JPanel mapPanel;
+
     private Pipe selectedPipe = null;
     private static final int CELL_SIZE = 80;
+
 
     public PlumberController(Plumber plumberPlayer1, JPanel mapPanel) {
         this.plumberPlayer1 = plumberPlayer1;
         this.plumberView1 = new PlumberView(plumberPlayer1);
         this.mapPanel = mapPanel;
+
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
@@ -104,6 +109,8 @@ public class PlumberController extends KeyAdapter {
         }
         SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
+
+ 
 
     private void attemptRepairAction() {
         // Get the current cell the player is standing on

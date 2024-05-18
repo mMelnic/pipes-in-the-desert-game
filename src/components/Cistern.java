@@ -248,6 +248,14 @@ public class Cistern extends Component implements IWaterFlowListener {
         return isCisternFull;
     }
 
+    public boolean getIsCisternFilling() {
+        return isFilling;
+    }
+
+    public void setIsCisternFilling(boolean isFillingState) {
+        isFilling = isFillingState;
+    }
+
     /**
      * a method that sets attribute of a cistern is full
      * 

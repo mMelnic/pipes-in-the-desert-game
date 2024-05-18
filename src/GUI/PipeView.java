@@ -39,18 +39,22 @@ public class PipeView extends JPanel {
         try {
             for (Shapes shape : Shapes.values()) {
                 if (shape == Shapes.HORIZONTAL) {
-                    
-                
-                pipeImagesNormal.put(shape,
-                        loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_normal.png")); }
+
+                    pipeImagesNormal.put(shape,
+                            loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + ".png"));
+                }
                 // pipeImagesLeaking.put(shape,
-                //         loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_leaking.png"));
+                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
+                // "_leaking.png"));
                 // pipeImagesBroken.put(shape,
-                //         loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_broken.png"));
+                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
+                // "_broken.png"));
                 // pipeImagesWaterFlowing.put(shape,
-                //         loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_water_flowing.png"));
+                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
+                // "_water_flowing.png"));
                 // pipeImagesFull.put(shape,
-                //         loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_full.png"));
+                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
+                // "_full.png"));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -76,13 +80,13 @@ public class PipeView extends JPanel {
         BufferedImage imageToDraw = pipeImagesNormal.get(shape);
 
         // if (pipeModel.isLeaking() || pipeModel.isFreeEndLeaking()) {
-        //     imageToDraw = pipeImagesLeaking.get(shape);
+        // imageToDraw = pipeImagesLeaking.get(shape);
         // } else if (pipeModel.isBroken()) {
-        //     imageToDraw = pipeImagesBroken.get(shape);
+        // imageToDraw = pipeImagesBroken.get(shape);
         // } else if (pipeModel.isFull()) {
-        //     imageToDraw = pipeImagesFull.get(shape);
+        // imageToDraw = pipeImagesFull.get(shape);
         // } else if (pipeModel.isWaterFlowing()) {
-        //     imageToDraw = pipeImagesWaterFlowing.get(shape);
+        // imageToDraw = pipeImagesWaterFlowing.get(shape);
         // }
 
         if (imageToDraw != null) {
