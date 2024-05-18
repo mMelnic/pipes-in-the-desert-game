@@ -9,9 +9,5 @@ public enum Shapes {
     CORNER_RIGHT_UP,
     CORNER_LEFT_DOWN,
     CORNER_RIGHT_DOWN,
-    T_UP,
-    T_DOWN,
-    T_RIGHT,
-    T_LEFT,
     CROSS
 }
