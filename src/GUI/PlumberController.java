@@ -40,9 +40,6 @@ public class PlumberController extends KeyAdapter {
             case KeyEvent.VK_RIGHT:
                 plumberPlayer1.move(Direction.RIGHT);
                 break;
-            case KeyEvent.VK_R:
-                plumberPlayer1.repairPump();
-                break;
             case KeyEvent.VK_ENTER:
                 attemptRepairAction();
                 break;
