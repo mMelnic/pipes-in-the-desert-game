@@ -122,12 +122,12 @@ public class GameManager implements ICisternListener
         map.initializeMap();
        
 
-        // for (Cistern cistern : map.getCisterns()) {
-        //     cistern.addCisternFullListener(this);
-        // }
+        for (Cistern cistern : map.getCisterns()) {
+             cistern.addCisternFullListener(this);
+        }
 
         // startTimer();
-        // manufactureComponents();
+        manufactureComponents();
 
         // String inputText;
 
@@ -696,15 +696,9 @@ public class GameManager implements ICisternListener
         
     // }
     public void setActiveTeam(int teamIndex) {
-        if (teamIndex == 0) { // Plumbers
-            activePlayer = teams.get(0).getPlayers().get(0);
-            activePlumber = (Plumber) teams.get(0).getPlayers().get(0);
-            activeSaboteur = null;
-        } else if (teamIndex == 1) { // Saboteurs
-            activePlayer = teams.get(1).getPlayers().get(0);
-            activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
-            activePlumber = null;
-        }
+        // activePlayer = teams.get(0).getPlayers().get(0);
+        activePlumber = (Plumber) teams.get(0).getPlayers().get(0);
+        activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
     }
 
     /**
@@ -929,5 +923,17 @@ public class GameManager implements ICisternListener
                 }
             }
         }, 1000 * 30, 1000 * 30);
+    }
+
+    public Map getMap() {
+        return map;
+    }
+
+    public Plumber getActivePlumber() {
+        return activePlumber;
+    }
+
+    public Saboteur getActiveSaboteur() {
+        return activeSaboteur;
     }
 }
