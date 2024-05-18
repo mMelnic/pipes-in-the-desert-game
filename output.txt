@@ -1,3 +1,2 @@
 Moved RIGHT to row 0 and column 4
 Moved RIGHT to row 0 and column 5
-Moved RIGHT to row 0 and column 6

@@ -73,20 +73,22 @@ public class PumpView extends JPanel {
 
         // Draw the number of openings
         String openingsText = String.valueOf(openings);
+        g.setFont(new Font("Arial", Font.BOLD, 35)); // Set a custom font, bold style, and size 24
         FontMetrics fm = g.getFontMetrics();
         int textWidth = fm.stringWidth(openingsText);
         int textHeight = fm.getHeight();
         int textX = (getWidth() - textWidth) / 2;
-        int textY = (getHeight() - textHeight) / 2 + fm.getAscent();
-        g.setColor(Color.WHITE);
+        int textY = (getHeight() - textHeight) / 2 + fm.getAscent() + 17;
+        g.setColor(Color.RED); // Set the color to red
         g.drawString(openingsText, textX, textY);
+
         // Draw connected pipes
         drawConnectedPipes(g);
     }
 
     private void drawConnectedPipes(Graphics g) {
-        int margin = 5; // Margin from the edge of the panel
-        int fontSize = 14; // Font size for drawing letters
+        int margin = 0; // Margin from the edge of the panel
+        int fontSize = 25; // Font size for drawing letters
         Font font = new Font("Arial", Font.BOLD, fontSize);
         g.setFont(font);
 
@@ -105,11 +107,11 @@ public class PumpView extends JPanel {
                     break;
                 case LEFT:
                     x = margin;
-                    y = (getHeight() - fontSize) / 2 + fontSize;
+                    y = (getHeight() - fontSize) / 2 + fontSize + 10;
                     break;
                 case RIGHT:
-                    x = getWidth() - margin - fontSize;
-                    y = (getHeight() - fontSize) / 2 + fontSize;
+                    x = getWidth() - margin - fontSize + 10;
+                    y = (getHeight() - fontSize) / 2 + fontSize + 10;
                     break;
                 default:
                     continue; // Skip if direction is invalid
@@ -119,7 +121,7 @@ public class PumpView extends JPanel {
             // Draw the letter "I" or "O" based on the direction
             if (componentToCheck instanceof Pipe) {
                 Pipe pipe = (Pipe)componentToCheck;
-                String letter = (pipe == pump.getIncomingPipe()) ? "I" : "O";
+                String letter = (pipe == pump.getIncomingPipe()) ? "P" : "P";
                 g.drawString(letter, x, y);
             }
         }
