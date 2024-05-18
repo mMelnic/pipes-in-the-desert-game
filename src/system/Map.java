@@ -4,19 +4,13 @@ import components.Cistern;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
+import enumerations.Direction;
 import java.io.File;  // Import the File class
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import enumerations.Direction;
-import exceptions.CisternMultipleComponentsConnectedException;
-import exceptions.PumpConnectablePipeNumberExceedException;
-import exceptions.SpringMultipleComponensConnectedException;
 import player.MovablePlayer;
-import player.Plumber;
-import player.Saboteur;
 
 public class Map {
     /**
@@ -53,52 +47,95 @@ public class Map {
 
         for (int i = 0; i < cells.length; i++)
         {
-            for (int j = 0; j < cells[i].length; j++) {
-                cells[i][j] = new Cell(i, j);
+            for (int j = 0; j < cells[i].length; j++) 
+            {
+                cells[i][j] = new Cell(i,j);
                 cells[i][j].map = this;
                 cells[i][j].isEmpty = true;
-                try {
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.LEFT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.RIGHT);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.DOWN);
-                    cells[i][j].getComponent().addConnectedComponent(cells[i][j].getComponent(), Direction.UP);
-                } catch (PumpConnectablePipeNumberExceedException e) {
-                    e.printStackTrace();
-                } catch (CisternMultipleComponentsConnectedException e) {
-                    e.printStackTrace();
-                } catch (SpringMultipleComponensConnectedException e) {
-                    e.printStackTrace();
-                }
             }
-
-
         }
     }
 
     public void initializeMap(){
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < columns; j++) {
-                if (j == rows-1){
-                    Cistern newCistern = new Cistern();
-                    cells[i][j].placeComponent(newCistern);
-                    cisterns.add(newCistern);
-                }
-                else if (i == 2 && j == 2 || i == 5 && j == 6){
-                    Spring newSpring = new Spring();
-                    cells[i][j].placeComponent(newSpring);
-                    springs.add(newSpring);
-                }
-                else if (i == 0 || j == columns -1){
-                    if (j != 0){
-                        Pipe newPipe = new Pipe();
-                        cells[i][j].placeComponent(newPipe);
-                    } else if (i != rows -1) {
-                        Pipe newPipe = new Pipe();
-                        cells[i][j].placeComponent(newPipe);
-                    }
-                }
-            }
+        Cistern newCistern1 = new Cistern();
+        Cistern newCistern2 = new Cistern();
+        Cistern newCistern3 = new Cistern();
+        Spring newSpring1 = new Spring();
+        Spring newSpring2 = new Spring();
+        Pipe newPipe1 = new Pipe();
+        Pipe newPipe2 = new Pipe();
+        Pipe newPipe3 = new Pipe();
+        Pipe newPipe4 = new Pipe();
+        Pipe newPipe5 = new Pipe();
+        Pipe newPipe6 = new Pipe();
+        Pipe newPipe7 = new Pipe();
+        Pump pump1 = new Pump();
+        Pump pump2 = new Pump();
+        cells[0][0].placeComponent(newCistern1);
+        cells[4][4].placeComponent(newCistern2);
+        cells[7][7].placeComponent(newCistern3);
+        cells[0][7].placeComponent(newSpring1);
+        cells[7][0].placeComponent(newSpring2);
+        cells[0][1].placeComponent(newPipe1);
+        cells[0][2].placeComponent(newPipe2);
+        cells[0][3].placeComponent(newPipe3);
+        cells[0][4].placeComponent(newPipe7);
+        cells[3][2].placeComponent(newPipe4);
+        cells[4][2].placeComponent(newPipe5);
+        cells[4][3].placeComponent(newPipe6);
+        cells[1][4].placeComponent(pump1);
+        cells[2][2].placeComponent(pump2);
+        pump1.setBroken(true);
+        newPipe3.setBroken(true);
+
+        /*
+        |c|p|p|p| | | |s|
+        | | | | |x| | | |
+        | | |x| | | | | |
+        | | |p| | | | | |
+        | | |p|p|c| | | |
+        | | | | | | | | |
+        | | | | | | | | |
+        |s| | | | | | |c|
+         */
+        try
+        {
+            newCistern1.addConnectedComponent(newPipe1, Direction.RIGHT);
+            newPipe1.addConnectedComponent(newCistern1, Direction.LEFT);
+
+            newPipe1.addConnectedComponent(newPipe2, Direction.RIGHT);
+            newPipe2.addConnectedComponent(newPipe1, Direction.LEFT);
+
+            newPipe2.addConnectedComponent(newPipe3, Direction.RIGHT);
+            newPipe3.addConnectedComponent(newPipe2, Direction.LEFT);
+            
+            newPipe3.addConnectedComponent(newPipe7, Direction.RIGHT);
+            newPipe7.addConnectedComponent(newPipe3, Direction.LEFT);
+
+            newPipe7.addConnectedComponent(pump1, Direction.DOWN);
+            pump1.addConnectedComponent(newPipe7, Direction.UP);
+
+            pump2.addConnectedComponent(newPipe4, Direction.DOWN);
+            newPipe4.addConnectedComponent(pump2, Direction.UP);
+
+            newPipe4.addConnectedComponent(newPipe5, Direction.DOWN);
+            newPipe5.addConnectedComponent(newPipe4, Direction.UP);
+
+            newPipe5.addConnectedComponent(newPipe6, Direction.RIGHT);
+            newPipe6.addConnectedComponent(newPipe5, Direction.LEFT);
+
+            newPipe6.addConnectedComponent(pump2, Direction.RIGHT);
+            pump2.addConnectedComponent(newPipe6, Direction.LEFT);
         }
+        catch (Exception ex) {}
+        
+        
+        cisterns.add(newCistern1);
+        cisterns.add(newCistern2);
+        cisterns.add(newCistern3);
+
+        springs.add(newSpring1);
+        springs.add(newSpring2);
     }
 
     public Cell getUpwardCell(Cell currentCell){
@@ -276,7 +313,7 @@ public class Map {
     }
 
     private void printMap() {
-        System.out.println("c - cistern; p - pipe; x - pump; s - spring; * - plumber; + - saboteur");
+        System.out.println("c - cistern; p - pipe; x - pump; s - spring, b - broken pipe, y - broken pump, * - player");
     
         for (int i = 0; i < columns; i++) {
             System.out.print("_");
@@ -289,17 +326,22 @@ public class Map {
                     System.out.print("| ");
                 }
                 else if (cells[i][j].isPlayerOn()) {
-                    if (cells[i][j].getPlayerOn() instanceof Plumber) {
-                        System.out.print("|*");
-                    } else if (cells[i][j].getPlayerOn() instanceof Saboteur) {
-                        System.out.print("|+");
-                    }
+
+                    System.out.print("|*");
                 } else if (cells[i][j].getComponent() instanceof Cistern) {
                     System.out.print("|c");
                 } else if (cells[i][j].getComponent() instanceof Pipe) {
+                    if(((Pipe)cells[i][j].getComponent()).isBroken()){
+                        System.out.print("|b");
+                    } else {
                     System.out.print("|p");
+                    }
                 } else if (cells[i][j].getComponent() instanceof Pump) {
-                    System.out.print("|x");
+                    if(((Pump)cells[i][j].getComponent()).isBroken()){
+                    System.out.print("|y");
+                    } else {
+                        System.out.print("|x");
+                    }
                 } else if (cells[i][j].getComponent() instanceof Spring) {
                     System.out.print("|s");
                 }

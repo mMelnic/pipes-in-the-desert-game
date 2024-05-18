@@ -83,13 +83,7 @@ public class GameManager
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));
         map.players.add(teams.get(1).getPlayers().get(1));
-        map.players.get(2).setCurrentCell(map.getCells(0, 0));
-        map.getCells(0, 0).setPlayerOn(true);
-        map.players.get(0).setCurrentCell(map.getCells(0, 1));
-        map.getCells(0, 1).setPlayerOn(true);
 
-        map.getCells(0, 0).setMovablePlayer(map.players.get(2));
-        map.getCells(0, 1).setMovablePlayer(map.players.get(0));
         map.initializeMap();
 
         startTimer();
