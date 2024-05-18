@@ -25,11 +25,10 @@ public class MapWindow {
 
     public MapWindow(int mapSize, GameManager gameManager) {
         initialize(mapSize);
-        plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
         saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
         this.map = gameManager.getMap();
         // Add the plumber view to the map panel
-
+        plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
         // Add key listener to the frame
         frame.addKeyListener(plumberController);
         frame.addKeyListener(saboteurController);
