@@ -15,11 +15,10 @@ public class CisternView extends JPanel {
     private BufferedImage cisternWithoutComponentImage;
     private BufferedImage cisternWithPipeImage;
     private BufferedImage cisternWithPumpImage;
-    private BufferedImage rainDrop;
 
     public CisternView(Cistern cistern) {
         this.cistern = cistern;
-
+        
         setPreferredSize(new Dimension(80, 80));
         setBackground(new Color(0, 0, 0, 0));
         loadImages();
@@ -31,7 +30,6 @@ public class CisternView extends JPanel {
                     .read(getClass().getResource("/resources/images/cistern_without_component.png"));
             cisternWithPipeImage = ImageIO.read(getClass().getResource("/resources/images/cistern_with_pipe.png"));
             cisternWithPumpImage = ImageIO.read(getClass().getResource("/resources/images/cistern_with_pump.png"));
-            rainDrop = ImageIO.read(getClass().getResource("/resources/images/rain_drop.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -57,14 +55,6 @@ public class CisternView extends JPanel {
             int x = (getWidth() - imageWidth) / 2;
             int y = (getHeight() - imageHeight) / 2;
             g.drawImage(imageToDraw, x, y, this);
-        }
-        // Draw raindrop image if the cistern is full
-        if (cistern.getIsCisternFull()) {
-            int rainDropWidth = rainDrop.getWidth();
-            int rainDropHeight = rainDrop.getHeight();
-            int rainDropX = (getWidth() - rainDropWidth) / 2;
-            int rainDropY = (getHeight() - rainDropHeight) / 2;
-            g.drawImage(rainDrop, rainDropX, rainDropY, this);
         }
     }
 }
