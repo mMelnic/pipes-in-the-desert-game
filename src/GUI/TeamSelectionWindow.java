@@ -45,7 +45,7 @@ public class TeamSelectionWindow {
                 gameManager.setActiveTeam(0); // Set to Plumbers
                 gameManager.startGame();
                 frame.dispose();
-                MapWindow mapWindow = new MapWindow(size);
+                MapWindow mapWindow = new MapWindow(size, gameManager);
                 mapWindow.show();
 
             }
@@ -57,7 +57,7 @@ public class TeamSelectionWindow {
                 gameManager.setActiveTeam(1); // Set to Saboteurs
                 gameManager.startGame();
                 frame.dispose();
-                MapWindow mapWindow = new MapWindow(size);
+                MapWindow mapWindow = new MapWindow(size, gameManager);
                 mapWindow.show();
 
             }
