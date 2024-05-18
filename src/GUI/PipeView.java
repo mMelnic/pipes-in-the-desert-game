@@ -1,17 +1,16 @@
 package GUI;
 
+import components.Pipe;
+import enumerations.Shapes;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import components.Pipe;
-import enumerations.Shapes;
 
 public class PipeView extends JPanel {
     private Map<Shapes, BufferedImage> pipeImagesNormal;
@@ -38,25 +37,16 @@ public class PipeView extends JPanel {
         // Load images for each state and shape
         try {
             for (Shapes shape : Shapes.values()) {
-                if (shape == Shapes.HORIZONTAL) {
 
-                    pipeImagesNormal.put(shape,
+
+                pipeImagesNormal.put(shape,
                             loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + ".png"));
-                
-                pipeImagesLeaking.put(shape,
-                loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
-                "_leaking.png"));
-                pipeImagesBroken.put(shape,
-                loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
-                "_red.png"));
+                pipeImagesLeaking.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_leaking.png"));
+                pipeImagesBroken.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_red.png"));
+                pipeImagesWaterFlowing.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_filled.png"));
                 }
-                // pipeImagesWaterFlowing.put(shape,
-                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
-                // "_water_flowing.png"));
-                // pipeImagesFull.put(shape,
-                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
+                // pipeImagesFull.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
                 // "_full.png"));
-            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -82,15 +72,15 @@ public class PipeView extends JPanel {
 
         if (pipeModel.isLeaking() || pipeModel.isFreeEndLeaking()) {
         imageToDraw = pipeImagesLeaking.get(shape);
-        }
-        else if (pipeModel.isBroken()) {
+        } else if (pipeModel.isBroken()) {
         imageToDraw = pipeImagesBroken.get(shape);
         }
         // else if (pipeModel.isFull()) {
         // imageToDraw = pipeImagesFull.get(shape);
-        // } else if (pipeModel.isWaterFlowing()) {
-        // imageToDraw = pipeImagesWaterFlowing.get(shape);
         // }
+        else if (pipeModel.isWaterFlowing()) {
+        imageToDraw = pipeImagesWaterFlowing.get(shape);
+        }
 
         if (imageToDraw != null) {
             int imageWidth = imageToDraw.getWidth();

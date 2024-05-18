@@ -1,15 +1,13 @@
 package GUI;
 
+import enumerations.Direction;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
-
-import enumerations.Direction;
 import player.Saboteur;
 
 public class SaboteurView extends JPanel {
@@ -29,10 +27,10 @@ public class SaboteurView extends JPanel {
 
     private void loadImages() {
         try {
-            saboteurDownImage = ImageIO.read(getClass().getResource("/resources/images/saboteur_down.png"));
-            saboteurUpImage = ImageIO.read(getClass().getResource("/resources/images/saboteur_up.png"));
-            saboteurLeftImage = ImageIO.read(getClass().getResource("/resources/images/saboteur_left.png"));
-            saboteurRightImage = ImageIO.read(getClass().getResource("/resources/images/saboteur_right.png"));
+            saboteurDownImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_down_yellow.png"));
+            saboteurUpImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_top_yellow.png"));
+            saboteurLeftImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_yellow_left.png"));
+            saboteurRightImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_yellow.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

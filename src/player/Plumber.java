@@ -6,11 +6,8 @@ import components.Pipe;
 import components.Pump;
 import components.Spring;
 import enumerations.Direction;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
-
 import system.Cell;
 
 /**
@@ -288,8 +285,10 @@ public class Plumber extends MovablePlayer {
                 ((Cistern) component).fillCistern();
                 handleOutput("Pipe connected to cistern.");
             } else if (component instanceof Spring) {
-                ((Spring) component).startWaterSupply();
-                handleOutput("Pipe connected to spring.");
+                if(!pipe.isWaterFlowing()) {
+                    ((Spring) component).startWaterSupply();
+                    handleOutput("Pipe connected to spring.");
+                }
             }
         } catch (Exception e) {
             // TODO undo the effect of the exception

@@ -1,15 +1,12 @@
 package GUI;
-import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.Map;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
 import components.Pipe;
 import components.Pump;
 import enumerations.Direction;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class PumpView extends JPanel {
     private Pump pump;
