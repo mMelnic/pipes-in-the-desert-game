@@ -111,11 +111,12 @@ public abstract class MovablePlayer {
                     handleOutput("You cannot move there.");
                 }
             } else if (targetCell.getComponent() instanceof Pump) {
+                if (currentCell.getComponent() instanceof Pipe) {
+                    currentCell.setPlayerOn(false);
+                }
                 currentCell = targetCell;
-
                 String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                 handleOutput(message);
-
             } else {
                 handleOutput("You cannot move there.");
             }
@@ -146,7 +147,6 @@ public abstract class MovablePlayer {
         if (currentCell.getComponent() instanceof Pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
-
                 return;
             }
 
@@ -157,7 +157,6 @@ public abstract class MovablePlayer {
             handleOutput("The direction changed.");
         } else {
             handleOutput("You are not standing on a pump.");
-
         }
     }
 

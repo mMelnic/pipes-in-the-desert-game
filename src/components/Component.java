@@ -116,7 +116,6 @@ public class Component {
                 throw new CisternMultipleComponentsConnectedException("the cistern is already connected to a component.");
             }
         }
-
         //if the component that is receiving a new component to its neighbouring cell is a spring
         //prior to add, first checks if it is already connected to a component.
         else if(this instanceof Spring){

@@ -28,12 +28,10 @@ import player.Saboteur;
 import player.SaboteurScorer;
 import player.Team;
 
-
 /**
  * The GameManager class manages the game's flow and logic.
  */
 public class GameManager implements ICisternListener
-
 {
     private Map map;
     private Timer timer;
@@ -49,7 +47,9 @@ public class GameManager implements ICisternListener
 
 
     Scanner scanner = new Scanner(System.in);
-
+    /**
+     * Displays the key bindings for the game.
+     */
     public void showKeyBindings()
     {
         String message = "                === KEY BINDINGS ===               \n\n\n"
@@ -62,6 +62,9 @@ public class GameManager implements ICisternListener
         System.out.println();
     }
 
+    /**
+     * Constructs a GameManager instance.
+     */
     public GameManager() 
     {
         cleanOutputTxt();
@@ -87,7 +90,6 @@ public class GameManager implements ICisternListener
         teams.get(1).assignPlayer(saboteur2);
     }
 
-
     @Override
     public void onCisternFullCheck() {
         if (checkIfAllCisternsAreFull()) {
@@ -107,7 +109,6 @@ public class GameManager implements ICisternListener
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));
         map.players.add(teams.get(1).getPlayers().get(1));
-
         map.players.get(2).setCurrentCell(map.getCells(0, 0));
         map.getCells(0, 0).setPlayerOn(true);
     
@@ -117,16 +118,13 @@ public class GameManager implements ICisternListener
     
         // Remove the previous placement of the saboteur
         map.getCells(0, 1).setPlayerOn(false);
-  
+    
         map.initializeMap();
        
-
 
         for (Cistern cistern : map.getCisterns()) {
              cistern.addCisternFullListener(this);
         }
-     inputText = receiveInput();
-
 
         // startTimer();
         manufactureComponents();
@@ -476,6 +474,9 @@ public class GameManager implements ICisternListener
 
     }
 
+    /**
+     * Displays the main menu contents.
+     */
     public static void printMainMenuContents()
     {
         String message = "                === PIPES IN THE DESERT ===               \n\n\n"
@@ -486,9 +487,7 @@ public class GameManager implements ICisternListener
         System.out.print(message);
         writeToOutputTxt(message);
     }
-
     public void switchActivePlayer() 
-
     {
         if (activePlayer instanceof Plumber) {
             activePlayer = teams.get(1).getPlayers().get(0);
@@ -506,7 +505,6 @@ public class GameManager implements ICisternListener
         MainWindow mainWindow = new MainWindow(this);
         mainWindow.show();
     }
-
 
     /**
      * Initiates a sandstorm event.
@@ -531,13 +529,11 @@ public class GameManager implements ICisternListener
 
             if (isPumpConnectedToWaterFlowingPipe(randomPump)) {
                 randomPump.fillReservoir();
-
             }
         }
 
         map.printMap();
     }
-
 
     private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
         Set<Component> visited = new HashSet<>();
@@ -609,6 +605,11 @@ public class GameManager implements ICisternListener
         }, 20 * 60 * 1000);
     }
 
+    /**
+     * Checks if all cisterns are full.
+     * 
+     * @return true if all cisterns are full, false otherwise
+     */
     public boolean checkIfAllCisternsAreFull() 
     {
         for (Cistern cistern : map.getCisterns()) {
@@ -632,7 +633,6 @@ public class GameManager implements ICisternListener
                 break;
         }
     }
-
 
      /**
      * Shows available maps.
@@ -693,7 +693,6 @@ public class GameManager implements ICisternListener
     //         showTeams();
     //     }
     //     while (input != 1 && input != 2 && input != 3);
-
         
     // }
     public void setActiveTeam(int teamIndex) {
@@ -702,6 +701,9 @@ public class GameManager implements ICisternListener
         activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
     }
 
+    /**
+     * Shows available teams.
+     */
     public void showTeams()
 {
     String message = "                === TEAMS ===               \n\n\n"
@@ -769,6 +771,11 @@ public class GameManager implements ICisternListener
     while (input != 1 && input != 2);
 }
 
+    /**
+     * Receives input from the user.
+     * 
+     * @return the user's input
+     */
     public String receiveInput()
     {
         String inputText = "";
@@ -842,6 +849,11 @@ public class GameManager implements ICisternListener
         while (true);
     }
 
+    /**
+     * Writes a message to the output.txt file.
+     * 
+     * @param message the message to write
+     */
     public static void writeToOutputTxt(String message)
     {
         FileWriter fileWriter = null;
@@ -869,6 +881,9 @@ public class GameManager implements ICisternListener
         }
     }
 
+    /**
+     * Cleans the output.txt file.
+     */
     public static void cleanOutputTxt()
     {
         FileWriter fileWriter = null;
@@ -892,18 +907,22 @@ public class GameManager implements ICisternListener
         }
     }
 
+    /**
+     * Manufactures components periodically.
+     */
     public void manufactureComponents()
     {
         Timer manufactureTimer = new Timer("ManufactureTimer");
         manufactureTimer.scheduleAtFixedRate(new TimerTask() {
             public void run()
             {
+                System.out.println();
                 for (Cistern cistern : map.getCisterns())
                 {
                     cistern.manufactureComponent();
                 }
             }
-        }, 1000 * 10, 1000 * 10);
+        }, 1000 * 30, 1000 * 30);
     }
 
     public Map getMap() {
