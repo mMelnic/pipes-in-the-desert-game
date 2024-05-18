@@ -240,6 +240,9 @@ public class Pipe extends Component implements ILeakage {
     public void isWaterFlowing(boolean set) {
         isWaterFlowing = set;
     }
+    public Shapes getShape() {
+        return shape;
+    }
 
     /**
      * Sets whether water is flowing through the pipe.

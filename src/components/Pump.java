@@ -325,4 +325,8 @@ public class Pump extends Component implements ILeakage {
         return incomingPipe;
     }
 
+    public boolean isFilling() {
+        return fillingTask != null && !fillingTask.isDone();
+    }
+
 }
