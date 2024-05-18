@@ -6,15 +6,13 @@ import components.Cistern;
 import components.Pump;
 import components.Pipe;
 import components.Spring;
-import player.MovablePlayer;
-
-import java.util.List;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import system.Cell;
+import system.GameManager;
 import system.Map;
 
 public class MapWindow {
@@ -22,9 +20,25 @@ public class MapWindow {
     private JFrame frame;
     private JPanel mapPanel;
     private Map map;
+    PlumberController plumberController;
+    SaboteurController saboteurController;
 
-    public MapWindow(int mapSize) {
+    public MapWindow(int mapSize, GameManager gameManager) {
         initialize(mapSize);
+        plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
+        // saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
+        this.map = gameManager.getMap();
+        // Add the plumber view to the map panel
+
+        // Add key listener to the frame
+        frame.addKeyListener(plumberController);
+        // frame.addKeyListener(saboteurController);
+
+        // Make the frame visible
+        frame.setVisible(true);
+
+        // Ensure the frame has focus to receive key events
+        frame.requestFocusInWindow();
     }
 
     private void initialize(int mapSize) {
@@ -44,8 +58,6 @@ public class MapWindow {
             }
         };
         frame.getContentPane().add(mapPanel);
-        map = new Map(mapSize, mapSize);
-        map.initializeMap();
     }
 
     private void drawMap(Graphics g, int squareSize) {
@@ -55,6 +67,11 @@ public class MapWindow {
         drawGrid(g, squareSize);
 
         drawComponents(g, squareSize);
+        plumberController.getPlumberView().setLocation(0, 0);
+        mapPanel.add(plumberController.getPlumberView());
+        // saboteurController.getSaboteurView().setLocation(0, 0);
+        // mapPanel.add(saboteurController.getSaboteurView());
+
     }
 
     private void drawGrid(Graphics g, int squareSize) {
@@ -75,6 +92,8 @@ public class MapWindow {
     }
 
     private void drawComponents(Graphics g, int squareSize) {
+        // Remove all components from the mapPanel
+        mapPanel.removeAll();
         for (int i = 0; i < map.rows; i++) {
             for (int j = 0; j < map.columns; j++) {
                 Cell cell = map.getCells(i, j);
@@ -86,14 +105,23 @@ public class MapWindow {
                         g.setColor(Color.RED);
                         g.fillOval(x, y, squareSize, squareSize);
                     } else if (cell.getComponent() instanceof Pipe) {
-                        g.setColor(Color.GREEN);
-                        g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3);
+                        // g.setColor(Color.GREEN);
+                        // g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3);
+                        PipeView pv = new PipeView((Pipe)cell.getComponent());
+                        pv.setBounds(x, y, squareSize, squareSize);
+                        mapPanel.add(pv);
                     } else if (cell.getComponent() instanceof Pump) {
                         g.setColor(Color.BLUE);
                         g.fillRect(x, y, squareSize, squareSize);
+                        // PumpView pumpView = new PumpView((Pump)cell.getComponent());
+                        // pumpView.setBounds(x, y, squareSize, squareSize);
+                        // mapPanel.add(pumpView);
                     } else if (cell.getComponent() instanceof Cistern) {
                         g.setColor(Color.PINK);
                         g.fillRect(x, y, squareSize, squareSize);
+                        // CisternView cisternView = new CisternView((Cistern)cell.getComponent());
+                        // cisternView.setBounds(x, y, squareSize, squareSize);
+                        // mapPanel.add(cisternView);
                     } else if (cell.getComponent() instanceof Spring) {
                         g.setColor(new Color(128, 0, 128));
                         g.fillRect(x, y, squareSize, squareSize);
