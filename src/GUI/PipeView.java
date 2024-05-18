@@ -42,13 +42,14 @@ public class PipeView extends JPanel {
 
                     pipeImagesNormal.put(shape,
                             loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + ".png"));
+                
+                pipeImagesLeaking.put(shape,
+                loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
+                "_leaking.png"));
+                pipeImagesBroken.put(shape,
+                loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
+                "_red.png"));
                 }
-                // pipeImagesLeaking.put(shape,
-                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
-                // "_leaking.png"));
-                // pipeImagesBroken.put(shape,
-                // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
-                // "_broken.png"));
                 // pipeImagesWaterFlowing.put(shape,
                 // loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +
                 // "_water_flowing.png"));
@@ -79,11 +80,13 @@ public class PipeView extends JPanel {
         Shapes shape = pipeModel.getShape();
         BufferedImage imageToDraw = pipeImagesNormal.get(shape);
 
-        // if (pipeModel.isLeaking() || pipeModel.isFreeEndLeaking()) {
-        // imageToDraw = pipeImagesLeaking.get(shape);
-        // } else if (pipeModel.isBroken()) {
-        // imageToDraw = pipeImagesBroken.get(shape);
-        // } else if (pipeModel.isFull()) {
+        if (pipeModel.isLeaking() || pipeModel.isFreeEndLeaking()) {
+        imageToDraw = pipeImagesLeaking.get(shape);
+        }
+        else if (pipeModel.isBroken()) {
+        imageToDraw = pipeImagesBroken.get(shape);
+        }
+        // else if (pipeModel.isFull()) {
         // imageToDraw = pipeImagesFull.get(shape);
         // } else if (pipeModel.isWaterFlowing()) {
         // imageToDraw = pipeImagesWaterFlowing.get(shape);
