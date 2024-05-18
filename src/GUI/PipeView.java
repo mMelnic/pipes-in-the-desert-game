@@ -46,11 +46,11 @@ public class PipeView extends JPanel {
                 pipeImagesLeaking.put(shape,
                         loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_leaking.png"));
                 pipeImagesBroken.put(shape,
-                        loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_broken.png"));
+                        loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_red.png"));
                 pipeImagesWaterFlowing.put(shape,
-                        loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_water_flowing.png"));
+                        loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_filled.png"));// this is to be changed
                 pipeImagesFull.put(shape,
-                        loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() + "_full.png"));
+                        loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_filled.png"));
             }
         } catch (IOException e) {
             e.printStackTrace();
