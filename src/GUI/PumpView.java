@@ -53,10 +53,10 @@ public class PumpView extends JPanel {
             imageToDraw = imageLeaking;
         } else if (pump.isReservoirFull()) {
             imageToDraw = imageReservoirFull;
-        } else if (pump.isBroken()) {
-            imageToDraw = imageBroken;
         } else if (pump.isFilling()) {
             imageToDraw = imageReservoirFilling;
+        } else if (pump.isBroken()) {
+            imageToDraw = imageBroken;
         } else {
             imageToDraw = imageNormal;
         }

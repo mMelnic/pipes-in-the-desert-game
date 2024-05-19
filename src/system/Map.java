@@ -12,10 +12,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-
 import player.MovablePlayer;
 import player.PlumberScorer;
 import player.SaboteurScorer;
@@ -37,6 +34,7 @@ public class Map {
     private PlumberScorer plumberScorer;
     private SaboteurScorer saboteurScorer;
     private JPanel mapPanel;
+    private GameManager gameManager;
 
     public Map(int sizeN, int sizeM) {
         // rows = sizeN;
@@ -60,6 +58,7 @@ public class Map {
                 if (j == rows - 1 && (i % 2) == 0) {
                     Cistern newCistern = new Cistern(cells[i][j]);
                     newCistern.addScorer(plumberScorer);
+                    newCistern.addCisternFullListener(gameManager);
                     cells[i][j].placeComponent(newCistern);
                     cisterns.add(newCistern);
                 } else if (i == 2 && j == 2 || i == 5 && j == 6) {
@@ -124,6 +123,10 @@ public class Map {
 
             }
         }
+    }
+
+    public void setGameManager(GameManager gameManager) {
+        this.gameManager = gameManager;
     }
 
     /**
