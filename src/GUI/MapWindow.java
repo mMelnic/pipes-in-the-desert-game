@@ -8,9 +8,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import player.PlumberScorer;
@@ -160,7 +158,7 @@ public class MapWindow {
         timerThread.start();
     }
 
-    public void finishGame() {
+    public static void finishGame() {
         timerRunning.set(false);
         timerThread.interrupt();
         map.stopLeakingAndFreeEnds();
