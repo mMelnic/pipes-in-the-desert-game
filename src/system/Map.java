@@ -123,10 +123,6 @@ public class Map {
 
             }
         }
-        
-        cisterns.get(1).setIsCisternFull(true);
-        cisterns.get(2).setIsCisternFull(true);
-        cisterns.get(3).setIsCisternFull(true);
     }
 
     public void setGameManager(GameManager gameManager) {
