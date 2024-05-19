@@ -76,6 +76,7 @@ public class PlumberView extends JPanel {
 
         g.drawImage(imageToDraw, column * cellSize, row * cellSize, cellSize, cellSize, this);
 
+        //code to add visible carried component
         if (plumberPlayer.getCarriedComponent() instanceof Pipe) {
             g.drawImage(plumberPickPipe, column * cellSize, row * cellSize, cellSize, cellSize, this);
         }else if (plumberPlayer.getCarriedComponent() instanceof Pump) {
