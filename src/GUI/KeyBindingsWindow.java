@@ -1,18 +1,20 @@
 package GUI;
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.*;
 
 public class KeyBindingsWindow {
-    private JFrame frame;
+    private JDialog frame;
+    private JFrame parentFrame;
 
-    public KeyBindingsWindow() {
+    public KeyBindingsWindow(JFrame parentFrame) {
         initialize();
+        this.parentFrame = parentFrame;
     }
 
     private void initialize() {
-        frame = new JFrame("Key Bindings");
+        frame = new JDialog(parentFrame, "Key Bindings", true);
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.getContentPane().setLayout(new GridLayout(0, 1, 0, 0));
