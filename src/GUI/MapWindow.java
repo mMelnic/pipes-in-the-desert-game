@@ -5,8 +5,12 @@ import components.Pipe;
 import components.Pump;
 import components.Spring;
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import system.Cell;
 import system.GameManager;
@@ -76,6 +80,14 @@ public class MapWindow {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
+                // Load the background image and draw it
+                try {
+                    Image backgroundImage = ImageIO.read(getClass().getResource("/resources/images/desert_top_view_just_sand_best.jpeg"));
+                    // Image backgroundImage = ImageIO.read(getClass().getResource("/resources/images/desertView.png"));
+                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 drawMap(g, squareSize);
             }
         };
