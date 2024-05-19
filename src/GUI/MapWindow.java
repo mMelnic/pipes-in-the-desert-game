@@ -29,7 +29,7 @@ public class MapWindow {
     private JLabel timeLabel; 
     private JLabel plumberScoreLabel;
     private JLabel saboteurScoreLabel;
-   private Timer timer;
+    private Timer timer;
     private long endTime;
     private long duration;
     private Thread timerThread;
@@ -51,7 +51,7 @@ public class MapWindow {
         initialize(mapSize);
         this.map = gameManager.getMap();
         map.setMapPanel(mapPanel);
-        saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
+        saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), gameManager.getActiveSaboteur2());
         // Add the plumber view to the map panel
         plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
         // Add key listener to the frame
@@ -203,8 +203,12 @@ public class MapWindow {
         mapPanel.add(plumberController.getPlumberView());
         saboteurController.getSaboteurView().setLocation(0, 0);
         mapPanel.add(saboteurController.getSaboteurView());
+        saboteurController.getSaboteurView2().setLocation(0, 0);
+        mapPanel.add(saboteurController.getSaboteurView2());
         mapPanel.setComponentZOrder(plumberController.getPlumberView(), 1);
         mapPanel.setComponentZOrder(saboteurController.getSaboteurView(), 1);
+        mapPanel.setComponentZOrder(saboteurController.getSaboteurView2(), 1);
+
     }
 
     private void drawGrid(Graphics g, int squareSize) {

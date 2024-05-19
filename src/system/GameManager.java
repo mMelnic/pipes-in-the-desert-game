@@ -103,6 +103,8 @@ public class GameManager implements ICisternListener
         map.players.add(teams.get(1).getPlayers().get(1));
         activeSaboteur.setCurrentCell(map.getCells(0, 0));
         map.getCells(0, 0).setPlayerOn(true);
+        activeSaboteur2.setCurrentCell(map.getCells(0, 1));
+        map.getCells(0, 1).setPlayerOn(true);
     
         // Put the plumber on row 1, column 3
         activePlumber.setCurrentCell(map.getCells(0, 3));
@@ -922,5 +924,13 @@ public class GameManager implements ICisternListener
 
     public Saboteur getActiveSaboteur() {
         return activeSaboteur;
+    }
+
+    public Plumber getActivePlumber2() {
+        return activePlumber2;
+    }
+
+    public Saboteur getActiveSaboteur2() {
+        return activeSaboteur2;
     }
 }

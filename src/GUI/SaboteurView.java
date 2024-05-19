@@ -17,20 +17,23 @@ public class SaboteurView extends JPanel {
     private BufferedImage saboteurLeftImage;
     private BufferedImage saboteurRightImage;
 
-    public SaboteurView(Saboteur saboteurPlayer) {
+    public SaboteurView(Saboteur saboteurPlayer, String color) {
         this.saboteurPlayer = saboteurPlayer;
         setPreferredSize(new Dimension(saboteurPlayer.getCurrentCell().getMap().getColumns() * 80,
                 saboteurPlayer.getCurrentCell().getMap().getRows() * 80));
         setBackground(new Color(0, 0, 0, 0));
-        loadImages();
+        loadImages(color);
     }
 
-    private void loadImages() {
+    private void loadImages(String color) {
         try {
-            saboteurDownImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_down_yellow.png"));
-            saboteurUpImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_top_yellow.png"));
-            saboteurLeftImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_yellow_left.png"));
-            saboteurRightImage = ImageIO.read(getClass().getResource("/resources/images/saboteurView_yellow.png"));
+            saboteurDownImage = ImageIO
+                    .read(getClass().getResource("/resources/images/saboteur_" + color + "_down.png"));
+            saboteurUpImage = ImageIO.read(getClass().getResource("/resources/images/saboteur_" + color + "_up.png"));
+            saboteurLeftImage = ImageIO
+                    .read(getClass().getResource("/resources/images/saboteur_" + color + "_left.png"));
+            saboteurRightImage = ImageIO
+                    .read(getClass().getResource("/resources/images/saboteur_" + color + "_right.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
