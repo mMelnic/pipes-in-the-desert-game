@@ -124,7 +124,7 @@ public class Pump extends Component implements ILeakage {
         }
     }
 
-    private void stopFillingTask() {
+    public void stopFillingTask() {
         if (fillingTask != null && !fillingTask.isCancelled()) {
             fillingTask.cancel(true);
         }

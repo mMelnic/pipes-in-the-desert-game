@@ -173,6 +173,7 @@ public class Map {
             Pump pump = (Pump) component;
             if (pump.isReservoirFull()) {
                 pump.setReservoirFull(false);
+                pump.stopFillingTask();
             }
             pump.stopLeaking();
         }

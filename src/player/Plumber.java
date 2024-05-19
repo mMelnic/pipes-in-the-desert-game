@@ -9,8 +9,6 @@ import enumerations.Direction;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.SwingUtilities;
-
 import system.Cell;
 
 /**
@@ -82,6 +80,7 @@ public class Plumber extends MovablePlayer {
                 handleOutput("The pump is repaired.");
                 if (pump.isReservoirFull()) {
                     pump.setReservoirFull(false);
+                    pump.stopFillingTask();
                     if (pump.getOutgoingPipe().isFull() || pump.getIncomingPipe().isFull()) {
                         pump.undoFullPipes();
                     }
