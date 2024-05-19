@@ -81,7 +81,7 @@ public abstract class MovablePlayer {
                         currentCell.setPlayerOn(false);
                     }
                     currentCell = targetCell;
-                    SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
+                    //SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                     String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                     handleOutput(message);
                 } else {
@@ -92,6 +92,7 @@ public abstract class MovablePlayer {
                     currentCell.setPlayerOn(false);
                 }
                 currentCell = targetCell;
+                //SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                 String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                 handleOutput(message);
             } else {

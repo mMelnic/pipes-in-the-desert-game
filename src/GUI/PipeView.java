@@ -56,10 +56,6 @@ public class PipeView extends JPanel {
         return ImageIO.read(getClass().getResource(path));
     }
 
-    public void updateComponentState() {
-        repaint();
-    }
-
     @Override
     protected void paintComponent(Graphics g) {
         //super.paintComponent(g);
@@ -70,16 +66,18 @@ public class PipeView extends JPanel {
         Shapes shape = pipeModel.getShape();
         BufferedImage imageToDraw = pipeImagesNormal.get(shape);
 
-        if (pipeModel.isLeaking() || pipeModel.isFreeEndLeaking()) {
-        imageToDraw = pipeImagesLeaking.get(shape);
+        if (pipeModel.isLeaking()) {
+            imageToDraw = pipeImagesLeaking.get(shape);
+        } else if (pipeModel.isFreeEndLeaking()) {
+            imageToDraw = pipeImagesLeaking.get(shape);
         } else if (pipeModel.isBroken()) {
-        imageToDraw = pipeImagesBroken.get(shape);
+            imageToDraw = pipeImagesBroken.get(shape);
         }
         // else if (pipeModel.isFull()) {
         // imageToDraw = pipeImagesFull.get(shape);
         // }
         else if (pipeModel.isWaterFlowing()) {
-        imageToDraw = pipeImagesWaterFlowing.get(shape);
+            imageToDraw = pipeImagesWaterFlowing.get(shape);
         }
 
         if (imageToDraw != null) {

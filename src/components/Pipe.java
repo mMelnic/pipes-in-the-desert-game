@@ -81,7 +81,6 @@ public class Pipe extends Component implements ILeakage {
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
             location.getMap().updateWaterFlow();
-            //stopFlow();
         }
     }
 
@@ -93,7 +92,6 @@ public class Pipe extends Component implements ILeakage {
         if (isLeaking) {
             isLeaking = false;
             long duration = System.currentTimeMillis() - leakStartTime;
-            //undoStopFlow();
             System.out.println("Leaking duration: " + duration + " milliseconds");
             notifyScorers(duration);
             location.getMap().updateWaterFlow();
@@ -103,51 +101,6 @@ public class Pipe extends Component implements ILeakage {
         
     }
 
-    /**
-     * Undoes the stoppage of water flow.
-     */
-    private void undoStopFlow() {
-        Component currentPipe = this;
-        for (Direction direction : Direction.values()) {
-            Component connectedComponent = currentPipe.connectedComponents.get(direction);
-            while (connectedComponent != null && !(connectedComponent instanceof Cistern)) {
-                if (connectedComponent instanceof Pipe) {
-                    ((Pipe) connectedComponent).isWaterFlowing = true;
-                }
-                currentPipe = connectedComponent;
-                connectedComponent = currentPipe.connectedComponents.get(direction);
-            }
-        }
-    }
-
-    /**
-     * Stops the water flow in the pipe.
-     */
-    public void stopFlow() {
-        isWaterFlowing = false;
-        Set<Component> visited = new HashSet<>();
-        for (Direction direction : Direction.values()) {
-            stopFlowRecursive(connectedComponents.get(direction), visited);
-        }
-    }
-
-    /**
-     * Recursively stops the water flow in connected components.
-     * @param component the component to stop the flow.
-     */
-    private void stopFlowRecursive(Component component, Set<Component> visited) {
-        if (component == null || component instanceof Cistern || visited.contains(component)) {
-            return;
-        }
-        visited.add(component);
-        if (component instanceof Pipe) {
-            ((Pipe) component).isWaterFlowing = false;
-            for (Direction direction : Direction.values()) {
-                stopFlowRecursive(component.connectedComponents.get(direction), visited);
-            }
-        }
-    }
-  
     /**
      * Changes the shape of the pipe based on connected components.
      */

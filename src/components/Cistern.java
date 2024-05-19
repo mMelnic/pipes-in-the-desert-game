@@ -95,7 +95,7 @@ public class Cistern extends Component implements IWaterFlowListener {
         Pipe newPipe = new Pipe(location);
         this.manufacturedComponent = newPipe;
         newPipe.addScorer(location.getMap().getSaboteurScorer());
-        SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
+        // SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
         return newPipe;
     }
 
@@ -118,7 +118,7 @@ public class Cistern extends Component implements IWaterFlowListener {
         Pump newPump = new Pump(parameter, location);
         newPump.addScorer(location.getMap().getSaboteurScorer());
         this.manufacturedComponent = newPump;
-        SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
+        // SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
         return newPump;
     }
 
@@ -133,7 +133,7 @@ public class Cistern extends Component implements IWaterFlowListener {
             Random random = new Random();
             int randomValue = random.nextInt(100); // Generate a random number between 0 and 99
 
-            if (randomValue < 80) {
+            if (randomValue < 70) {
                 return manufacturePipe();
             } else {
                 return manufacturePump();
@@ -231,7 +231,7 @@ public class Cistern extends Component implements IWaterFlowListener {
                 if (pipe.isWaterFlowing()) {
                     // Set the isFull attribute to true for the Pipe
                     pipe.setFull(true);
-                    SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
+                    // SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
                     // Recursive call to traverse the connected components of the connected component
                     onCisternFullRecursive(connectedComponent, visited);
                 } else {

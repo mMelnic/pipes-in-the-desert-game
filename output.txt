@@ -1,0 +1,7 @@
+Moved RIGHT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4

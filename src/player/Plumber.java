@@ -8,6 +8,9 @@ import components.Spring;
 import enumerations.Direction;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.SwingUtilities;
+
 import system.Cell;
 
 /**
@@ -48,14 +51,14 @@ public class Plumber extends MovablePlayer {
                 if (pipe.isLeaking()) {
                     pipe.stopLeaking();
                     handleOutput("The pipe is repaired and stopped leaking.");
+                } else {
+                    // SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                 }
                 return true;
-            }
-            else if(!pipe.isBroken()) {
+            } else if (!pipe.isBroken()) {
                 handleOutput("The pipe is not broken.");
             }
-        }
-        else {
+        } else {
             handleOutput("You are not standing on a pipe.");
         }
         return false;
@@ -89,12 +92,10 @@ public class Plumber extends MovablePlayer {
                     handleOutput("The pump is repaired and stopped leaking.");
                 }
                 return true;
-            }
-            else {
+            } else {
                 handleOutput("The pump is not broken.");
             }
-        }
-        else {
+        } else {
             handleOutput("You are not standing on a pump.");
         }
         return false;
@@ -200,32 +201,52 @@ public class Plumber extends MovablePlayer {
 
     private boolean installPump(Cell targetCell, Component componentInCurrentCell, Direction direction) {
         Pump pump = (Pump) carriedComponent;
-        // Check if targetCell's component is a Pipe and reconnect its connected components to the Pump
+        // Check if targetCell's component is a Pipe and reconnect its connected
+        // components to the Pump
         if (targetCell.getComponent() instanceof Pipe) {
             Pipe pipeToBeReplaced = (Pipe) targetCell.getComponent();
             HashMap<Direction, Component> connectedComponents = pipeToBeReplaced.getConnectedComponents();
             for (Map.Entry<Direction, Component> entry : connectedComponents.entrySet()) {
+                Component component = entry.getValue();
+                if (component instanceof Spring || component instanceof Cistern) {
+                    return false; // Return the connected components if one is a Spring or Cistern
+                }
+            }
+            HashMap<Direction, Component> initialConnections = new HashMap<>();
+
+            // Store initial state
+            for (Map.Entry<Direction, Component> entry : connectedComponents.entrySet()) {
+                Direction directionToCheck = entry.getKey();
+                Component component = entry.getValue();
+                initialConnections.put(directionToCheck, component);
+            }
+            for (Map.Entry<Direction, Component> entry : connectedComponents.entrySet()) {
                 Direction connectedDirection = entry.getKey();
                 Component connectedComponent = entry.getValue();
-                if (connectedComponent instanceof Spring || connectedComponent instanceof Cistern) {
-                    return false;
-                }
                 try {
                     connectedComponent.removeConnectedComponent(pipeToBeReplaced);
                     pump.addConnectedComponent(connectedComponent, connectedDirection);
                     connectedComponent.addConnectedComponent(pump, connectedDirection.getOppositeDirection());
                 } catch (Exception e) {
                     System.out.println("Could not reconnect the components.");
-                    try {
-                        connectedComponent.addConnectedComponent(pipeToBeReplaced, connectedDirection);
-                        pump.removeConnectedComponent(connectedComponent);
-                        connectedComponent.removeConnectedComponent(pump);
-                    } catch (Exception f) {
-                        // Surpressing the exception
+                    for (Map.Entry<Direction, Component> entryToRestore : initialConnections.entrySet()) {
+                        Direction connectedDirectionResored = entryToRestore.getKey();
+                        Component connectedComponentRestored = entryToRestore.getValue();
+                        try {
+                            connectedComponentRestored.addConnectedComponent(pipeToBeReplaced,
+                                    connectedDirectionResored);
+                            pump.removeConnectedComponent(connectedComponentRestored);
+                            connectedComponentRestored.removeConnectedComponent(pump);
+                        } catch (Exception f) {
+                            // Surpressing the exception
+                        }
                     }
                     return false;
                 }
-                pipeToBeReplaced.stopLeaking();
+            }
+            pipeToBeReplaced.stopLeaking();
+            if (pipeToBeReplaced.isFreeEndLeaking()) {
+                pipeToBeReplaced.setFreeEndLeaking(false);
             }
             targetCell.placeComponent(pump);
             carriedComponent = null;
@@ -269,8 +290,14 @@ public class Plumber extends MovablePlayer {
      */
 
     public void connectPipeWithComponent(Pipe pipe, Component component) {
-        if (component instanceof Pipe || component instanceof Pump || 
-        !(pipe.getLocation().getMap().isNeighbouringCell(pipe.getLocation(), component.getLocation()))) {
+        if (component instanceof Pipe || component instanceof Pump ||
+                !(pipe.getLocation().getMap().isNeighbouringCell(pipe.getLocation(), component.getLocation()))) {
+            return;
+        }
+
+        // Check if the components are already connected
+        if (pipe.getConnectedComponents().containsValue(component)
+                && component.getConnectedComponents().containsValue(pipe)) {
             return;
         }
 
@@ -286,11 +313,14 @@ public class Plumber extends MovablePlayer {
 
             // Check the type of the component and take appropriate action
             if (component instanceof Cistern && pipe.isWaterFlowing()) {
+                currentCell.getMap().checkForFreeEnds();
                 ((Cistern) component).fillCistern();
+                // SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                 handleOutput("Pipe connected to cistern.");
             } else if (component instanceof Spring spring) {
-                if(!pipe.isWaterFlowing()) {
+                if (!pipe.isWaterFlowing()) {
                     spring.startWaterSupply();
+                    // SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                     handleOutput("Pipe connected to spring.");
                 }
             }
@@ -329,12 +359,13 @@ public class Plumber extends MovablePlayer {
         } else if (newComponent instanceof Pipe) {
             handleOutput("The component that you have tried to connect is not an active component.");
         }
-        if (newComponent instanceof Pipe || oldComponent instanceof Pipe || newComponent == null || oldComponent == null) {
+        if (newComponent instanceof Pipe || oldComponent instanceof Pipe || newComponent == null
+                || oldComponent == null) {
             return false;
         }
 
         if (currentCell.getComponent() instanceof Pipe pipe) {
-            if (newComponent instanceof  Spring && pipe.isWaterFlowing()) {
+            if (newComponent instanceof Spring && pipe.isWaterFlowing()) {
                 return false;
             }
             if (!(pipe.getConnectedComponents().containsValue(oldComponent))) {
@@ -415,8 +446,7 @@ public class Plumber extends MovablePlayer {
                     cistern.setManufacturedComponent(null); // Reset the manufacturedComponent
                     handleOutput("You have picked a " + carriedComponent.getClass().getSimpleName());
                     return; // Exit the method once a component is picked
-                }
-                else {
+                } else {
                     handleOutput("There is no component available at the cistern.");
                 }
             }
@@ -454,6 +484,7 @@ public class Plumber extends MovablePlayer {
     public void setCarriedComponent(Component carriedComponent) {
         this.carriedComponent = carriedComponent;
     }
+
     @Override
     public boolean isSaboteur() {
         return false;

@@ -38,7 +38,7 @@ public class SaboteurView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
         renderSaboteurPlayer(g);
     }
 

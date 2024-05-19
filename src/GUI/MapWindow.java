@@ -163,6 +163,7 @@ public class MapWindow {
     public void finishGame() {
         timerRunning.set(false);
         timerThread.interrupt();
+        map.stopLeakingAndFreeEnds();
         String winner = "";
         int plumberScore = gameManager.getPlumberScore();
         int saboteurScore = gameManager.getSaboteurScore();

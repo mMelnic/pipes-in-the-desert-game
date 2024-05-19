@@ -40,7 +40,7 @@ public class PlumberView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
         renderPlumberPlayer(g);
     }
 

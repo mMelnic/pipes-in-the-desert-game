@@ -160,7 +160,7 @@ public class Map {
             }
         }
         checkForFreeEnds();
-        SwingUtilities.invokeLater(() -> mapPanel.repaint());
+        // SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
     private void resetComponentState(Component component) {
@@ -230,6 +230,29 @@ public class Map {
                         if (!pipesWithFreeEndLeaking.contains(pipe)) {
                             pipe.setFreeEndLeaking(false);
                         }
+                    }
+                }
+            }
+        }
+    }
+
+    public void stopLeakingAndFreeEnds() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < columns; j++) {
+                Cell cell = cells[i][j];
+                Component component = cell.getComponent();
+                if (component instanceof Pipe) {
+                    Pipe pipe = (Pipe) component;
+                    if (pipe.isLeaking()) {
+                        pipe.stopLeaking();
+                    }
+                    if (pipe.isFreeEndLeaking()) {
+                        pipe.setFreeEndLeaking(false);
+                    }
+                } else if (component instanceof Pump) {
+                    Pump pump = (Pump) component;
+                    if (pump.isLeaking()) {
+                        pump.stopLeaking();
                     }
                 }
             }

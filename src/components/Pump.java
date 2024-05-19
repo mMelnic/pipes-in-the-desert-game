@@ -138,35 +138,7 @@ public class Pump extends Component implements ILeakage {
             isBroken = true;
             isLeaking = true;
             leakStartTime = System.currentTimeMillis();
-            //stopFlow();
             location.getMap().updateWaterFlow();
-        }
-    }
-
-    /**
-     * Stops the water flow from the pump.
-     */
-    public void stopFlow() {
-        if (outgoingPipe != null) {
-            stopOrStartFlowRecursive(outgoingPipe, false);
-        }
-    }
-
-    /**
-     * Recursively stops or starts the water flow in connected components.
-     * 
-     * @param component   the component to stop or start the flow.
-     * @param stopOrStart true to stop the flow, false to start it.
-     */
-    private void stopOrStartFlowRecursive(Component component, boolean stopOrStart) {
-        if (component == null || component instanceof Cistern) {
-            return;
-        }
-        if (component instanceof Pipe) {
-            ((Pipe) component).isWaterFlowing(stopOrStart);
-            for (Direction direction : Direction.values()) {
-                stopOrStartFlowRecursive(component.connectedComponents.get(direction), stopOrStart);
-            }
         }
     }
 

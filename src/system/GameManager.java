@@ -94,6 +94,7 @@ public class GameManager implements ICisternListener
     @Override
     public void onCisternFullCheck() {
         if (checkIfAllCisternsAreFull()) {
+            map.stopLeakingAndFreeEnds();
             // Handle the event when all cisterns are full
             System.out.println("All cisterns are full!");
             // TODO compare score
