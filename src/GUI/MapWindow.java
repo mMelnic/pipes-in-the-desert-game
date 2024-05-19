@@ -66,6 +66,7 @@ public class MapWindow {
     }
 
     private void initialize(int mapSize) {
+        gameManager.setMapWindow(this);
         int squareSize = 80;
         int frameSize = mapSize * squareSize;
         frame = new JFrame();
@@ -186,6 +187,22 @@ public class MapWindow {
         });
 
         timerThread.start();
+    }
+
+    public void DisplayCisternFullWindow(){
+        String winner = "";
+        int plumberScore = gameManager.getPlumberScore();
+        int saboteurScore = gameManager.getSaboteurScore();
+        if (plumberScore > saboteurScore) {
+            winner = "Plumbers win!";
+        } else if (saboteurScore > plumberScore) {
+            winner = "Saboteurs win!";
+        }else if (saboteurScore == plumberScore){
+            winner = "It's a tie!";
+        }
+        frame.dispose();
+        CisternFullWindow cisternFullWindow = new CisternFullWindow(plumberScore, saboteurScore, winner, gameManager);
+        cisternFullWindow.show();
     }
 
     public void finishGame() {

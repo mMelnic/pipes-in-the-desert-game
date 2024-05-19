@@ -1,6 +1,7 @@
 package system;
 
 import GUI.MainWindow;
+import GUI.MapWindow;
 import components.Cistern;
 import components.Component;
 import components.Pipe;
@@ -38,6 +39,7 @@ public class GameManager implements ICisternListener
     private Plumber activePlumber2;
     private SaboteurScorer saboteurScorer = new SaboteurScorer();
     private PlumberScorer plumberScorer = new PlumberScorer();
+    private MapWindow mapWindow;
 
     Scanner scanner = new Scanner(System.in);
     /**
@@ -80,10 +82,15 @@ public class GameManager implements ICisternListener
         teams.get(1).assignPlayer(saboteur2);
     }
 
+    public void setMapWindow(MapWindow mapWindow) {
+        this.mapWindow = mapWindow;
+    }
+
     @Override
     public void onCisternFullCheck() {
         if (checkIfAllCisternsAreFull()) {
             map.stopLeakingAndFreeEnds();
+            mapWindow.DisplayCisternFullWindow();
             // Handle the event when all cisterns are full
             System.out.println("All cisterns are full!");
             // TODO compare score
@@ -113,6 +120,8 @@ public class GameManager implements ICisternListener
     
         // Remove the previous placement of the saboteur
         map.getCells(0, 1).setPlayerOn(false);
+
+        map.setGameManager(this);
     
         map.initializeMap();
        
