@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -25,12 +26,18 @@ public class MapWindow {
     private JLabel timeLabel; 
     private JLabel plumberScoreLabel;
     private JLabel saboteurScoreLabel;
-    private Timer timer;
+   private Timer timer;
     private long endTime;
     private long duration;
+    private Thread timerThread;
+    private AtomicBoolean timerRunning = new AtomicBoolean(false);
+    GameManager gameManager;
+    boolean isTimeUp;
+
+    private Image backgroundImage;
 
     public MapWindow(int mapSize, GameManager gameManager) {
-        this.duration = gameManager.getDuration();
+        this.gameManager = gameManager;
         initialize(mapSize);
         this.map = gameManager.getMap();
         map.setMapPanel(mapPanel);
@@ -73,19 +80,18 @@ public class MapWindow {
         frame.add(spacerPanel, BorderLayout.NORTH);
         spacerPanel.add(timeLabel, BorderLayout.EAST);
         spacerPanel.add(plumberScoreLabel, BorderLayout.WEST);
-        
+        try {
+            backgroundImage = ImageIO
+                    .read(getClass().getResource("/resources/images/desert_top_view_just_sand_best.jpeg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         mapPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
                 super.paintComponent(g);
                 // Load the background image and draw it
-                try {
-                    Image backgroundImage = ImageIO.read(getClass().getResource("/resources/images/desert_top_view_just_sand_best.jpeg"));
-                    // Image backgroundImage = ImageIO.read(getClass().getResource("/resources/images/desertView.png"));
-                    g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
                 drawMap(g, squareSize);
             }
         };
@@ -94,23 +100,55 @@ public class MapWindow {
     }
 
     public void startTimer() {
-        final long interval = 1000; 
+        duration = 20 * 60 * 1000;
         endTime = System.currentTimeMillis() + duration;
 
-        timer = new Timer("GameTimer");
+        timerRunning.set(true);
+        timerThread = new Thread(() -> {
+            try {
+                while (timerRunning.get() && !isTimeUp) {
+                    long remainingTime = getRemainingTime();
+                    long minutes = (remainingTime / 1000) / 60;
+                    long seconds = (remainingTime / 1000) % 60;
+                    timeLabel.setText(String.format("Remaining time: %02d:%02d", minutes, seconds));
 
-        timer.scheduleAtFixedRate(new TimerTask() {
-            public void run() {
-                long remainingTime = getRemainingTime();
-                long minutes = (remainingTime / 1000) / 60;
-                long seconds = (remainingTime / 1000) % 60;
-                timeLabel.setText(String.format("Remaining time: %02d:%02d", minutes, seconds));
+                    if (remainingTime <= 0) {
+                        isTimeUp = true;
+                        finishGame();
+                        System.out.println("\nTime is up!\n\n\n");
+                        // writeToOutputTxt("\nTime is up!\n\n\n");
+                    }
+
+                    Thread.sleep(1000);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
-        }, 0, interval);
+        });
+
+        timerThread.start();
     }
 
-    public long getRemainingTime() {
-        if (timer == null) {
+    public void finishGame() {
+        timerRunning.set(false);
+        timerThread.interrupt();
+        String winner = "";
+        int plumberScore = gameManager.getPlumberScore();
+        int saboteurScore = gameManager.getSaboteurScore();
+        if (plumberScore > saboteurScore) {
+            winner = "Plumbers win!";
+        } else if (saboteurScore > plumberScore) {
+            winner = "Saboteurs win!";
+        }else if (saboteurScore == plumberScore){
+            winner = "It's a tie!";
+        }
+        frame.dispose();
+        TimeUpWindow timeUpWindow = new TimeUpWindow(plumberScore, saboteurScore, winner, gameManager);
+        timeUpWindow.show();
+    }
+
+  public long getRemainingTime() {
+        if (!timerRunning.get()) {
             return 0;
         }
         long currentTime = System.currentTimeMillis();

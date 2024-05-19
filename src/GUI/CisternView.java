@@ -38,7 +38,7 @@ public class CisternView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
         renderCistern(g);
     }
 

@@ -16,6 +16,8 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
+
 import player.MovablePlayer;
 import player.Plumber;
 import player.PlumberScorer;
@@ -41,6 +43,8 @@ public class GameManager implements ICisternListener
     private PlumberScorer plumberScorer = new PlumberScorer();
     private long endTime;
     private long duration;
+    private Thread timerThread;
+    private AtomicBoolean timerRunning = new AtomicBoolean(false);
 
 
     Scanner scanner = new Scanner(System.in);
@@ -124,7 +128,6 @@ public class GameManager implements ICisternListener
              cistern.addCisternFullListener(this);
         }
 
-        startTimer();
         manufactureComponents();
 
         // String inputText;
@@ -591,33 +594,12 @@ public class GameManager implements ICisternListener
     /**
      * Starts the game timer.
      */
-   public void startTimer() {
-         duration = 20 * 60 * 1000; 
-         
-    
-        endTime = System.currentTimeMillis() + duration;
-    
-        timer = new Timer("GameTimer");
-    
-        timer.schedule(new TimerTask() {
-            public void run() {
-                isTimeUp = true;
-                String message = "\nTime is up!\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                timer.cancel(); 
-            }
-        }, duration);
-    
-       
+     public int getPlumberScore(){
+        return plumberScorer.getScore();
     }
-
-    public long getDuration(){
-        return duration;
+    public int getSaboteurScore(){
+        return saboteurScorer.getScore();
     }
-
-    
-
     /**
      * Checks if all cisterns are full.
      * 
