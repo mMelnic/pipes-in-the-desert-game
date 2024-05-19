@@ -31,21 +31,13 @@ import player.Team;
 public class GameManager implements ICisternListener
 {
     private Map map;
-    private Timer timer;
-    private int plumbersScore;
-    private int saboteursScore;
     private List<Team> teams;
-    private boolean isTimeUp = false;
     private Plumber activePlumber = null;
     private Saboteur activeSaboteur = null;
-    private MovablePlayer activePlayer;
+    private Saboteur activeSaboteur2;
+    private Plumber activePlumber2;
     private SaboteurScorer saboteurScorer = new SaboteurScorer();
     private PlumberScorer plumberScorer = new PlumberScorer();
-    private long endTime;
-    private long duration;
-    private Thread timerThread;
-    private AtomicBoolean timerRunning = new AtomicBoolean(false);
-
 
     Scanner scanner = new Scanner(System.in);
     /**
@@ -69,9 +61,6 @@ public class GameManager implements ICisternListener
     public GameManager() 
     {
         cleanOutputTxt();
-        isTimeUp = false;
-        plumbersScore = 0;
-        saboteursScore = 0;
 
         teams = new ArrayList<Team>();
 
@@ -112,11 +101,11 @@ public class GameManager implements ICisternListener
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));
         map.players.add(teams.get(1).getPlayers().get(1));
-        map.players.get(2).setCurrentCell(map.getCells(0, 0));
+        activeSaboteur.setCurrentCell(map.getCells(0, 0));
         map.getCells(0, 0).setPlayerOn(true);
     
         // Put the plumber on row 1, column 3
-        map.players.get(0).setCurrentCell(map.getCells(0, 3));
+        activePlumber.setCurrentCell(map.getCells(0, 3));
         map.getCells(0, 3).setPlayerOn(true);
     
         // Remove the previous placement of the saboteur
@@ -694,78 +683,80 @@ public class GameManager implements ICisternListener
     public void setActiveTeam(int teamIndex) {
         // activePlayer = teams.get(0).getPlayers().get(0);
         activePlumber = (Plumber) teams.get(0).getPlayers().get(0);
+        activePlumber2 = (Plumber) teams.get(0).getPlayers().get(1);
         activeSaboteur = (Saboteur) teams.get(1).getPlayers().get(0);
+        activeSaboteur2 = (Saboteur)teams.get(1).getPlayers().get(1);
     }
 
     /**
      * Shows available teams.
      */
-    public void showTeams()
-{
-    String message = "                === TEAMS ===               \n\n\n"
-                   + "1. Plumbers\n"
-                   + "2. Saboteurs\n"
-                   + "3. Return to the main menu.\n\n";
+//     public void showTeams()
+// {
+//     String message = "                === TEAMS ===               \n\n\n"
+//                    + "1. Plumbers\n"
+//                    + "2. Saboteurs\n"
+//                    + "3. Return to the main menu.\n\n";
 
-    System.out.print(message);
-    writeToOutputTxt(message);
+//     System.out.print(message);
+//     writeToOutputTxt(message);
 
-    String inputText = "";
-    int input = 0;
+//     String inputText = "";
+//     int input = 0;
 
-    TEAMS_MENU_LOOP: do
-    {
-        try
-        {
-            inputText = receiveInput();
-            input = Integer.parseInt(inputText);
-        }
-        catch (Exception exception)
-        {
-            String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-            System.out.print(message);
-            writeToOutputTxt(message);
-            try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-            continue;
-        }
+//     TEAMS_MENU_LOOP: do
+//     {
+//         try
+//         {
+//             inputText = receiveInput();
+//             input = Integer.parseInt(inputText);
+//         }
+//         catch (Exception exception)
+//         {
+//             String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+//             System.out.print(message);
+//             writeToOutputTxt(message);
+//             try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+//             continue;
+//         }
 
-        switch (input)
-        {
-            case 1 -> {
-                activePlayer = teams.get(0).getPlayers().get(0);
-                activePlumber = (Plumber)teams.get(0).getPlayers().get(0);
-                activeSaboteur = null;
-            }
-            case 2 -> {
-                activePlayer = teams.get(1).getPlayers().get(0);
-                activeSaboteur = (Saboteur)teams.get(1).getPlayers().get(0);
-                activePlumber = null;
-            }
-            case 3 -> {
-                break TEAMS_MENU_LOOP;
-            }
-            default -> {
-                String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
-                System.out.print(message);
-                writeToOutputTxt(message);
-                try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
-                continue;
-            }
-        }
+//         switch (input)
+//         {
+//             case 1 -> {
+//                 activePlayer = teams.get(0).getPlayers().get(0);
+//                 activePlumber = (Plumber)teams.get(0).getPlayers().get(0);
+//                 activeSaboteur = null;
+//             }
+//             case 2 -> {
+//                 activePlayer = teams.get(1).getPlayers().get(0);
+//                 activeSaboteur = (Saboteur)teams.get(1).getPlayers().get(0);
+//                 activePlumber = null;
+//             }
+//             case 3 -> {
+//                 break TEAMS_MENU_LOOP;
+//             }
+//             default -> {
+//                 String errorMessage = "\nPlease enter 1, 2, or 3.\n\n\n\n\n";
+//                 System.out.print(message);
+//                 writeToOutputTxt(message);
+//                 try {Thread.sleep(1500);} catch (InterruptedException interruptedException) {}
+//                 continue;
+//             }
+//         }
         
-        // Start sandstorm timers after 15 seconds
-        Timer timer = new Timer("SandstormTimer");
-        timer.schedule(new TimerTask() {
-            public void run()
-            {
-                startSandstorm();
-            }
-        }, 15 * 1000);
+//         // Start sandstorm timers after 15 seconds
+//         Timer timer = new Timer("SandstormTimer");
+//         timer.schedule(new TimerTask() {
+//             public void run()
+//             {
+//                 startSandstorm();
+//             }
+//         }, 15 * 1000);
 
-        startGame(); // Start the game after selecting a team
-    }
-    while (input != 1 && input != 2);
-}
+//         startGame(); // Start the game after selecting a team
+//     }
+//     while (input != 1 && input != 2);
+// }
 
     /**
      * Receives input from the user.
