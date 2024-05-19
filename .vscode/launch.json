@@ -9,6 +9,13 @@
             "name": "Main",
             "request": "launch",
             "mainClass": "Main",
+            "projectName": "pipes-in-the-desert-prototype_7f703b06"
+        },
+        {
+            "type": "java",
+            "name": "Main",
+            "request": "launch",
+            "mainClass": "Main",
             "projectName": "pipes-in-the-desert-prototype_cd5df89d"
         },
         {

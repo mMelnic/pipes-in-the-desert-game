@@ -5,12 +5,14 @@ import components.Pipe;
 import components.Pump;
 import components.Spring;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import player.PlumberScorer;
+import player.SaboteurScorer;
 import system.Cell;
 import system.GameManager;
 import system.Map;
@@ -29,6 +31,13 @@ public class MapWindow {
     private long endTime;
     private long duration;
 
+    private PlumberScorer plumberScorer;
+    private SaboteurScorer saboteurScorer;
+
+    BufferedImage coinImage = null;
+    ImageIcon coinIcon = null;
+    
+    
     public MapWindow(int mapSize, GameManager gameManager) {
         this.duration = gameManager.getDuration();
         initialize(mapSize);
@@ -66,13 +75,34 @@ public class MapWindow {
         timeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         frame.add(spacerPanel, BorderLayout.NORTH);
 
+        plumberScorer = new PlumberScorer();
+        saboteurScorer = new SaboteurScorer();
+
+        try {
+            coinImage = ImageIO.read(getClass().getResource("/resources/images/coin.png"));
+            int height = 25;
+            int width = 25;
+            Image smallerImage = coinImage.getScaledInstance(width, height, 0);
+            coinIcon = new ImageIcon(smallerImage);
+        }
+        catch (Exception ex) {ex.printStackTrace();}
+        
         plumberScoreLabel = new JLabel();
         plumberScoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
-        plumberScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        plumberScoreLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        plumberScoreLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        if (coinIcon != null) {plumberScoreLabel.setIcon(coinIcon);}
+
+        saboteurScoreLabel = new JLabel();
+        saboteurScoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        saboteurScoreLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        saboteurScoreLabel.setHorizontalTextPosition(SwingConstants.LEFT);
+        if (coinIcon != null) {saboteurScoreLabel.setIcon(coinIcon);}
 
         frame.add(spacerPanel, BorderLayout.NORTH);
         spacerPanel.add(timeLabel, BorderLayout.EAST);
         spacerPanel.add(plumberScoreLabel, BorderLayout.WEST);
+        spacerPanel.add(saboteurScoreLabel, BorderLayout.CENTER);
         
         mapPanel = new JPanel() {
             @Override
@@ -122,7 +152,8 @@ public class MapWindow {
         // Remove all components from the mapPanel
         mapPanel.removeAll();
 
-        plumberScoreLabel.setText("Plumber score: ");
+        plumberScoreLabel.setText("Plumber score: " + plumberScorer.getScore());
+        saboteurScoreLabel.setText("Saboteur score: " + saboteurScorer.getScore());
 
         // Draw the grid
         drawGrid(g, squareSize);
@@ -161,8 +192,8 @@ public class MapWindow {
                 int y = i * squareSize;
 
                 if (!cell.isEmpty()) {
-                    if (cell.getComponent() instanceof Pipe) {
-                        PipeView pv = new PipeView((Pipe)cell.getComponent());
+                    if (cell.getComponent() instanceof Pipe pipe) {
+                        PipeView pv = new PipeView(pipe);
                         pv.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(pv);
                         mapPanel.setComponentZOrder(pv, 0); // Places component at index 0 in the Z-order
@@ -175,8 +206,8 @@ public class MapWindow {
                         CisternView cisternView = new CisternView((Cistern)cell.getComponent());
                         cisternView.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(cisternView);
-                    } else if (cell.getComponent() instanceof Spring) {
-                        SpringView springView = new SpringView((Spring)cell.getComponent());
+                    } else if (cell.getComponent() instanceof Spring spring) {
+                        SpringView springView = new SpringView(spring);
                         springView.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(springView);
                     }
