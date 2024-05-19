@@ -42,20 +42,20 @@ public class PumpView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
         // Get the current state of the pump
         int openings = pump.getConnectablePipesNumber();
 
         // Determine the image based on the pump's state
         BufferedImage imageToDraw = null;
 
-        if (pump.isBroken()) {
-            imageToDraw = imageBroken;
-        } else if (pump.isLeaking()) {
+        if (pump.isLeaking()) {
             imageToDraw = imageLeaking;
+        } else if (pump.isBroken()) {
+            imageToDraw = imageBroken;
         } else if (pump.isReservoirFull()) {
             imageToDraw = imageReservoirFull;
-        } else if (pump.isFilling()) { // Assuming you have a method to check if the pump is filling
+        } else if (pump.isFilling()) {
             imageToDraw = imageReservoirFilling;
         } else {
             imageToDraw = imageNormal;

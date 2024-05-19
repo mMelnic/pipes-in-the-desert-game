@@ -21,7 +21,7 @@ public class SpringView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        //super.paintComponent(g);
 
         int imageWidth = springImage.getWidth();
         int imageHeight = springImage.getHeight();
