@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
-
+import java.awt.event.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import player.PlumberScorer;
@@ -126,9 +126,37 @@ public class MapWindow {
                 drawMap(g, squareSize);
             }
         };
+        JButton menuButton = new JButton("Menu");
+        menuButton.setBackground(new Color(46, 204, 113));
+        menuButton.setForeground(Color.WHITE);
+        menuButton.setFont(new Font("Arial", Font.BOLD, 16));
+        menuButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                showMenu(menuButton); 
+            }
+        });
+        frame.add(menuButton, BorderLayout.SOUTH);
         frame.getContentPane().add(mapPanel);
         startTimer();
     }
+    private void showMenu(Component invoker) {
+        JPopupMenu menu = new JPopupMenu();
+        JMenuItem exitItem = new JMenuItem("Exit");
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
+
+      
+        menu.add(exitItem);
+
+
+        menu.show(invoker, 0, invoker.getHeight());
+    }
+
 
     public void startTimer() {
         duration = 20 * 60 * 1000;
