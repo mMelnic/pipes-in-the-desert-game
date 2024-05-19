@@ -1,7 +1,21 @@
 Moved RIGHT to row 0 and column 4
-Moved LEFT to row 0 and column 3
-Moved LEFT to row 0 and column 2
-Moved LEFT to row 0 and column 1
-Moved RIGHT to row 0 and column 2
-Moved RIGHT to row 0 and column 3
-Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+Moved LEFT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You cannot move there.
+You have picked a Pump
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+You have successfully installed a Pump.
+Moved LEFT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You cannot move there.
+You have picked a Pipe
+Moved LEFT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+Moved UP to row 0 and column 5
+Moved DOWN to row 1 and column 5
+You have successfully installed a Pipe.
