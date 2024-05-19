@@ -96,7 +96,7 @@ public class PumpView extends JPanel {
             switch (direction) {
                 case UP -> {
                     x = (getWidth() - fontSize + 12) / 2;
-                    y = margin;
+                    y = margin + fontSize;
                 }
                 case DOWN -> {
                     x = (getWidth() - fontSize + 12) / 2;
