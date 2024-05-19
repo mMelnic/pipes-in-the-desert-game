@@ -7,6 +7,8 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import interfaces.ICisternListener;
+
+import java.awt.Font;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -25,6 +27,7 @@ import player.PlumberScorer;
 import player.Saboteur;
 import player.SaboteurScorer;
 import player.Team;
+import javax.swing.*;
 
 /**
  * The GameManager class manages the game's flow and logic.
@@ -131,7 +134,7 @@ public class GameManager implements ICisternListener
         }
 
         manufactureComponents();
-
+        startSandstorms();
         // String inputText;
 
         
@@ -509,12 +512,22 @@ public class GameManager implements ICisternListener
         mainWindow.show();
     }
 
+    public void startSandstorms() {
+        Timer sandstormTimer = new Timer("SandstormTimer");
+        sandstormTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                startSandstorm();
+            }
+        }, 1000 * 15, 1000 * 50); 
+    }
+
     /**
      * Initiates a sandstorm event.
      */
     public void startSandstorm() {
         System.out.println("SANDSTORM!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-
+        showSandstormWindow();
         List<Pump> pumps = map.getPumps();
 
         if (pumps.isEmpty()) {
@@ -522,9 +535,13 @@ public class GameManager implements ICisternListener
             return;
         }
 
+
         if (pumps.size() == 1) {
             Pump pump = pumps.get(0);
             pump.setBroken(true);
+            if (isPumpConnectedToWaterFlowingPipe(pump)) {
+                pump.fillReservoir();
+            }
         } else {
             Random random = new Random();
             Pump randomPump = pumps.get(random.nextInt(pumps.size()));
@@ -535,10 +552,31 @@ public class GameManager implements ICisternListener
             }
         }
 
-        map.printMap();
         
         
     }
+
+    private void showSandstormWindow() {
+        JFrame frame = new JFrame("Sandstorm Alert");
+        JLabel label = new JLabel("SANDSTORM!", SwingConstants.CENTER);
+        label.setFont(new Font("Serif", Font.BOLD, 27));
+        frame.add(label);
+        frame.setSize(300, 100);
+        frame.setUndecorated(true); // Remove window decorations
+    
+        frame.setLocationRelativeTo(null);
+    
+        frame.setAlwaysOnTop(true);
+        frame.setVisible(true);
+    
+        Timer timer = new Timer();
+        timer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                frame.dispose();
+            }
+        }, 
+        5000); }
 
     private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
         Set<Component> visited = new HashSet<>();
@@ -756,19 +794,19 @@ public class GameManager implements ICisternListener
 //             }
 //         }
         
-//         // Start sandstorm timers after 15 seconds
-//         Timer timer = new Timer("SandstormTimer");
-//         timer.schedule(new TimerTask() {
-//             public void run()
-//             {
-//                 startSandstorm();
-//             }
-//         }, 15 * 1000);
+    //     // Start sandstorm timers after 15 seconds
+    //     Timer timer = new Timer("SandstormTimer");
+    //     timer.schedule(new TimerTask() {
+    //         public void run()
+    //         {
+    //             startSandstorm();
+    //         }
+    //     }, 15 * 1000);
 
-//         startGame(); // Start the game after selecting a team
-//     }
-//     while (input != 1 && input != 2);
-// }
+    //     startGame(); // Start the game after selecting a team
+    // }
+    // while (input != 1 && input != 2);
+
 
     /**
      * Receives input from the user.
