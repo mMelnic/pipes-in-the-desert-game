@@ -21,7 +21,8 @@ public class TimerWindow extends JFrame{
         setSize(200, 100);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
-        
         setVisible(true);
     }
+
+    
 }

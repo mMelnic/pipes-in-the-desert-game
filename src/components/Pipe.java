@@ -1,15 +1,14 @@
 package components;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import enumerations.Direction;
 import enumerations.Shapes;
 import interfaces.ILeakage;
 import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import system.Cell;
 
 /**
@@ -69,6 +68,8 @@ public class Pipe extends Component implements ILeakage {
         for (IScorer scorer : scorers) {
             scorer.updateScore(leakTime);
         }
+        System.out.println("Leaking duration: " + leakTime + " milliseconds");
+
     }
 
     /**
@@ -172,15 +173,15 @@ public class Pipe extends Component implements ILeakage {
             boolean leftConnected = connectedComponents.get(Direction.LEFT) != null;
             boolean rightConnected = connectedComponents.get(Direction.RIGHT) != null;
     
-            if (upConnected && downConnected) {
+             if (upConnected && downConnected) {
                 shape = Shapes.VERTICAL;
-            } else if (upConnected && rightConnected) {
-                shape = Shapes.CORNER_LEFT_DOWN;
-            } else if (rightConnected && downConnected) {
-                shape = Shapes.CORNER_LEFT_UP;
             } else if (downConnected && leftConnected) {
-                shape = Shapes.CORNER_RIGHT_UP;
+                shape = Shapes.CORNER_LEFT_DOWN;
             } else if (leftConnected && upConnected) {
+                shape = Shapes.CORNER_LEFT_UP;
+            } else if (upConnected && rightConnected) {
+                shape = Shapes.CORNER_RIGHT_UP;
+            } else if (rightConnected && downConnected) {
                 shape = Shapes.CORNER_RIGHT_DOWN;
             } else {
                 shape = Shapes.HORIZONTAL;
@@ -271,7 +272,6 @@ public class Pipe extends Component implements ILeakage {
         } else if (!value && freeEndLeaking) { // If the value is changing to false
             freeEndLeaking = false;
             long duration = System.currentTimeMillis() - freeEndLeakingStartTime; // Calculate the duration
-            System.out.println("Leaking duration: " + duration + " milliseconds");
             notifyScorers(duration);
         }
     }

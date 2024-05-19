@@ -1,8 +1,7 @@
 package player;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import interfaces.IScorer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The {@code PlumberScorer} class implements the {@code IScorer} interface and

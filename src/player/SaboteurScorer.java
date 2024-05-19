@@ -1,8 +1,7 @@
 package player;
 
-import java.util.concurrent.atomic.AtomicInteger;
-
 import interfaces.IScorer;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class SaboteurScorer implements IScorer{
     private static AtomicInteger score = new AtomicInteger(0);

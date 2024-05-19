@@ -1,14 +1,12 @@
 package GUI;
-import java.awt.*;
-
-import javax.imageio.ImageIO;
-import javax.swing.*;
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
 import components.Cistern;
 import components.Pipe;
 import components.Pump;
+import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class CisternView extends JPanel {
     private Cistern cistern;
@@ -32,7 +30,7 @@ public class CisternView extends JPanel {
             cisternWithPipeImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_manufacturedPipe.png"));
             cisternWithPumpImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_manufacturedPump.png"));
             cisternFillingImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_filling.png"));
-            cisternFullImage = ImageIO.read(getClass().getResource("/resources/images/citernView_full.png"));
+            cisternFullImage = ImageIO.read(getClass().getResource("/resources/images/cisternView_full.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }

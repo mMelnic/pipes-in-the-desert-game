@@ -2,13 +2,12 @@ package components;
 import interfaces.ICisternListener;
 import interfaces.IScorer;
 import interfaces.IWaterFlowListener;
-import system.Cell;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+import system.Cell;
 /**
  * a class Cistern represents cistern in the game, extends class component
  */
@@ -92,6 +91,7 @@ public class Cistern extends Component implements IWaterFlowListener {
         writeMessageToCMD("pipe successfully manufactured.");
         Pipe newPipe = new Pipe(location);
         this.manufacturedComponent = newPipe;
+        newPipe.addScorer(location.getMap().getSaboteurScorer());
         return newPipe;
     }
 
@@ -112,6 +112,7 @@ public class Cistern extends Component implements IWaterFlowListener {
             parameter = 2; // Probability of 2: 10%
         }
         Pump newPump = new Pump(parameter, location);
+        newPump.addScorer(location.getMap().getSaboteurScorer());
         this.manufacturedComponent = newPump;
         return newPump;
     }
@@ -127,7 +128,7 @@ public class Cistern extends Component implements IWaterFlowListener {
             Random random = new Random();
             int randomValue = random.nextInt(100); // Generate a random number between 0 and 99
 
-            if (randomValue < 65) {
+            if (randomValue < 80) {
                 return manufacturePipe();
             } else {
                 return manufacturePump();

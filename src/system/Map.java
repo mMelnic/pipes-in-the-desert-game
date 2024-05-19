@@ -5,16 +5,16 @@ import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
+import enumerations.Direction;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import enumerations.Direction;
 import player.MovablePlayer;
 import player.PlumberScorer;
+import player.SaboteurScorer;
 
 /**
  * The Map class represents the game map consisting of cells, cisterns, pipes,
@@ -31,6 +31,7 @@ public class Map {
     private List<Pump> pumps = new ArrayList<>();
     public List<MovablePlayer> players = new ArrayList<>();
     private PlumberScorer plumberScorer;
+    private SaboteurScorer saboteurScorer;
     String size;
 
     public Map(int sizeN, int sizeM) {
@@ -65,8 +66,10 @@ public class Map {
                     if (j == 5) {
                         Pump newPump = new Pump(3, cells[i][j]);
                         cells[i][j].placeComponent(newPump);
+                        newPump.addScorer(saboteurScorer);
                     } else {
                         Pipe newPipe = new Pipe(cells[i][j]);
+                        newPipe.addScorer(saboteurScorer);
                         cells[i][j].placeComponent(newPipe);
                     }
                 }
@@ -532,5 +535,13 @@ public class Map {
 
     public String getSize() {
         return size;
+    }
+    
+    public SaboteurScorer getSaboteurScorer() {
+        return saboteurScorer;
+    }
+
+    public void setSaboteurScorer(SaboteurScorer saboteurScorer) {
+        this.saboteurScorer = saboteurScorer;
     }
 }

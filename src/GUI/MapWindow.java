@@ -1,16 +1,13 @@
 package GUI;
 
-import javax.swing.*;
-
 import components.Cistern;
-import components.Pump;
 import components.Pipe;
+import components.Pump;
 import components.Spring;
-
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
+import java.util.Timer;
+import java.util.TimerTask;
+import javax.swing.*;
 import system.Cell;
 import system.GameManager;
 import system.Map;
@@ -22,9 +19,16 @@ public class MapWindow {
     private Map map;
     PlumberController plumberController;
     SaboteurController saboteurController;
+    private JLabel timeLabel; 
+    private JLabel plumberScoreLabel;
+    private JLabel saboteurScoreLabel;
+    private Timer timer;
+    private long endTime;
+    private long duration;
 
     public MapWindow(int mapSize, GameManager gameManager) {
         initialize(mapSize);
+        duration = gameManager.getDuration();
         saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
         this.map = gameManager.getMap();
         // Add the plumber view to the map panel
@@ -45,10 +49,29 @@ public class MapWindow {
         int frameSize = mapSize * squareSize;
         frame = new JFrame();
         frame.setTitle("Map Window");
-        frame.setBounds(100, 100, frameSize + 20, frameSize + 40);
+        frame.setBounds(100, 100, frameSize + 20, frameSize + 90);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
+        JPanel spacerPanel = new JPanel();
+        spacerPanel.setLayout(new BorderLayout());
+        spacerPanel.setPreferredSize(new Dimension(frameSize + 20, 50)); 
+
+        timeLabel = new JLabel();
+        timeLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 10));
+        timeLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        frame.add(spacerPanel, BorderLayout.NORTH);
+
+        plumberScoreLabel = new JLabel();
+        plumberScoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
+        plumberScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
+        frame.add(spacerPanel, BorderLayout.NORTH);
+
+        
+
+        spacerPanel.add(timeLabel, BorderLayout.EAST);
+        spacerPanel.add(plumberScoreLabel, BorderLayout.WEST);
+        
         mapPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -57,12 +80,42 @@ public class MapWindow {
             }
         };
         frame.getContentPane().add(mapPanel);
+        startTimer();
     }
+
+     public void startTimer() {
+        final long interval = 1000; 
+
+        endTime = System.currentTimeMillis() + duration;
+
+        timer = new Timer("GameTimer");
+
+        // Task to periodically update the timer label
+        timer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                long remainingTime = getRemainingTime();
+                long minutes = (remainingTime / 1000) / 60;
+                long seconds = (remainingTime / 1000) % 60;
+                timeLabel.setText("\rRemaining time: " + minutes + ":"+ seconds);
+            }
+        }, 0, interval);
+    }
+
+    public long getRemainingTime() {
+        if (timer == null) {
+            return 0;
+        }
+        long currentTime = System.currentTimeMillis();
+        return Math.max(endTime - currentTime, 0);
+    }
+
 
     private void drawMap(Graphics g, int squareSize) {
         // int squareSize = 80;
         // Remove all components from the mapPanel
         mapPanel.removeAll();
+
+        plumberScoreLabel.setText("Plumber score: ");
 
         // Draw the grid
         drawGrid(g, squareSize);
@@ -101,10 +154,10 @@ public class MapWindow {
                 int y = i * squareSize;
 
                 if (!cell.isEmpty()) {
-                    // if (cell.isPlayerOn()) {
-                    //     g.setColor(Color.RED);
-                    //     g.fillOval(x, y, squareSize, squareSize);
-                    // } else 
+                    if (cell.isPlayerOn()) {
+                        //g.setColor(Color.RED);
+                        //g.fillOval(x, y, squareSize, squareSize);
+                    } else 
                     if (cell.getComponent() instanceof Pipe) {
                         // g.setColor(Color.GREEN);
                         // g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3);
@@ -120,14 +173,17 @@ public class MapWindow {
                         mapPanel.add(pumpView);
                         mapPanel.setComponentZOrder(pumpView, 0);
                     } else if (cell.getComponent() instanceof Cistern) {
-                        g.setColor(Color.PINK);
-                        g.fillRect(x, y, squareSize, squareSize);
-                        // CisternView cisternView = new CisternView((Cistern)cell.getComponent());
-                        // cisternView.setBounds(x, y, squareSize, squareSize);
-                        // mapPanel.add(cisternView);
+                        //g.setColor(Color.PINK);
+                        //g.fillRect(x, y, squareSize, squareSize);
+                        CisternView cisternView = new CisternView((Cistern)cell.getComponent());
+                        cisternView.setBounds(x, y, squareSize, squareSize);
+                        mapPanel.add(cisternView);
                     } else if (cell.getComponent() instanceof Spring) {
-                        g.setColor(new Color(128, 0, 128));
-                        g.fillRect(x, y, squareSize, squareSize);
+                        //g.setColor(new Color(128, 0, 128));
+                        //g.fillRect(x, y, squareSize, squareSize);
+                        SpringView springView = new SpringView((Spring)cell.getComponent());
+                        springView.setBounds(x, y, squareSize, squareSize);
+                        mapPanel.add(springView);
                     }
 
                 }

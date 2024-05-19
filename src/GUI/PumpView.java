@@ -94,31 +94,32 @@ public class PumpView extends JPanel {
 
             // Calculate the position based on the direction
             switch (direction) {
-                case UP:
+                case UP -> {
                     x = (getWidth() - fontSize) / 2;
                     y = margin;
-                    break;
-                case DOWN:
+                }
+                case DOWN -> {
                     x = (getWidth() - fontSize) / 2;
-                    y = getHeight() - margin - fontSize;
-                    break;
-                case LEFT:
+                    y = getHeight() - margin - fontSize + 10;
+                }
+                case LEFT -> {
                     x = margin;
                     y = (getHeight() - fontSize) / 2 + fontSize + 10;
-                    break;
-                case RIGHT:
+                }
+                case RIGHT -> {
                     x = getWidth() - margin - fontSize + 10;
                     y = (getHeight() - fontSize) / 2 + fontSize + 10;
-                    break;
-                default:
+                }
+                default -> {
                     continue; // Skip if direction is invalid
+                }
             }
 
             components.Component componentToCheck = pump.getConnectedComponents().get(direction);
             // Draw the letter "I" or "O" based on the direction
             if (componentToCheck instanceof Pipe) {
                 Pipe pipe = (Pipe)componentToCheck;
-                String letter = (pipe == pump.getIncomingPipe()) ? "P" : "P";
+                String letter = (pipe == pump.getIncomingPipe() || pipe == pump.getOutgoingPipe()) ? "P" : "";
                 g.drawString(letter, x, y);
             }
         }

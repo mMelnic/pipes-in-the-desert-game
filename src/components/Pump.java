@@ -72,6 +72,7 @@ public class Pump extends Component implements ILeakage {
         for (IScorer scorer : scorers) {
             scorer.updateScore(leakTime);
         }
+        System.out.println("Leaking duration: " + leakTime + " milliseconds");
     }
 
     /**

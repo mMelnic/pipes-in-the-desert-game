@@ -1,23 +1,22 @@
 package GUI;
 
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import system.Map;
-
 import components.Cistern;
 import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
 import enumerations.Direction;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.Set;
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import player.Plumber;
 import system.Cell;
+import system.Map;
 
 public class PlumberController extends KeyAdapter {
     private Plumber plumberPlayer1;
@@ -26,6 +25,13 @@ public class PlumberController extends KeyAdapter {
 
     private Pipe selectedPipe = null;
     private static final int CELL_SIZE = 80;
+    private Set<Integer> pressedKeys = new HashSet<>();
+
+    private enum State {
+        MOVEMENT, ACTION
+    }
+
+    private State currentState = State.MOVEMENT;
 
     public PlumberController(Plumber plumberPlayer1, JPanel mapPanel) {
         this.plumberPlayer1 = plumberPlayer1;
@@ -74,6 +80,24 @@ public class PlumberController extends KeyAdapter {
     @Override
     public void keyPressed(KeyEvent e) {
         int keyCode = e.getKeyCode();
+        pressedKeys.add(keyCode);
+        switch (currentState) {
+            case MOVEMENT:
+                handleMovementKeyPress(keyCode);
+                break;
+            case ACTION:
+                handleActionKeyPress(keyCode);
+                break;
+        }
+        SwingUtilities.invokeLater(() -> mapPanel.repaint());
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        pressedKeys.remove(e.getKeyCode());
+    }
+
+    private void handleMovementKeyPress(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
                 plumberPlayer1.move(Direction.UP);
@@ -98,12 +122,74 @@ public class PlumberController extends KeyAdapter {
                 break;
             case KeyEvent.VK_COMMA:
                 plumberPlayer1.dropComponent();
-
+                break;
+            case KeyEvent.VK_SHIFT:
+                currentState = State.ACTION;
+                break;
         }
-        SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
- 
+    private void handleActionKeyPress(int keyCode) {
+        if (keyCode == KeyEvent.VK_SHIFT) {
+            currentState = State.MOVEMENT;
+            return; // Exit early if Shift key is pressed to switch to movement state
+        }
+
+        // Handle simultaneous key presses specific to the action state
+        handleSimultaneousKeyPresses();
+        SwingUtilities.invokeLater(() -> mapPanel.repaint());
+
+        // Add other key press handling logic as needed
+    }
+
+    private void handleSimultaneousKeyPresses() {
+        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_DOWN)) {
+            checkAndRedirect(Direction.UP, Direction.DOWN);
+        }
+        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_LEFT)) {
+            checkAndRedirect(Direction.UP, Direction.LEFT);
+        }
+        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+            checkAndRedirect(Direction.UP, Direction.RIGHT);
+        }
+        if (pressedKeys.contains(KeyEvent.VK_DOWN) && pressedKeys.contains(KeyEvent.VK_LEFT)) {
+            checkAndRedirect(Direction.DOWN, Direction.LEFT);
+        }
+        if (pressedKeys.contains(KeyEvent.VK_DOWN) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+            checkAndRedirect(Direction.DOWN, Direction.RIGHT);
+        }
+        if (pressedKeys.contains(KeyEvent.VK_LEFT) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
+            checkAndRedirect(Direction.LEFT, Direction.RIGHT);
+        }
+    }
+
+    private void checkAndRedirect(Direction dir1, Direction dir2) {
+        Cell cell1 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir1);
+        Cell cell2 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir2);
+
+        if (cell1 != null && cell2 != null) {
+            Component component1 = cell1.getComponent();
+            Component component2 = cell2.getComponent();
+            if (component1 instanceof Pipe && component2 instanceof Pipe) {
+                plumberPlayer1.redirectWaterFlow((Pipe) component1, (Pipe) component2);
+            }
+        }
+    }
+
+    private Cell getCellInDirection(Cell currentCell, Direction direction) {
+        switch (direction) {
+            case UP:
+                return currentCell.getMap().getUpwardCell(currentCell);
+            case DOWN:
+                return currentCell.getMap().getDownwardCell(currentCell);
+            case LEFT:
+                return currentCell.getMap().getLeftwardCell(currentCell);
+            case RIGHT:
+                return currentCell.getMap().getRightwardCell(currentCell);
+            default:
+                throw new IllegalArgumentException("Invalid direction");
+        }
+    }
 
     private void attemptRepairAction() {
         // Get the current cell the player is standing on

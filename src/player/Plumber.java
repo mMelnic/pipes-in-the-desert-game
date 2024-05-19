@@ -46,8 +46,7 @@ public class Plumber extends MovablePlayer {
                 handleOutput("The pipe is repaired.");
                 // Check if the pipe is leaking and stop the leaking
                 if (pipe.isLeaking()) {
-                    long duration = pipe.stopLeaking();
-                    ((PlumberScorer)team.getTeamScore()).updateScore(duration);
+                    pipe.stopLeaking();
                     handleOutput("The pipe is repaired and stopped leaking.");
                 }
                 return true;
@@ -86,8 +85,7 @@ public class Plumber extends MovablePlayer {
                     handleOutput("The reservoir emptied.");
                 }
                 if (pump.isLeaking()) {
-                    long duration = pump.stopLeaking();
-                    ((PlumberScorer) team.getTeamScore()).updateScore(duration);
+                    pump.stopLeaking();
                     handleOutput("The pump is repaired and stopped leaking.");
                 }
                 return true;
@@ -171,6 +169,8 @@ public class Plumber extends MovablePlayer {
             componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
             carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
         } catch (Exception e) {
+            componentInCurrentCell.removeConnectedComponent(carriedComponent);
+            carriedComponent.removeConnectedComponent(carriedComponent);
             System.out.println("Could not connect the components.");
             return false;
         }
@@ -218,6 +218,8 @@ public class Plumber extends MovablePlayer {
                     System.out.println("Could not reconnect the components.");
                     try {
                         connectedComponent.addConnectedComponent(pipeToBeReplaced, connectedDirection);
+                        pump.removeConnectedComponent(connectedComponent);
+                        connectedComponent.removeConnectedComponent(pump);
                     } catch (Exception f) {
                         // Surpressing the exception
                     }
@@ -237,6 +239,8 @@ public class Plumber extends MovablePlayer {
             componentInCurrentCell.addConnectedComponent(carriedComponent, direction);
             carriedComponent.addConnectedComponent(componentInCurrentCell, direction.getOppositeDirection());
         } catch (Exception e) {
+            componentInCurrentCell.removeConnectedComponent(carriedComponent);
+            carriedComponent.removeConnectedComponent(componentInCurrentCell);
             System.out.println("Could not connect the components.");
             return false;
         }
@@ -284,14 +288,18 @@ public class Plumber extends MovablePlayer {
             if (component instanceof Cistern && pipe.isWaterFlowing()) {
                 ((Cistern) component).fillCistern();
                 handleOutput("Pipe connected to cistern.");
-            } else if (component instanceof Spring) {
+            } else if (component instanceof Spring spring) {
                 if(!pipe.isWaterFlowing()) {
-                    ((Spring) component).startWaterSupply();
+                    spring.startWaterSupply();
                     handleOutput("Pipe connected to spring.");
                 }
             }
         } catch (Exception e) {
-            // TODO undo the effect of the exception
+            // Remove the component from the pipe's connected components
+            pipe.removeConnectedComponent(component);
+
+            // Remove the pipe from the component's connected components
+            component.removeConnectedComponent(pipe);
             handleOutput("Could not connect the components");
         }
     }
@@ -325,8 +333,10 @@ public class Plumber extends MovablePlayer {
             return false;
         }
 
-        if (currentCell.getComponent() instanceof Pipe) {
-            Pipe pipe = (Pipe) currentCell.getComponent();
+        if (currentCell.getComponent() instanceof Pipe pipe) {
+            if (newComponent instanceof  Spring && pipe.isWaterFlowing()) {
+                return false;
+            }
             if (!(pipe.getConnectedComponents().containsValue(oldComponent))) {
                 handleOutput("The pipe is not connected to the given active component.");
             } else if (!(currentCell.getMap().isNeighbouringCell(newComponent.getLocation(), pipe.getLocation()))) {
@@ -355,8 +365,8 @@ public class Plumber extends MovablePlayer {
                     if (pipe.isWaterFlowing()) {
                         currentCell.getMap().updateWaterFlow();
                     }
-                    if (newComponent instanceof Spring) {
-                        ((Spring)newComponent).startWaterSupply();
+                    if (newComponent instanceof Spring spring) {
+                        spring.startWaterSupply();
                     }
                     handleOutput("You successfully redirected an end of a pipe.");
                     return true;
@@ -368,6 +378,8 @@ public class Plumber extends MovablePlayer {
                             pipe.getLocation().getRelativeDirection(oldComponent.getLocation()));
                     oldComponent.addConnectedComponent(pipe,
                             oldComponent.getLocation().getRelativeDirection(pipe.getLocation()));
+                    pipe.removeConnectedComponent(newComponent);
+                    newComponent.removeConnectedComponent(pipe);
                 } catch (Exception ex) {
                     // Supress exception
                 }

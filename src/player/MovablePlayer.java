@@ -98,6 +98,9 @@ public abstract class MovablePlayer {
         }
 
         if (targetCell != null) {
+            if (!currentCell.getComponent().getConnectedComponents().containsValue(targetCell.getComponent())) {
+                return;
+            }
             if (targetCell.getComponent() instanceof Pipe) {
                 if (!targetCell.isPlayerOn()) {
                     targetCell.setPlayerOn(true);
@@ -144,13 +147,16 @@ public abstract class MovablePlayer {
             return;
         }
         
-        if (currentCell.getComponent() instanceof Pump) {
+        if (currentCell.getComponent() instanceof Pump pump) {
             if (newIncomingPipe.equals(newOutgoingPipe)) {
                 handleOutput("Incoming and outgoing pipes should be different.");
                 return;
             }
+            if (!pump.getConnectedComponents().containsValue(newIncomingPipe)
+                    || !pump.getConnectedComponents().containsValue(newOutgoingPipe)) {
+                return;
+            }
 
-            Pump pump = (Pump) currentCell.getComponent();
             pump.setIncomingPipe(newIncomingPipe);
             pump.setOutgoingPipe(newOutgoingPipe);
             currentCell.getMap().updateWaterFlow();

@@ -1,12 +1,11 @@
 package system;
 
+import GUI.MainWindow;
 import components.Cistern;
 import components.Component;
 import components.Pipe;
 import components.Pump;
-import enumerations.Direction;
 import interfaces.ICisternListener;
-
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
@@ -17,10 +16,6 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-
-import GUI.MainWindow;
-import GUI.MapWindow;
-import jdk.jshell.spi.ExecutionControl;
 import player.MovablePlayer;
 import player.Plumber;
 import player.PlumberScorer;
@@ -44,6 +39,8 @@ public class GameManager implements ICisternListener
     private MovablePlayer activePlayer;
     private SaboteurScorer saboteurScorer = new SaboteurScorer();
     private PlumberScorer plumberScorer = new PlumberScorer();
+    private long endTime;
+    private long duration;
 
 
     Scanner scanner = new Scanner(System.in);
@@ -74,8 +71,8 @@ public class GameManager implements ICisternListener
 
         teams = new ArrayList<Team>();
 
-        teams.add(new Team(new PlumberScorer()));
-        teams.add(new Team(new SaboteurScorer()));
+        teams.add(new Team(plumberScorer));
+        teams.add(new Team(saboteurScorer));
         
         Plumber plumber1 = new Plumber(teams.get(0));
         teams.get(0).assignPlayer(plumber1);
@@ -105,6 +102,7 @@ public class GameManager implements ICisternListener
     public void startGame() 
     {
         map.setPlumberScorer(plumberScorer);
+        map.setSaboteurScorer(saboteurScorer);
         map.players.add(teams.get(0).getPlayers().get(0));
         map.players.add(teams.get(0).getPlayers().get(1));
         map.players.add(teams.get(1).getPlayers().get(0));
@@ -487,18 +485,18 @@ public class GameManager implements ICisternListener
         System.out.print(message);
         writeToOutputTxt(message);
     }
-    public void switchActivePlayer() 
-    {
-        if (activePlayer instanceof Plumber) {
-            activePlayer = teams.get(1).getPlayers().get(0);
-            activeSaboteur = (Saboteur) activePlayer;
-            activePlumber = null;
-        } else if (activePlayer instanceof Saboteur) {
-            activePlayer = teams.get(0).getPlayers().get(0);
-            activePlumber = (Plumber) activePlayer;
-            activeSaboteur = null;
-        }
-    }
+    // public void switchActivePlayer() 
+    // {
+    //     if (activePlayer instanceof Plumber) {
+    //         activePlayer = teams.get(1).getPlayers().get(0);
+    //         activeSaboteur = (Saboteur) activePlayer;
+    //         activePlumber = null;
+    //     } else if (activePlayer instanceof Saboteur) {
+    //         activePlayer = teams.get(0).getPlayers().get(0);
+    //         activePlumber = (Plumber) activePlayer;
+    //         activeSaboteur = null;
+    //     }
+    // }
 
   
     public void openMenu() {
@@ -533,6 +531,8 @@ public class GameManager implements ICisternListener
         }
 
         map.printMap();
+        
+        
     }
 
     private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
@@ -591,19 +591,32 @@ public class GameManager implements ICisternListener
     /**
      * Starts the game timer.
      */
-    public void startTimer() 
-    {
+   public void startTimer() {
+         duration = 20 * 60 * 1000; 
+         
+    
+        endTime = System.currentTimeMillis() + duration;
+    
         timer = new Timer("GameTimer");
+    
         timer.schedule(new TimerTask() {
-            public void run()
-            {
+            public void run() {
                 isTimeUp = true;
                 String message = "\nTime is up!\n\n\n";
                 System.out.print(message);
                 writeToOutputTxt(message);
+                timer.cancel(); 
             }
-        }, 20 * 60 * 1000);
+        }, duration);
+    
+       
     }
+
+    public long getDuration(){
+        return duration;
+    }
+
+    
 
     /**
      * Checks if all cisterns are full.
