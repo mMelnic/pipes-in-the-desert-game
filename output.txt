@@ -1,0 +1,11 @@
+Moved LEFT to row 0 and column 2
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
