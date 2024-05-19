@@ -323,7 +323,7 @@ public class Plumber extends MovablePlayer {
      *         otherwise.
      */
 
-    public boolean detachPipe(Component newComponent, Component oldComponent) {
+    public boolean detachPipe(Component oldComponent, Component newComponent) {
         if (oldComponent instanceof Pipe) {
             handleOutput("The pipe is not connected to any active component.");
         } else if (newComponent instanceof Pipe) {

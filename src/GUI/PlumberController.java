@@ -1,22 +1,26 @@
 package GUI;
 
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.util.HashSet;
+import java.util.Set;
+
+import system.Map;
+
 import components.Cistern;
 import components.Component;
 import components.Pipe;
 import components.Pump;
 import components.Spring;
 import enumerations.Direction;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.HashSet;
-import java.util.Set;
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import player.Plumber;
 import system.Cell;
-import system.Map;
 
 public class PlumberController extends KeyAdapter {
     private Plumber plumberPlayer1;
@@ -143,23 +147,57 @@ public class PlumberController extends KeyAdapter {
     }
 
     private void handleSimultaneousKeyPresses() {
-        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_DOWN)) {
-            checkAndRedirect(Direction.UP, Direction.DOWN);
+        // List of all pairs of keys
+        int[] keys = { KeyEvent.VK_UP, KeyEvent.VK_DOWN, KeyEvent.VK_LEFT, KeyEvent.VK_RIGHT };
+
+        for (int key1 : keys) {
+            for (int key2 : keys) {
+                if (key1 != key2) {
+                    if (pressedKeys.contains(key1) && pressedKeys.contains(key2)) {
+                        // Check the order of key presses
+                        if (pressedKeysOrder(key1) < pressedKeysOrder(key2)) {
+                            Cell currentCell = plumberPlayer1.getCurrentCell();
+                            Component currentComponent = currentCell.getComponent();
+
+                            if (currentComponent instanceof Pump) {
+                                // Check and redirect for pump
+                                checkAndRedirect(getDirection(key1), getDirection(key2));
+                            } else if (currentComponent instanceof Pipe) {
+                                // Check and detach for pipe
+                                checkAndDetach(getDirection(key1), getDirection(key2));
+                            }
+                        }
+                    }
+                }
+            }
         }
-        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_LEFT)) {
-            checkAndRedirect(Direction.UP, Direction.LEFT);
+    }
+
+    // Helper method to get the order of key presses
+    private int pressedKeysOrder(int keyCode) {
+        int order = 0;
+        for (int key : pressedKeys) {
+            if (key == keyCode) {
+                return order;
+            }
+            order++;
         }
-        if (pressedKeys.contains(KeyEvent.VK_UP) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
-            checkAndRedirect(Direction.UP, Direction.RIGHT);
-        }
-        if (pressedKeys.contains(KeyEvent.VK_DOWN) && pressedKeys.contains(KeyEvent.VK_LEFT)) {
-            checkAndRedirect(Direction.DOWN, Direction.LEFT);
-        }
-        if (pressedKeys.contains(KeyEvent.VK_DOWN) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
-            checkAndRedirect(Direction.DOWN, Direction.RIGHT);
-        }
-        if (pressedKeys.contains(KeyEvent.VK_LEFT) && pressedKeys.contains(KeyEvent.VK_RIGHT)) {
-            checkAndRedirect(Direction.LEFT, Direction.RIGHT);
+        return -1; // Key not found in pressedKeys set
+    }
+
+    // Helper method to map key codes to directions
+    private Direction getDirection(int keyCode) {
+        switch (keyCode) {
+            case KeyEvent.VK_UP:
+                return Direction.UP;
+            case KeyEvent.VK_DOWN:
+                return Direction.DOWN;
+            case KeyEvent.VK_LEFT:
+                return Direction.LEFT;
+            case KeyEvent.VK_RIGHT:
+                return Direction.RIGHT;
+            default:
+                return null; // Handle invalid key codes
         }
     }
 
@@ -173,6 +211,17 @@ public class PlumberController extends KeyAdapter {
             if (component1 instanceof Pipe && component2 instanceof Pipe) {
                 plumberPlayer1.redirectWaterFlow((Pipe) component1, (Pipe) component2);
             }
+        }
+    }
+
+    private void checkAndDetach(Direction dir1, Direction dir2) {
+        Cell cell1 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir1);
+        Cell cell2 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir2);
+
+        if (cell1 != null && cell2 != null) {
+            Component component1 = cell1.getComponent();
+            Component component2 = cell2.getComponent();
+            plumberPlayer1.detachPipe(component1, component2);
         }
     }
 
