@@ -93,7 +93,7 @@ public class PlumberController extends KeyAdapter {
                 handleActionKeyPress(keyCode);
                 break;
         }
-        SwingUtilities.invokeLater(() -> mapPanel.repaint());
+        // SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
     @Override
@@ -141,9 +141,6 @@ public class PlumberController extends KeyAdapter {
 
         // Handle simultaneous key presses specific to the action state
         handleSimultaneousKeyPresses();
-        SwingUtilities.invokeLater(() -> mapPanel.repaint());
-
-        // Add other key press handling logic as needed
     }
 
     private void handleSimultaneousKeyPresses() {

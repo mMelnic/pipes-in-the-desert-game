@@ -5,7 +5,6 @@ import components.Pipe;
 import components.Pump;
 import components.Spring;
 import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,10 +30,11 @@ public class MapWindow {
     private long duration;
 
     public MapWindow(int mapSize, GameManager gameManager) {
+        this.duration = gameManager.getDuration();
         initialize(mapSize);
-        duration = gameManager.getDuration();
-        saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
         this.map = gameManager.getMap();
+        map.setMapPanel(mapPanel);
+        saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), mapPanel);
         // Add the plumber view to the map panel
         plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
         // Add key listener to the frame
@@ -69,10 +69,8 @@ public class MapWindow {
         plumberScoreLabel = new JLabel();
         plumberScoreLabel.setBorder(BorderFactory.createEmptyBorder(0, 10, 0, 0));
         plumberScoreLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
         frame.add(spacerPanel, BorderLayout.NORTH);
-
-        
-
         spacerPanel.add(timeLabel, BorderLayout.EAST);
         spacerPanel.add(plumberScoreLabel, BorderLayout.WEST);
         
@@ -95,20 +93,18 @@ public class MapWindow {
         startTimer();
     }
 
-     public void startTimer() {
+    public void startTimer() {
         final long interval = 1000; 
-
         endTime = System.currentTimeMillis() + duration;
 
         timer = new Timer("GameTimer");
 
-        // Task to periodically update the timer label
         timer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 long remainingTime = getRemainingTime();
                 long minutes = (remainingTime / 1000) / 60;
                 long seconds = (remainingTime / 1000) % 60;
-                timeLabel.setText("\rRemaining time: " + minutes + ":"+ seconds);
+                timeLabel.setText(String.format("Remaining time: %02d:%02d", minutes, seconds));
             }
         }, 0, interval);
     }
@@ -120,7 +116,6 @@ public class MapWindow {
         long currentTime = System.currentTimeMillis();
         return Math.max(endTime - currentTime, 0);
     }
-
 
     private void drawMap(Graphics g, int squareSize) {
         // int squareSize = 80;
@@ -166,33 +161,21 @@ public class MapWindow {
                 int y = i * squareSize;
 
                 if (!cell.isEmpty()) {
-                    if (cell.isPlayerOn()) {
-                        //g.setColor(Color.RED);
-                        //g.fillOval(x, y, squareSize, squareSize);
-                    } else 
                     if (cell.getComponent() instanceof Pipe) {
-                        // g.setColor(Color.GREEN);
-                        // g.fillRect(x, y + squareSize / 3, squareSize, squareSize / 3);
                         PipeView pv = new PipeView((Pipe)cell.getComponent());
                         pv.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(pv);
-                        mapPanel.setComponentZOrder(pv, 0); // Places component1 at index 0 in the Z-order
+                        mapPanel.setComponentZOrder(pv, 0); // Places component at index 0 in the Z-order
                     } else if (cell.getComponent() instanceof Pump) {
-                        // g.setColor(Color.BLUE);
-                        // g.fillRect(x, y, squareSize, squareSize);
                         PumpView pumpView = new PumpView((Pump)cell.getComponent());
                         pumpView.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(pumpView);
                         mapPanel.setComponentZOrder(pumpView, 0);
                     } else if (cell.getComponent() instanceof Cistern) {
-                        //g.setColor(Color.PINK);
-                        //g.fillRect(x, y, squareSize, squareSize);
                         CisternView cisternView = new CisternView((Cistern)cell.getComponent());
                         cisternView.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(cisternView);
                     } else if (cell.getComponent() instanceof Spring) {
-                        //g.setColor(new Color(128, 0, 128));
-                        //g.fillRect(x, y, squareSize, squareSize);
                         SpringView springView = new SpringView((Spring)cell.getComponent());
                         springView.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(springView);

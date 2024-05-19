@@ -5,11 +5,11 @@ import components.Pump;
 import enumerations.Direction;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
-import java.util.Scanner;
 import java.util.UUID;
+
+import javax.swing.SwingUtilities;
+
 import system.Cell;
-import system.Map;
 
 /**
  * Abstract class representing a movable player in a game.
@@ -29,33 +29,6 @@ public abstract class MovablePlayer {
     protected MovablePlayer(Team team) {
         this.playerID = UUID.randomUUID();
         this.team = team;
-    }
-
-    /**
-     * Allows the player to choose a map from a list of available maps based on
-     * size.
-     * 
-     * @param maps A list of available maps to choose from.
-     * @return The chosen map.
-     * @throws IllegalArgumentException If no maps are available or if an invalid
-     *                                  map size choice is made.
-     */
-    public Map chooseMap(List<Map> maps) {
-        if (maps == null || maps.isEmpty()) {
-            throw new IllegalArgumentException("No maps available");
-        }
-
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Choose a map size: small, medium, or large");
-        String sizeChoice = scanner.nextLine().toLowerCase();
-
-        for (Map map : maps) {
-            if (map.getSize().equalsIgnoreCase(sizeChoice)) {
-                return map;
-            }
-        }
-
-        throw new IllegalArgumentException("Invalid map size choice");
     }
 
     /**
@@ -108,6 +81,7 @@ public abstract class MovablePlayer {
                         currentCell.setPlayerOn(false);
                     }
                     currentCell = targetCell;
+                    SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                     String message = "Moved " + direction + " to row " + targetCell.getRow() + " and column " + targetCell.getColumn();
                     handleOutput(message);
                 } else {

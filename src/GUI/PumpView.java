@@ -75,7 +75,7 @@ public class PumpView extends JPanel {
         int textWidth = fm.stringWidth(openingsText);
         int textHeight = fm.getHeight();
         int textX = (getWidth() - textWidth) / 2;
-        int textY = (getHeight() - textHeight) / 2 + fm.getAscent() + 17;
+        int textY = (getHeight() - textHeight) / 2 + fm.getAscent() + 10;
         g.setColor(Color.RED); // Set the color to red
         g.drawString(openingsText, textX, textY);
 
@@ -95,12 +95,12 @@ public class PumpView extends JPanel {
             // Calculate the position based on the direction
             switch (direction) {
                 case UP -> {
-                    x = (getWidth() - fontSize) / 2;
+                    x = (getWidth() - fontSize + 12) / 2;
                     y = margin;
                 }
                 case DOWN -> {
-                    x = (getWidth() - fontSize) / 2;
-                    y = getHeight() - margin - fontSize + 10;
+                    x = (getWidth() - fontSize + 12) / 2;
+                    y = getHeight() - margin - fontSize + 25;
                 }
                 case LEFT -> {
                     x = margin;

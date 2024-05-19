@@ -124,7 +124,7 @@ public class GameManager implements ICisternListener
              cistern.addCisternFullListener(this);
         }
 
-        // startTimer();
+        startTimer();
         manufactureComponents();
 
         // String inputText;
@@ -935,7 +935,7 @@ public class GameManager implements ICisternListener
                     cistern.manufactureComponent();
                 }
             }
-        }, 1000 * 30, 1000 * 30);
+        }, 1000 * 10, 1000 * 10);
     }
 
     public Map getMap() {

@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
+
 import player.MovablePlayer;
 import player.PlumberScorer;
 import player.SaboteurScorer;
@@ -32,7 +36,7 @@ public class Map {
     public List<MovablePlayer> players = new ArrayList<>();
     private PlumberScorer plumberScorer;
     private SaboteurScorer saboteurScorer;
-    String size;
+    private JPanel mapPanel;
 
     public Map(int sizeN, int sizeM) {
         // rows = sizeN;
@@ -156,6 +160,7 @@ public class Map {
             }
         }
         checkForFreeEnds();
+        SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
     private void resetComponentState(Component component) {
@@ -212,18 +217,6 @@ public class Map {
                 }
             }
         }
-        // else if (component instanceof Pump) {
-        // Pump pump = (Pump) component;
-        // if (pump.getConnectedComponents().size() == 1) {
-        // Component connectedComponent =
-        // pump.getConnectedComponents().values().iterator().next();
-        // if (connectedComponent instanceof Pipe
-        // && ((Pipe) connectedComponent).isWaterFlowing()) {
-        // // Call fillReservoir method for the pump
-        // pump.fillReservoir();
-        // }
-        // }
-        // }
     }
 
     private void updatePipesNotInList(List<Pipe> pipesWithFreeEndLeaking) {
@@ -533,8 +526,8 @@ public class Map {
         return columns;
     }
 
-    public String getSize() {
-        return size;
+    public JPanel getMapPanel() {
+        return mapPanel;
     }
     
     public SaboteurScorer getSaboteurScorer() {
@@ -543,5 +536,9 @@ public class Map {
 
     public void setSaboteurScorer(SaboteurScorer saboteurScorer) {
         this.saboteurScorer = saboteurScorer;
+    }
+    
+    public void setMapPanel(JPanel mapPanel) {
+        this.mapPanel = mapPanel;
     }
 }

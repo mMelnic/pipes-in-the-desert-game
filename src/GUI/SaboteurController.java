@@ -40,7 +40,7 @@ public class SaboteurController extends KeyAdapter {
                 break;
             // TODO: Add more key bindings if necessary
         }
-        SwingUtilities.invokeLater(() -> mapPanel.repaint());
+        // SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
     public SaboteurView getSaboteurView() {

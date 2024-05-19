@@ -2,30 +2,63 @@ Moved RIGHT to row 0 and column 4
 Moved RIGHT to row 0 and column 5
 Moved RIGHT to row 0 and column 6
 You cannot move there.
-There is no component available at the cistern.
 Moved LEFT to row 0 and column 5
-You have no component carried.
-Moved RIGHT to row 0 and column 6
-There is no component available at the cistern.
-There is no component available at the cistern.
-There is no component available at the cistern.
-Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+Moved LEFT to row 0 and column 1
+You cannot move there.
+Moved RIGHT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
 Moved RIGHT to row 0 and column 6
 You have picked a Pipe
 Moved LEFT to row 0 and column 5
 You have successfully installed a Pipe.
+Moved RIGHT to row 0 and column 6
+There is no component available at the cistern.
+You have picked a Pump
+Moved LEFT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+You have successfully installed a Pump.
+Moved UP to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You have picked a Pipe
+You have dropped the component.
+Moved LEFT to row 0 and column 5
+Moved RIGHT to row 0 and column 6
+You have picked a Pipe
+The cell is not empty, you cannot install here.
+You have dropped the component.
+You have picked a Pipe
+You have dropped the component.
+There is no component available at the cistern.
+There is no component available at the cistern.
+You have picked a Pump
+Moved LEFT to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
+Moved DOWN to row 1 and column 5
+Moved DOWN to row 2 and column 5
+You already have a component carried.
+Moved UP to row 1 and column 5
+Moved UP to row 0 and column 5
+Moved LEFT to row 0 and column 4
+Moved LEFT to row 0 and column 3
+Moved LEFT to row 0 and column 2
+You have successfully installed a Pump.
+Moved RIGHT to row 0 and column 3
+Moved RIGHT to row 0 and column 4
+Moved RIGHT to row 0 and column 5
 Moved RIGHT to row 0 and column 6
 You cannot move there.
 You have no component carried.
 You have picked a Pipe
 Moved LEFT to row 0 and column 5
 Moved DOWN to row 1 and column 5
-You have successfully installed a Pipe.
-Moved UP to row 0 and column 5
-Moved RIGHT to row 0 and column 6
-Moved LEFT to row 0 and column 5
-Moved DOWN to row 1 and column 5
 Moved DOWN to row 2 and column 5
+You have successfully installed a Pipe.
 Moved UP to row 1 and column 5
 Moved UP to row 0 and column 5
 Moved RIGHT to row 0 and column 6

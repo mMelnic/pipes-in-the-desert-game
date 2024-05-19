@@ -91,19 +91,35 @@ public class Component {
         //if the component that is receiving a new component to its neighbouring cell
         //is a pump, prior to add
         //first checks connectable pipe number and currently connected pipe
-        else if(this instanceof Pump) {
-            if(this.connectedComponents.size() < ((Pump) this).getConnectablePipesNumber()){
-                this.connectedComponents.put(d, c);
-                if (c instanceof Pipe) {
-                    ((Pump)this).connectPipe((Pipe)c);
+        else if (this instanceof Pump) {
+            int connectedPipesCount = 0;
+            int connectedPumpsCount = 0;
+            int maxConnectablePipes = ((Pump) this).getConnectablePipesNumber();
+            int maxConnectablePumps = 4 - maxConnectablePipes;
+
+            for (Component connectedComponent : this.connectedComponents.values()) {
+                if (connectedComponent instanceof Pipe) {
+                    connectedPipesCount++;
+                } else if (connectedComponent instanceof Pump) {
+                    connectedPumpsCount++;
                 }
-                writeMessageToCMD("component successfully added.");
-                return true;
             }
-            else{
-                throw new PumpConnectablePipeNumberExceedException("the pump is connected to max number of pipes already.");
+
+            if (c instanceof Pipe && connectedPipesCount < maxConnectablePipes) {
+                this.connectedComponents.put(d, c);
+                ((Pump) this).connectPipe((Pipe) c);
+                writeMessageToCMD("Pipe successfully added.");
+                return true;
+            } else if (c instanceof Pump && connectedPumpsCount < maxConnectablePumps) {
+                this.connectedComponents.put(d, c);
+                writeMessageToCMD("Pump successfully added.");
+                return true;
+            } else {
+                    throw new PumpConnectablePipeNumberExceedException(
+                            "The pump is connected to the maximum number of pipes already.");
             }
         }
+
         //if the component that is receiving a new component to its neighbouring cell is a cistern
         //prior to add, first checks if it is already connected to a component.
         else if(this instanceof Cistern && c instanceof Pipe) {
