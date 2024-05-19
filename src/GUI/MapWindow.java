@@ -53,7 +53,7 @@ public class MapWindow {
         map.setMapPanel(mapPanel);
         saboteurController = new SaboteurController(gameManager.getActiveSaboteur(), gameManager.getActiveSaboteur2());
         // Add the plumber view to the map panel
-        plumberController = new PlumberController(gameManager.getActivePlumber(), mapPanel);
+        plumberController = new PlumberController(gameManager.getActivePlumber(), gameManager.getActivePlumber2(), mapPanel);
         // Add key listener to the frame
         frame.addKeyListener(plumberController);
         frame.addKeyListener(saboteurController);
@@ -233,7 +233,10 @@ public class MapWindow {
         mapPanel.add(saboteurController.getSaboteurView());
         saboteurController.getSaboteurView2().setLocation(0, 0);
         mapPanel.add(saboteurController.getSaboteurView2());
+        plumberController.getPlumberView2().setLocation(0, 0);
+        mapPanel.add(plumberController.getPlumberView2());
         mapPanel.setComponentZOrder(plumberController.getPlumberView(), 1);
+        mapPanel.setComponentZOrder(plumberController.getPlumberView2(), 1);
         mapPanel.setComponentZOrder(saboteurController.getSaboteurView(), 1);
         mapPanel.setComponentZOrder(saboteurController.getSaboteurView2(), 1);
 

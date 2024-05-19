@@ -160,7 +160,7 @@ public class Cistern extends Component implements IWaterFlowListener {
         if (fillingThread == null || !fillingThread.isAlive()) {
             fillingThread = new Thread(() -> {
                 try {
-                    while (isFilling && elapsedTime < 180000) {
+                    while (isFilling && elapsedTime < 60000) {
                         Thread.sleep(100); // Check every 100ms
                         long currentTime = System.currentTimeMillis();
                         long elapsedUpdate = currentTime - startTime;
@@ -169,7 +169,7 @@ public class Cistern extends Component implements IWaterFlowListener {
                         notifyScorers(elapsedUpdate); // Notify listeners of the update
                     }
 
-                    if (elapsedTime >= 180000) {
+                    if (elapsedTime >= 60000) {
                         System.out.println("Cistern filled.");
                         isCisternFull = true; // Set the flag to true when the cistern is filled
                         isFilling = false;
