@@ -9,6 +9,8 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import components.Pipe;
+import components.Pump;
 import enumerations.Direction;
 import player.Plumber;
 
@@ -18,6 +20,9 @@ public class PlumberView extends JPanel {
     private BufferedImage plumberUpImage;
     private BufferedImage plumberLeftImage;
     private BufferedImage plumberRightImage;
+    private BufferedImage plumberPickPipe;
+    private BufferedImage plumberPickPump;
+
 
     public PlumberView(Plumber plumberPlayer) {
         this.plumberPlayer = plumberPlayer;
@@ -33,6 +38,8 @@ public class PlumberView extends JPanel {
             plumberUpImage = ImageIO.read(getClass().getResource("/resources/images/plumber_up.png"));
             plumberLeftImage = ImageIO.read(getClass().getResource("/resources/images/plumber_left.png"));
             plumberRightImage = ImageIO.read(getClass().getResource("/resources/images/plumber_right.png"));
+            plumberPickPipe = ImageIO.read(getClass().getResource("/resources/plumber/plumberView_pickPipe.png"));
+            plumberPickPump = ImageIO.read(getClass().getResource("/resources/plumber/plumberView_pickPump.png"));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -40,7 +47,7 @@ public class PlumberView extends JPanel {
 
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
         renderPlumberPlayer(g);
     }
 
@@ -68,5 +75,12 @@ public class PlumberView extends JPanel {
         int cellSize = 80; // Assuming each cell is 80x80 pixels
 
         g.drawImage(imageToDraw, column * cellSize, row * cellSize, cellSize, cellSize, this);
+
+        if (plumberPlayer.getCarriedComponent() instanceof Pipe) {
+            g.drawImage(plumberPickPipe, column * cellSize, row * cellSize, cellSize, cellSize, this);
+        }else if (plumberPlayer.getCarriedComponent() instanceof Pump) {
+            g.drawImage(plumberPickPump, column * cellSize, row * cellSize, cellSize, cellSize, this);
+        }
+        
     }
 }
