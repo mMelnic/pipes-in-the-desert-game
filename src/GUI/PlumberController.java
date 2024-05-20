@@ -56,9 +56,9 @@ public class PlumberController extends KeyAdapter {
             }
         });
 
-        // // Schedule the task to switch players every 15 seconds
-        // ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-        // scheduler.scheduleAtFixedRate(this::switchPlayers, 15, 15, TimeUnit.SECONDS);
+        // Schedule the task to switch players every 15 seconds
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(this::switchPlayers, 15, 15, TimeUnit.SECONDS);
     }
 
     private void switchPlayers() {

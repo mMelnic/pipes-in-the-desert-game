@@ -122,9 +122,6 @@ public class GameManager implements ICisternListener
         map.getCells(0, 3).setPlayerOn(true);
         activePlumber2.setCurrentCell(map.getCells(0, 5));
         map.getCells(0, 5).setPlayerOn(true);
-    
-        // Remove the previous placement of the saboteur
-        map.getCells(0, 1).setPlayerOn(false);
 
         map.setGameManager(this);
     
@@ -537,20 +534,22 @@ public class GameManager implements ICisternListener
             return;
         }
 
-
         if (pumps.size() == 1) {
             Pump pump = pumps.get(0);
-            pump.setBroken(true);
-            if (isPumpConnectedToWaterFlowingPipe(pump)) {
-                pump.fillReservoir();
+            if (!pump.isBroken()) {
+                pump.setBroken(true);
+                if (isPumpConnectedToWaterFlowingPipe(pump)) {
+                    pump.fillReservoir();
+                }
             }
         } else {
             Random random = new Random();
             Pump randomPump = pumps.get(random.nextInt(pumps.size()));
-            randomPump.setBroken(true);
-
-            if (isPumpConnectedToWaterFlowingPipe(randomPump)) {
-                randomPump.fillReservoir();
+            if (!randomPump.isBroken()) {
+                randomPump.setBroken(true);
+                if (isPumpConnectedToWaterFlowingPipe(randomPump)) {
+                    randomPump.fillReservoir();
+                }
             }
         }
 
@@ -578,7 +577,7 @@ public class GameManager implements ICisternListener
                 frame.dispose();
             }
         }, 
-        5000); }
+        3000); }
 
     private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
         Set<Component> visited = new HashSet<>();

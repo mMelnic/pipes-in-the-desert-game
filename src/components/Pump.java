@@ -113,6 +113,7 @@ public class Pump extends Component implements ILeakage {
 
                         if (fillElapsedTime >= 30000) {
                             isReservoirFull = true;
+                            fillElapsedTime = 0;
                             startLeaking();
                             stopFillingTask();
                         }

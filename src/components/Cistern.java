@@ -7,6 +7,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
+
+import javax.swing.SwingUtilities;
+
 import system.Cell;
 /**
  * a class Cistern represents cistern in the game, extends class component
@@ -228,7 +231,6 @@ public class Cistern extends Component implements IWaterFlowListener {
                 if (pipe.isWaterFlowing()) {
                     // Set the isFull attribute to true for the Pipe
                     pipe.setFull(true);
-                    // SwingUtilities.invokeLater(() -> location.getMap().getMapPanel().repaint());
                     // Recursive call to traverse the connected components of the connected component
                     onCisternFullRecursive(connectedComponent, visited);
                 } else {
