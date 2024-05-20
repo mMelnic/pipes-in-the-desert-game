@@ -199,7 +199,6 @@ public class MapWindow {
                         isTimeUp = true;
                         finishGame();
                         System.out.println("\nTime is up!\n\n\n");
-                        // writeToOutputTxt("\nTime is up!\n\n\n");
                     }
 
                     Thread.sleep(1000);
@@ -341,7 +340,7 @@ public class MapWindow {
                         PipeView pv = new PipeView(pipe);
                         pv.setBounds(x, y, squareSize, squareSize);
                         mapPanel.add(pv);
-                        mapPanel.setComponentZOrder(pv, 0); // Places component at index 0 in the Z-order
+                        mapPanel.setComponentZOrder(pv, 0); 
                     } else if (cell.getComponent() instanceof Pump) {
                         PumpView pumpView = new PumpView((Pump)cell.getComponent());
                         pumpView.setBounds(x, y, squareSize, squareSize);
