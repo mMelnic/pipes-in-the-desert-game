@@ -7,6 +7,10 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import system.GameManager;
 
+/**
+ * The {@code MainWindow} class represents the main menu window for the game "Pipes in the Desert".
+ * It provides options to start the game, view key bindings, and exit the application.
+ */
 public class MainWindow {
     private JFrame frame;
     private BufferedImage backGroundImage = null;
@@ -19,11 +23,19 @@ public class MainWindow {
 
     private GameManager gameManager;
 
+    /**
+     * Constructs a new {@code MainWindow} with the specified game manager.
+     *
+     * @param gameManager the game manager to handle game-related operations
+     */
     public MainWindow(GameManager gameManager) {
         this.gameManager = gameManager;
         initialize();
     }
 
+    /**
+     * Initializes the contents of the main menu window.
+     */
     private void initialize() {
 
         frame = new JFrame("Pipes in the Desert");
@@ -110,6 +122,10 @@ public class MainWindow {
         gridBagLayout.setConstraints(exitButton, c);
         frame.getContentPane().add(exitButton);
     }
+
+    /**
+     * Displays the key bindings window.
+     */
     private void showKeyBindingsWindow() {
         //frame.dispose(); 
         KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow(frame);
@@ -121,12 +137,18 @@ public class MainWindow {
     // mapWindow.show();
     // }
 
+    /**
+     * Displays the team selection window and disposes of the main menu window.
+     */
     public void showTeams() {
         frame.dispose();
         MapSelectionWindow teamSelectionWindow = new MapSelectionWindow(gameManager);
         teamSelectionWindow.show();
     }
 
+    /**
+     * Displays the main menu window.
+     */
     public void show() {
         frame.setVisible(true);
     }

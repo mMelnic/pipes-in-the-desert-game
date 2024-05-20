@@ -19,6 +19,11 @@ import system.Cell;
 import system.GameManager;
 import system.Map;
 
+
+/**
+ * The {@code MapWindow} class represents the main game window where the map and game components are displayed.
+ * It includes functionalities such as rendering the game map, displaying scores, and handling game timing.
+ */
 public class MapWindow {
 
     private JFrame frame;
@@ -45,7 +50,12 @@ public class MapWindow {
     BufferedImage coinImage = null;
     ImageIcon coinIcon = null;
     
-    
+    /**
+     * Constructs a new {@code MapWindow} with the specified map size and game manager.
+     *
+     * @param mapSize the size of the map
+     * @param gameManager the game manager to handle game-related operations
+     */
     public MapWindow(int mapSize, GameManager gameManager) {
         this.gameManager = gameManager;
         initialize(mapSize);
@@ -65,6 +75,11 @@ public class MapWindow {
         frame.requestFocusInWindow();
     }
 
+    /**
+     * Initializes the user interface components of the map window.
+     *
+     * @param mapSize the size of the map
+     */
     private void initialize(int mapSize) {
         gameManager.setMapWindow(this);
         int squareSize = 80;
@@ -141,6 +156,12 @@ public class MapWindow {
         frame.getContentPane().add(mapPanel);
         startTimer();
     }
+
+    /**
+     * Displays the menu with an exit option.
+     *
+     * @param invoker the component that invoked the menu
+     */
     private void showMenu(Component invoker) {
         JPopupMenu menu = new JPopupMenu();
         JMenuItem exitItem = new JMenuItem("Exit");
@@ -158,7 +179,9 @@ public class MapWindow {
         menu.show(invoker, 0, invoker.getHeight());
     }
 
-
+    /**
+     * Starts the game timer.
+     */
     public void startTimer() {
         duration = 20 * 60 * 1000;
         endTime = System.currentTimeMillis() + duration;
@@ -189,6 +212,9 @@ public class MapWindow {
         timerThread.start();
     }
 
+    /**
+     * Displays the window indicating that the cistern is full and shows the game results.
+     */
     public void DisplayCisternFullWindow(){
         String winner = "";
         int plumberScore = gameManager.getPlumberScore();
@@ -205,6 +231,9 @@ public class MapWindow {
         cisternFullWindow.show();
     }
 
+    /**
+     * Finishes the game and displays the results in a new window.
+     */
     public void finishGame() {
         timerRunning.set(false);
         timerThread.interrupt();
@@ -224,6 +253,11 @@ public class MapWindow {
         timeUpWindow.show();
     }
 
+    /**
+     * Gets the remaining time in milliseconds.
+     *
+     * @return the remaining time in milliseconds
+     */
   public long getRemainingTime() {
         if (!timerRunning.get()) {
             return 0;
@@ -232,6 +266,12 @@ public class MapWindow {
         return Math.max(endTime - currentTime, 0);
     }
 
+    /**
+     * Draws the map and its components on the panel.
+     *
+     * @param g the Graphics object used for drawing
+     * @param squareSize the size of each square in the grid
+     */
     private void drawMap(Graphics g, int squareSize) {
         // int squareSize = 80;
         // Remove all components from the mapPanel
@@ -259,6 +299,12 @@ public class MapWindow {
 
     }
 
+    /**
+     * Draws the grid on the panel.
+     *
+     * @param g the Graphics object used for drawing
+     * @param squareSize the size of each square in the grid
+     */
     private void drawGrid(Graphics g, int squareSize) {
         int rows = map.getRows();
         int columns = map.getColumns();
@@ -276,6 +322,12 @@ public class MapWindow {
         }
     }
 
+    /**
+     * Draws the game components (pipes, pumps, cisterns, springs) on the panel.
+     *
+     * @param g the Graphics object used for drawing
+     * @param squareSize the size of each square in the grid
+     */
     private void drawComponents(Graphics g, int squareSize) {
         for (int i = 0; i < map.rows; i++) {
             for (int j = 0; j < map.columns; j++) {
@@ -309,6 +361,9 @@ public class MapWindow {
         }
     }
 
+    /**
+     * Displays the map window.
+     */
     public void show() {
         frame.setVisible(true);
     }

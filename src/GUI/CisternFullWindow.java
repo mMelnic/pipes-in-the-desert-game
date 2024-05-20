@@ -8,15 +8,34 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The {@code CisternFullWindow} class represents a window that displays the 
+ * scores and the winner when all cisterns are full in the game.
+ */
 public class CisternFullWindow {
     private JFrame frame;
     private GameManager gameManager;
 
+    /**
+     * Constructs a new {@code CisternFullWindow} with the specified scores, winner, and game manager.
+     *
+     * @param plumberScore  the score of the plumber
+     * @param saboteurScore the score of the saboteur
+     * @param winner        the winner of the game
+     * @param gameManager   the game manager to control the game logic
+     */
     public CisternFullWindow(int plumberScore, int saboteurScore, String winner, GameManager gameManager) {
         initialize(plumberScore, saboteurScore, winner);
         this.gameManager = gameManager;
     }
 
+    /**
+     * Initializes the contents of the frame.
+     *
+     * @param plumberScore  the score of the plumber
+     * @param saboteurScore the score of the saboteur
+     * @param winner        the winner of the game
+     */
     private void initialize(int plumberScore, int saboteurScore, String winner) {
         frame = new JFrame("All cisterns are full!");
         frame.setBounds(100, 100, 450, 300);
@@ -66,7 +85,10 @@ public class CisternFullWindow {
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);
     }
-
+    
+    /**
+     * Displays the window.
+     */
     public void show(){
         frame.setVisible(true);
     }

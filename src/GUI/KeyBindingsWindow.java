@@ -4,15 +4,27 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.*;
 
+/**
+ * The {@code KeyBindingsWindow} class represents a window that displays the key bindings for the game.
+ * It extends {@code JDialog} to provide a modal dialog window.
+ */
 public class KeyBindingsWindow {
     private JDialog frame;
     private JFrame parentFrame;
 
+    /**
+     * Constructs a new {@code KeyBindingsWindow} with the specified parent frame.
+     *
+     * @param parentFrame the parent frame of this dialog
+     */
     public KeyBindingsWindow(JFrame parentFrame) {
         initialize();
         this.parentFrame = parentFrame;
     }
 
+    /**
+     * Initializes the contents of the dialog.
+     */
     private void initialize() {
         frame = new JDialog(parentFrame, "Key Bindings", true);
         frame.setBounds(100, 100, 450, 300);
@@ -69,6 +81,9 @@ public class KeyBindingsWindow {
         frame.getContentPane().add(returnButton);
     }
 
+    /**
+     * Displays the key bindings window.
+     */
     public void show() {
         frame.setVisible(true);
     }

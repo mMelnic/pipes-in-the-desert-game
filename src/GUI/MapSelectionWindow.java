@@ -7,15 +7,30 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+
+/**
+ * The {@code MapSelectionWindow} class represents a window for selecting the map size for the game.
+ * It provides options for different map sizes and a button to return to the main menu.
+ */
 public class MapSelectionWindow {
     private GameManager gameManager;
     private JFrame frame;
 
+
+    /**
+     * Constructs a new {@code MapSelectionWindow} with the specified game manager.
+     *
+     * @param gameManager the game manager to handle game-related operations
+     */
     public MapSelectionWindow(GameManager gameManager) {
         this.gameManager = gameManager;
         initUI();
     }
 
+
+    /**
+     * Initializes the user interface components of the map selection window.
+     */
     private void initUI() {
         frame = new JFrame();
         frame.setTitle("Map Selection");
@@ -91,6 +106,10 @@ public class MapSelectionWindow {
 
         frame.getContentPane().add(mapSelectionPanel);
     }
+    
+    /**
+     * Displays the map selection window.
+     */
     public void show() {
         frame.setVisible(true);
     }
