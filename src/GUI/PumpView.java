@@ -10,9 +10,18 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * Represents the view for a pump in the game.
+ * Handles rendering of the pump and any components connected to it.
+ */
 public class PumpView extends JPanel {
     private Pump pump;
 
+    /**
+     * Constructs a new PumpView for the specified pump.
+     *
+     * @param pump the pump to be represented by this view
+     */
     public PumpView(Pump pump) {
         this.pump = pump;
         // Initialize images for different states
@@ -61,6 +70,12 @@ public class PumpView extends JPanel {
         drawConnectedPipes(g);
     }
 
+
+    /**
+     * Draws the connected pipes around the pump.
+     *
+     * @param g the Graphics object to draw on
+     */
     private void drawConnectedPipes(Graphics g) {
         int margin = 0; // Margin from the edge of the panel
         int fontSize = 25; // Font size for drawing letters

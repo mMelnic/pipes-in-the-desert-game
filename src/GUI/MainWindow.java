@@ -1,4 +1,5 @@
 package GUI;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -8,8 +9,10 @@ import javax.swing.*;
 import system.GameManager;
 
 /**
- * The {@code MainWindow} class represents the main menu window for the game "Pipes in the Desert".
- * It provides options to start the game, view key bindings, and exit the application.
+ * The {@code MainWindow} class represents the main menu window for the game
+ * "Pipes in the Desert".
+ * It provides options to start the game, view key bindings, and exit the
+ * application.
  */
 public class MainWindow {
     private JFrame frame;
@@ -18,8 +21,6 @@ public class MainWindow {
     private BufferedImage startButtonImage = null;
     private BufferedImage keyBindingsButtonImage = null;
     private BufferedImage exitButtonImage = null;
-
-
 
     private GameManager gameManager;
 
@@ -41,21 +42,21 @@ public class MainWindow {
         frame = new JFrame("Pipes in the Desert");
         frame.setBounds(100, 100, 450, 300);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //frame.getContentPane().setLayout(new GridLayout(4, 3, 0, 10));
+        // frame.getContentPane().setLayout(new GridLayout(4, 3, 0, 10));
         GridBagLayout gridBagLayout = new GridBagLayout();
         frame.getContentPane().setLayout(gridBagLayout);
         GridBagConstraints c = new GridBagConstraints();
         c.insets = new Insets(10, 0, 10, 0);
         frame.setLocationRelativeTo(null);
 
-        //title
+        // title
         try {
-            titleImage =  ImageIO.read(getClass().getResource("/resources/images/main_menu.png"));
+            titleImage = ImageIO.read(getClass().getResource("/resources/images/main_menu.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
         ImageButton titleLabel = new ImageButton(titleImage);
-        //frame.getContentPane().add(titleLabel);
+        // frame.getContentPane().add(titleLabel);
         titleLabel.setPreferredSize(new Dimension(140, 40));
         c.gridx = 0;
         c.gridy = 0;
@@ -64,27 +65,27 @@ public class MainWindow {
 
         // Start button
         try {
-            startButtonImage =  ImageIO.read(getClass().getResource("/resources/images/start_button.png"));
+            startButtonImage = ImageIO.read(getClass().getResource("/resources/images/start_button.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         ImageButton startButton = new ImageButton(startButtonImage);
-        
+
         startButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 showTeams();
-                
+
             }
         });
-        //frame.add(startButton);
+        // frame.add(startButton);
         startButton.setPreferredSize(new Dimension(140, 40));
         c.gridx = 0;
         c.gridy = 1;
         gridBagLayout.setConstraints(startButton, c);
         frame.getContentPane().add(startButton);
 
-        //  Key bindings button
+        // Key bindings button
         try {
             keyBindingsButtonImage = ImageIO.read(getClass().getResource("/resources/images/key_bindings_button.png"));
         } catch (Exception e) {
@@ -103,9 +104,9 @@ public class MainWindow {
         gridBagLayout.setConstraints(keyBindingsButton, c);
         frame.getContentPane().add(keyBindingsButton);
 
-        //Exit button
+        // Exit button
         try {
-            exitButtonImage =  ImageIO.read(getClass().getResource("/resources/images/exit_button.png"));
+            exitButtonImage = ImageIO.read(getClass().getResource("/resources/images/exit_button.png"));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,12 +128,12 @@ public class MainWindow {
      * Displays the key bindings window.
      */
     private void showKeyBindingsWindow() {
-        //frame.dispose(); 
+        // frame.dispose();
         KeyBindingsWindow keyBindingsWindow = new KeyBindingsWindow(frame);
         keyBindingsWindow.show();
     }
     // private void showMapWindow() {
-    //     frame.dispose(); 
+    // frame.dispose();
     // MapWindow mapWindow = new MapWindow();
     // mapWindow.show();
     // }
@@ -142,8 +143,11 @@ public class MainWindow {
      */
     public void showTeams() {
         frame.dispose();
-        MapSelectionWindow teamSelectionWindow = new MapSelectionWindow(gameManager);
-        teamSelectionWindow.show();
+        gameManager.selectMapSize(8);
+        gameManager.setActiveTeam(1); // Set to Saboteurs
+        gameManager.startGame();
+        MapWindow map = new MapWindow(8, gameManager);
+        map.show();
     }
 
     /**

@@ -10,6 +10,10 @@ import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 import player.Saboteur;
 
+/**
+    * The SaboteurView class is responsible for rendering the graphical representation of a saboteur player.
+    * It displays the saboteur in different orientations and colors based on the player's direction and state.
+    */
 public class SaboteurView extends JPanel {
     private Saboteur saboteurPlayer;
     private BufferedImage saboteurDownImage;
@@ -17,6 +21,13 @@ public class SaboteurView extends JPanel {
     private BufferedImage saboteurLeftImage;
     private BufferedImage saboteurRightImage;
 
+    
+    /**
+     * Constructs a new SaboteurView for the specified saboteur player and color.
+     *
+     * @param saboteurPlayer the saboteur player to be rendered
+     * @param color the color of the saboteur (used to load the appropriate images)
+     */
     public SaboteurView(Saboteur saboteurPlayer, String color) {
         this.saboteurPlayer = saboteurPlayer;
         setPreferredSize(new Dimension(saboteurPlayer.getCurrentCell().getMap().getColumns() * 80,
@@ -25,6 +36,13 @@ public class SaboteurView extends JPanel {
         loadImages(color);
     }
 
+    
+
+     /**
+     * Loads the images for the saboteur in different orientations based on the specified color.
+     *
+     * @param color the color of the saboteur (used to determine the image file names)
+     */
     private void loadImages(String color) {
         try {
             saboteurDownImage = ImageIO
@@ -45,6 +63,11 @@ public class SaboteurView extends JPanel {
         renderSaboteurPlayer(g);
     }
 
+    /**
+     * Renders the saboteur player on the panel based on the player's current facing direction.
+     *
+     * @param g the Graphics context in which to paint
+     */
     private void renderSaboteurPlayer(Graphics g) {
         BufferedImage imageToDraw = saboteurDownImage;
         Direction facingDirection = saboteurPlayer.getFacingDirection();
