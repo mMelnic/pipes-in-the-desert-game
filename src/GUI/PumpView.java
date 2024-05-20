@@ -8,6 +8,10 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
+/**
+ * Represents the view for a pump in the game.
+ * Handles rendering of the pump and any components connected to it.
+ */
 public class PumpView extends JPanel {
     private Pump pump;
     private BufferedImage imageNormal;
@@ -16,6 +20,11 @@ public class PumpView extends JPanel {
     private BufferedImage imageReservoirFull;
     private BufferedImage imageReservoirFilling;
 
+    /**
+     * Constructs a new PumpView for the specified pump.
+     *
+     * @param pump the pump to be represented by this view
+     */
     public PumpView(Pump pump) {
         this.pump = pump;
         // Initialize images for different states
@@ -24,6 +33,9 @@ public class PumpView extends JPanel {
         setBackground(new Color(0, 0, 0, 0));
     }
 
+    /**
+     * Loads images for different states of the pump.
+     */
     private void initializeImages() {
         try {
             imageNormal = loadImage("/resources/pumpImages/pump_normal.png");
@@ -36,6 +48,13 @@ public class PumpView extends JPanel {
         }
     }
 
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param path the path to the image file
+     * @return the loaded BufferedImage
+     * @throws IOException if an error occurs during reading
+     */
     private BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(getClass().getResource(path));
     }
@@ -83,6 +102,12 @@ public class PumpView extends JPanel {
         drawConnectedPipes(g);
     }
 
+
+    /**
+     * Draws the connected pipes around the pump.
+     *
+     * @param g the Graphics object to draw on
+     */
     private void drawConnectedPipes(Graphics g) {
         int margin = 0; // Margin from the edge of the panel
         int fontSize = 25; // Font size for drawing letters

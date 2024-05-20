@@ -8,16 +8,30 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * TeamSelectionWindow class provides a graphical user interface for players to select between two teams: Plumbers and Saboteurs.
+ */
 public class TeamSelectionWindow {
 
     private JFrame frame;
     private GameManager gameManager;
 
+    /**
+     * Constructs a new TeamSelectionWindow.
+     *
+     * @param gameManager the GameManager instance that manages the game state
+     * @param size the size of the map for the game
+     */
     public TeamSelectionWindow(GameManager gameManager, int size) {
         this.gameManager = gameManager;
         initialize(size);
     }
 
+    /**
+     * Initializes the contents of the frame.
+     *
+     * @param size the size of the map for the game
+     */
     private void initialize(int size) {
         frame = new JFrame();
         frame.setTitle("Team Selection");
@@ -84,6 +98,9 @@ public class TeamSelectionWindow {
         frame.getContentPane().add(panel);
     }
 
+    /**
+     * Makes the frame visible.
+     */
     public void show() {
         frame.setVisible(true);
     }
