@@ -10,6 +10,9 @@ import javax.imageio.ImageIO;
 
 import enumerations.Shapes;
 
+/**
+ * The ImageLoader class loads images for different shapes of pipes.
+ */
 public class ImageLoader {
     private static Map<Shapes, BufferedImage> pipeImagesNormal = new HashMap<>();
     private static Map<Shapes, BufferedImage> pipeImagesLeaking = new HashMap<>();
@@ -17,12 +20,15 @@ public class ImageLoader {
     private static Map<Shapes, BufferedImage> pipeImagesWaterFlowing = new HashMap<>();
     private static Map<Shapes, BufferedImage> pipeImagesFull = new HashMap<>();
 
+    // Static block to load images when the class is initialized
     static {
         loadImages();
     }
-    
+
+    // Private constructor to prevent instantiation
     private ImageLoader() {}
 
+    // Method to load images for all pipe shapes and states
     private static void loadImages() {
         try {
             for (Shapes shape : Shapes.values()) {
@@ -42,10 +48,12 @@ public class ImageLoader {
         }
     }
 
+    // Method to load a single image given its path
     private static BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(ImageLoader.class.getResource(path));
     }
 
+    // Methods to get specific pipe images based on shape and state
     public static BufferedImage getPipeImageNormal(Shapes shape) {
         return pipeImagesNormal.get(shape);
     }

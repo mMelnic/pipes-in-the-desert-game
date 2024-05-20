@@ -5,6 +5,9 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
+/**
+ * The CisternImageLoader class loads images related to cisterns.
+ */
 public class CisternImageLoader {
     private static BufferedImage cisternWithoutComponentImage;
     private static BufferedImage cisternWithPipeImage;
@@ -16,6 +19,9 @@ public class CisternImageLoader {
         loadImages();
     }
 
+    /**
+     * Loads the cistern images from the resources.
+     */
     private static void loadImages() {
         try {
             cisternWithoutComponentImage = loadImage("/resources/images/cisternView.png");
@@ -28,6 +34,13 @@ public class CisternImageLoader {
         }
     }
 
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param path The path to the image resource.
+     * @return The loaded BufferedImage.
+     * @throws IOException If there is an error loading the image.
+     */
     private static BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(CisternImageLoader.class.getResource(path));
     }
