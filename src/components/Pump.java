@@ -128,6 +128,7 @@ public class Pump extends Component implements ILeakage {
         if (fillingTask != null && !fillingTask.isCancelled()) {
             fillingTask.cancel(true);
             fillElapsedTime = 0;
+            //location.getMap().updateWaterFlow();
         }
     }
 

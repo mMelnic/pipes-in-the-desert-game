@@ -31,6 +31,7 @@ public class Map {
     private List<Spring> springs = new ArrayList<>();
     private List<Pump> pumps = new ArrayList<>();
     public List<MovablePlayer> players = new ArrayList<>();
+    List<Pump> pumpsTraversed = new ArrayList<>(); // Local list to store traversed pumps
     private PlumberScorer plumberScorer;
     private SaboteurScorer saboteurScorer;
     private JPanel mapPanel;
@@ -196,6 +197,7 @@ public class Map {
     public synchronized void checkForFreeEnds() {
         List<Pipe> pipesWithFreeEndLeaking = findPipesWithFreeEndLeaking();
         updatePipesNotInList(pipesWithFreeEndLeaking);
+        resetPumps();
     }
 
     private List<Pipe> findPipesWithFreeEndLeaking() {
@@ -221,7 +223,7 @@ public class Map {
         return pipesWithFreeEndLeaking;
     }
 
-    private void checkPumpConnectedPipes(Pump pump, List<Pipe> pipesWithFreeEndLeaking) {
+    private List<Pump> checkPumpConnectedPipes(Pump pump, List<Pipe> pipesWithFreeEndLeaking) {
         for (Component connectedComponent : pump.getConnectedComponents().values()) {
             if (connectedComponent instanceof Pipe
                     && ((Pipe) connectedComponent).isWaterFlowing()) {
@@ -229,9 +231,11 @@ public class Map {
                 if (pipe != pump.getIncomingPipe() && pipe != pump.getOutgoingPipe()) {
                     pipe.setFreeEndLeaking(true);
                     pipesWithFreeEndLeaking.add(pipe);
+                    pumpsTraversed.add(pump);
                 }
             }
         }
+        return pumpsTraversed;
     }
 
     private void updatePipesNotInList(List<Pipe> pipesWithFreeEndLeaking) {
@@ -249,6 +253,24 @@ public class Map {
                 }
             }
         }
+    }
+
+    public void resetPumps() {
+        for (Pump pump : pumpsTraversed) {
+            if (pump.isReservoirFull()) {
+                pump.setReservoirFull(false);
+                pump.stopFillingTask();
+                if (pump.getOutgoingPipe().isFull() || pump.getIncomingPipe().isFull()) {
+                    pump.undoFullPipes();
+                }
+            } else if (pump.isFilling()) {
+                pump.stopFillingTask();
+            }
+            if (pump.isLeaking()) {
+                pump.stopLeaking();
+            }
+        }
+        pumpsTraversed.clear(); // Reset the list of traversed pumps
     }
 
     public void stopLeakingAndFreeEnds() {

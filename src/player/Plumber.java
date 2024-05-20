@@ -49,8 +49,6 @@ public class Plumber extends MovablePlayer {
                 if (pipe.isLeaking()) {
                     pipe.stopLeaking();
                     handleOutput("The pipe is repaired and stopped leaking.");
-                } else {
-                    // SwingUtilities.invokeLater(() -> currentCell.getMap().getMapPanel().repaint());
                 }
                 return true;
             } else if (!pipe.isBroken()) {
@@ -87,6 +85,7 @@ public class Plumber extends MovablePlayer {
                     handleOutput("The reservoir emptied.");
                 } else if (pump.isFilling()) {
                     pump.stopFillingTask();
+                    currentCell.getMap().updateWaterFlow();
                 }
                 if (pump.isLeaking()) {
                     pump.stopLeaking();

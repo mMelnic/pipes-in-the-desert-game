@@ -134,6 +134,9 @@ public abstract class MovablePlayer {
 
             pump.setIncomingPipe(newIncomingPipe);
             pump.setOutgoingPipe(newOutgoingPipe);
+            if (pump.isFilling()) {
+                pump.stopFillingTask();
+            }
             currentCell.getMap().updateWaterFlow();
             handleOutput("The direction changed.");
         } else {
