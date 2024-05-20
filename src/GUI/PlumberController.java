@@ -6,10 +6,13 @@ import java.awt.event.MouseAdapter;
 
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.awt.event.MouseAdapter;
+
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import system.Map;
 
@@ -24,8 +27,10 @@ import system.Cell;
 
 public class PlumberController extends KeyAdapter {
     private Plumber plumberPlayer1;
+    private Plumber plumberPlayer2;
     private PlumberView plumberView1;
-    private JPanel mapPanel;
+    private PlumberView plumberView2;
+    private Plumber activePlumber;
 
     private Pipe selectedPipe = null;
     private static final int CELL_SIZE = 80;
@@ -37,10 +42,12 @@ public class PlumberController extends KeyAdapter {
 
     private State currentState = State.MOVEMENT;
 
-    public PlumberController(Plumber plumberPlayer1, JPanel mapPanel) {
+    public PlumberController(Plumber plumberPlayer1, Plumber plumberPlayer2, JPanel mapPanel) {
         this.plumberPlayer1 = plumberPlayer1;
-        this.plumberView1 = new PlumberView(plumberPlayer1);
-        this.mapPanel = mapPanel;
+        this.plumberPlayer2 = plumberPlayer2;
+        this.activePlumber = plumberPlayer2; // Start with plumberPlayer1
+        this.plumberView1 = new PlumberView(plumberPlayer1, "green");
+        this.plumberView2 = new PlumberView(plumberPlayer2, "red");
 
         mapPanel.addMouseListener(new MouseAdapter() {
             @Override
@@ -48,6 +55,18 @@ public class PlumberController extends KeyAdapter {
                 handleMousePressed(e);
             }
         });
+
+        // Schedule the task to switch players every 15 seconds
+        ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+        scheduler.scheduleAtFixedRate(this::switchPlayers, 15, 15, TimeUnit.SECONDS);
+    }
+
+    private void switchPlayers() {
+        if (activePlumber == plumberPlayer1) {
+            activePlumber = plumberPlayer2;
+        } else {
+            activePlumber = plumberPlayer1;
+        }
     }
 
     private void handleMousePressed(MouseEvent e) {
@@ -93,7 +112,6 @@ public class PlumberController extends KeyAdapter {
                 handleActionKeyPress(keyCode);
                 break;
         }
-        // SwingUtilities.invokeLater(() -> mapPanel.repaint());
     }
 
     @Override
@@ -104,28 +122,28 @@ public class PlumberController extends KeyAdapter {
     private void handleMovementKeyPress(int keyCode) {
         switch (keyCode) {
             case KeyEvent.VK_UP:
-                plumberPlayer1.move(Direction.UP);
+                activePlumber.move(Direction.UP);
                 break;
             case KeyEvent.VK_DOWN:
-                plumberPlayer1.move(Direction.DOWN);
+                activePlumber.move(Direction.DOWN);
                 break;
             case KeyEvent.VK_LEFT:
-                plumberPlayer1.move(Direction.LEFT);
+                activePlumber.move(Direction.LEFT);
                 break;
             case KeyEvent.VK_RIGHT:
-                plumberPlayer1.move(Direction.RIGHT);
+                activePlumber.move(Direction.RIGHT);
                 break;
             case KeyEvent.VK_ENTER:
                 attemptRepairAction();
                 break;
             case KeyEvent.VK_PERIOD:
-                plumberPlayer1.pickComponent();
+                activePlumber.pickComponent();
                 break;
             case KeyEvent.VK_SLASH:
-                plumberPlayer1.installComponent(plumberPlayer1.getFacingDirection());
+                activePlumber.installComponent(activePlumber.getFacingDirection());
                 break;
             case KeyEvent.VK_COMMA:
-                plumberPlayer1.dropComponent();
+                activePlumber.dropComponent();
                 break;
             case KeyEvent.VK_SHIFT:
                 currentState = State.ACTION;
@@ -153,7 +171,7 @@ public class PlumberController extends KeyAdapter {
                     if (pressedKeys.contains(key1) && pressedKeys.contains(key2)) {
                         // Check the order of key presses
                         if (pressedKeysOrder(key1) < pressedKeysOrder(key2)) {
-                            Cell currentCell = plumberPlayer1.getCurrentCell();
+                            Cell currentCell = activePlumber.getCurrentCell();
                             Component currentComponent = currentCell.getComponent();
 
                             if (currentComponent instanceof Pump) {
@@ -199,26 +217,26 @@ public class PlumberController extends KeyAdapter {
     }
 
     private void checkAndRedirect(Direction dir1, Direction dir2) {
-        Cell cell1 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir1);
-        Cell cell2 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir2);
+        Cell cell1 = getCellInDirection(activePlumber.getCurrentCell(), dir1);
+        Cell cell2 = getCellInDirection(activePlumber.getCurrentCell(), dir2);
 
         if (cell1 != null && cell2 != null) {
             Component component1 = cell1.getComponent();
             Component component2 = cell2.getComponent();
             if (component1 instanceof Pipe && component2 instanceof Pipe) {
-                plumberPlayer1.redirectWaterFlow((Pipe) component1, (Pipe) component2);
+                activePlumber.redirectWaterFlow((Pipe) component1, (Pipe) component2);
             }
         }
     }
 
     private void checkAndDetach(Direction dir1, Direction dir2) {
-        Cell cell1 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir1);
-        Cell cell2 = getCellInDirection(plumberPlayer1.getCurrentCell(), dir2);
+        Cell cell1 = getCellInDirection(activePlumber.getCurrentCell(), dir1);
+        Cell cell2 = getCellInDirection(activePlumber.getCurrentCell(), dir2);
 
         if (cell1 != null && cell2 != null) {
             Component component1 = cell1.getComponent();
             Component component2 = cell2.getComponent();
-            plumberPlayer1.detachPipe(component1, component2);
+            activePlumber.detachPipe(component1, component2);
         }
     }
 
@@ -239,18 +257,22 @@ public class PlumberController extends KeyAdapter {
 
     private void attemptRepairAction() {
         // Get the current cell the player is standing on
-        Cell currentCell = plumberPlayer1.getCurrentCell();
+        Cell currentCell = activePlumber.getCurrentCell();
         // Check if the cell contains a component and attempt repair
         if (currentCell.getComponent() != null) {
             if (currentCell.getComponent() instanceof Pump) {
-                plumberPlayer1.repairPump();
+                activePlumber.repairPump();
             } else if (currentCell.getComponent() instanceof Pipe) {
-                plumberPlayer1.repairPipe();
+                activePlumber.repairPipe();
             }
         }
     }
 
     public PlumberView getPlumberView() {
         return plumberView1;
+    }
+
+    public PlumberView getPlumberView2() {
+        return plumberView2;
     }
 }

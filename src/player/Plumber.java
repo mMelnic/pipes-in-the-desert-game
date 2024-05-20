@@ -85,6 +85,8 @@ public class Plumber extends MovablePlayer {
                         pump.undoFullPipes();
                     }
                     handleOutput("The reservoir emptied.");
+                } else if (pump.isFilling()) {
+                    pump.stopFillingTask();
                 }
                 if (pump.isLeaking()) {
                     pump.stopLeaking();

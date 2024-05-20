@@ -57,9 +57,8 @@ public class PipeView extends JPanel {
                 pipeImagesLeaking.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_leaking.png"));
                 pipeImagesBroken.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_red.png"));
                 pipeImagesWaterFlowing.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_filled.png"));
-                }
-                // pipeImagesFull.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() +
-                // "_full.png"));
+                pipeImagesFull.put(shape, loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +"_full.png"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -97,10 +96,9 @@ public class PipeView extends JPanel {
             imageToDraw = pipeImagesLeaking.get(shape);
         } else if (pipeModel.isBroken()) {
             imageToDraw = pipeImagesBroken.get(shape);
+        } else if (pipeModel.isFull()) {
+        imageToDraw = pipeImagesFull.get(shape);
         }
-        // else if (pipeModel.isFull()) {
-        // imageToDraw = pipeImagesFull.get(shape);
-        // }
         else if (pipeModel.isWaterFlowing()) {
             imageToDraw = pipeImagesWaterFlowing.get(shape);
         }

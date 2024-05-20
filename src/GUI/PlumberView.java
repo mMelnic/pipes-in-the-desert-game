@@ -24,20 +24,21 @@ public class PlumberView extends JPanel {
     private BufferedImage plumberPickPump;
 
 
-    public PlumberView(Plumber plumberPlayer) {
+    public PlumberView(Plumber plumberPlayer, String color) {
         this.plumberPlayer = plumberPlayer;
-        setPreferredSize(new Dimension(plumberPlayer.getCurrentCell().getMap().getColumns() * 80, 
+        setPreferredSize(new Dimension(
+                plumberPlayer.getCurrentCell().getMap().getColumns() * 80,
                 plumberPlayer.getCurrentCell().getMap().getRows() * 80));
-        setBackground(new Color(0,0,0,0));
-        loadImages();
+        setBackground(new Color(0, 0, 0, 0));
+        loadImages(color);
     }
 
-    private void loadImages() {
+    private void loadImages(String color) {
         try {
-            plumberDownImage = ImageIO.read(getClass().getResource("/resources/images/plumber_down.png"));
-            plumberUpImage = ImageIO.read(getClass().getResource("/resources/images/plumber_up.png"));
-            plumberLeftImage = ImageIO.read(getClass().getResource("/resources/images/plumber_left.png"));
-            plumberRightImage = ImageIO.read(getClass().getResource("/resources/images/plumber_right.png"));
+            plumberDownImage = ImageIO.read(getClass().getResource("/resources/plumber/plumber_" + color + "_down.png"));
+            plumberUpImage = ImageIO.read(getClass().getResource("/resources/plumber/plumber_" + color + "_up.png"));
+            plumberLeftImage = ImageIO.read(getClass().getResource("/resources/plumber/plumber_" + color + "_left.png"));
+            plumberRightImage = ImageIO.read(getClass().getResource("/resources/plumber/plumber_" + color + "_right.png"));
             plumberPickPipe = ImageIO.read(getClass().getResource("/resources/plumber/plumberView_pickPipe.png"));
             plumberPickPump = ImageIO.read(getClass().getResource("/resources/plumber/plumberView_pickPump.png"));
         } catch (IOException e) {
