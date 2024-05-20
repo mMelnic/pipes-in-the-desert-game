@@ -86,7 +86,7 @@ public class MapWindow {
         int frameSize = mapSize * squareSize;
         frame = new JFrame();
         frame.setTitle("Map Window");
-        frame.setBounds(100, 100, frameSize + 20, frameSize + 90);
+        frame.setBounds(100, 100, frameSize + 20, frameSize + 115);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
 
@@ -153,7 +153,7 @@ public class MapWindow {
             }
         });
         frame.add(menuButton, BorderLayout.SOUTH);
-        frame.getContentPane().add(mapPanel);
+        frame.add(mapPanel, BorderLayout.CENTER);
         startTimer();
     }
 

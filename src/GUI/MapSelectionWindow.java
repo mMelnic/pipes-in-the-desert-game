@@ -44,7 +44,7 @@ public class MapSelectionWindow {
         JLabel titleLabel = new JLabel("Select Map Size");
         titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JButton smallMapBtn = new JButton("Small (5x5)");
+        JButton smallMapBtn = new JButton("Small (8x8)");
         JButton mediumMapBtn = new JButton("Medium (10x10)");
         JButton largeMapBtn = new JButton("Large (15x15)");
         JButton backBtn = new JButton("Back to Main Menu");

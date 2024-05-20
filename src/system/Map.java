@@ -75,6 +75,16 @@ public class Map {
                         newPipe.addScorer(saboteurScorer);
                         cells[i][j].placeComponent(newPipe);
                     }
+                } else if (i == 7 && (j != 0)) {
+                    if (j == 4) {
+                        Pump newPump = new Pump(3, cells[i][j]);
+                        cells[i][j].placeComponent(newPump);
+                        newPump.addScorer(saboteurScorer);
+                    } else {
+                        Pipe newPipe = new Pipe(cells[i][j]);
+                        newPipe.addScorer(saboteurScorer);
+                        cells[i][j].placeComponent(newPipe);
+                    }
                 }
 
             }
@@ -120,9 +130,10 @@ public class Map {
                         }
                     }
                 }
-
+                ((Pipe)cells[7][7].getComponent()).changeShape();
             }
         }
+
     }
 
     public void setGameManager(GameManager gameManager) {
