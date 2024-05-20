@@ -1,0 +1,33 @@
+Moved RIGHT to row 7 and column 4
+Moved RIGHT to row 7 and column 5
+Moved RIGHT to row 7 and column 6
+Moved RIGHT to row 7 and column 2
+Moved RIGHT to row 7 and column 3
+Moved RIGHT to row 7 and column 4
+Moved LEFT to row 7 and column 3
+Moved LEFT to row 7 and column 2
+Moved LEFT to row 7 and column 1
+Moved LEFT to row 7 and column 5
+Moved RIGHT to row 7 and column 6
+Moved RIGHT to row 7 and column 2
+Moved LEFT to row 7 and column 5
+Moved RIGHT to row 7 and column 6
+Moved RIGHT to row 7 and column 3
+Moved RIGHT to row 7 and column 7
+Moved LEFT to row 7 and column 2
+Moved LEFT to row 7 and column 6
+Moved LEFT to row 0 and column 2
+Moved RIGHT to row 0 and column 3
+You cannot move there.
+Moved RIGHT to row 0 and column 4
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+Moved RIGHT to row 0 and column 5
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.
+You cannot move there.

@@ -115,13 +115,13 @@ public class GameManager implements ICisternListener
         activeSaboteur.setCurrentCell(map.getCells(0, 0));
         map.getCells(0, 0).setPlayerOn(true);
         activeSaboteur2.setCurrentCell(map.getCells(7, 1));
-        map.getCells(0, 1).setPlayerOn(true);
+        map.getCells(7, 1).setPlayerOn(true);
     
         // Put the plumber on row 1, column 3
         activePlumber.setCurrentCell(map.getCells(0, 3));
         map.getCells(0, 3).setPlayerOn(true);
         activePlumber2.setCurrentCell(map.getCells(7, 3));
-        map.getCells(0, 5).setPlayerOn(true);
+        map.getCells(7, 3).setPlayerOn(true);
 
         map.setGameManager(this);
     
