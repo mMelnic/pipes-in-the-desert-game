@@ -12,6 +12,11 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+/**
+ * The {@code PipeView} class represents the graphical view of a pipe component.
+ * It displays the pipe in different states (normal, leaking, broken, water flowing)
+ * based on the current state of the pipe model.
+ */
 public class PipeView extends JPanel {
     private Map<Shapes, BufferedImage> pipeImagesNormal;
     private Map<Shapes, BufferedImage> pipeImagesLeaking;
@@ -21,6 +26,11 @@ public class PipeView extends JPanel {
 
     private Pipe pipeModel;
 
+    /**
+     * Constructs a new {@code PipeView} with the specified pipe model.
+     *
+     * @param pipeModel the pipe model to be represented by this view
+     */
     public PipeView(Pipe pipeModel) {
         this.pipeModel = pipeModel;
         pipeImagesNormal = new HashMap<>();
@@ -33,6 +43,9 @@ public class PipeView extends JPanel {
         loadImages();
     }
 
+    /**
+     * Loads the images for each state and shape of the pipe.
+     */
     private void loadImages() {
         // Load images for each state and shape
         try {
@@ -52,6 +65,13 @@ public class PipeView extends JPanel {
         }
     }
 
+    /**
+     * Loads an image from the specified path.
+     *
+     * @param path the path to the image resource
+     * @return the loaded BufferedImage
+     * @throws IOException if an error occurs during reading the image
+     */
     private BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(getClass().getResource(path));
     }
@@ -62,6 +82,11 @@ public class PipeView extends JPanel {
         renderPipe(g);
     }
 
+    /**
+     * Renders the pipe based on its current state.
+     *
+     * @param g the Graphics object used for drawing
+     */
     private void renderPipe(Graphics g) {
         Shapes shape = pipeModel.getShape();
         BufferedImage imageToDraw = pipeImagesNormal.get(shape);
