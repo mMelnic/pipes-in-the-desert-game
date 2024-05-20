@@ -120,8 +120,6 @@ public class GameManager implements ICisternListener
         // Put the plumber on row 1, column 3
         activePlumber.setCurrentCell(map.getCells(0, 3));
         map.getCells(0, 3).setPlayerOn(true);
-        activePlumber2.setCurrentCell(map.getCells(0, 5));
-        map.getCells(0, 5).setPlayerOn(true);
 
         map.setGameManager(this);
     
