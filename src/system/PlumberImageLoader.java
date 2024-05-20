@@ -6,6 +6,9 @@ import javax.imageio.ImageIO;
 
 import enumerations.Direction;
 
+/**
+ * The PlumberImageLoader class manages loading images for plumbers.
+ */
 public class PlumberImageLoader {
     private static BufferedImage[][] images; // 2D array to store images for different colors and directions
     private static BufferedImage plumberPickPipeImage;
@@ -22,6 +25,7 @@ public class PlumberImageLoader {
         loadAdditionalImages();
     }
 
+    // Method to load plumber images for different colors and directions
     private static void loadImages() {
         try {
             // Load images for green color
@@ -40,6 +44,7 @@ public class PlumberImageLoader {
         }
     }
     
+    // Method to load additional images
     private static void loadAdditionalImages() {
         try {
             plumberPickPipeImage = loadImage("/resources/plumber/plumberView_pickPipe.png");
@@ -49,16 +54,19 @@ public class PlumberImageLoader {
         }
     }
 
+    // Method to load a single image given its path
     private static BufferedImage loadImage(String path) throws IOException {
         return ImageIO.read(ImageLoader.class.getResource(path));
     }
 
+    // Method to get the plumber image based on color and direction
     public static BufferedImage getImage(String color, Direction direction) {
         int colorIndex = color.equalsIgnoreCase("green") ? 0 : 1;
         int directionIndex = direction.ordinal();
         return images[colorIndex][directionIndex];
     }
 
+    // Methods to get additional images for when the plumber is picking up a pipe or pump
     public static BufferedImage getPlumberPickPipeImage() {
         return plumberPickPipeImage;
     }

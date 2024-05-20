@@ -1,11 +1,18 @@
 package enumerations;
 
+/**
+ * The Direction enum represents different directions.
+ */
 public enum Direction {
     UP,
     DOWN,
     LEFT,
     RIGHT;
 
+    /**
+     * Get the opposite direction of the current one.
+     * @return The opposite direction.
+     */
     public Direction getOppositeDirection() {
         switch (this) {
             case UP:

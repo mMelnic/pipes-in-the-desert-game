@@ -19,9 +19,10 @@ import java.util.Scanner;
 import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
-import player.MovablePlayer;
 import player.Plumber;
 import player.PlumberScorer;
 import player.Saboteur;
@@ -32,8 +33,7 @@ import javax.swing.*;
 /**
  * The GameManager class manages the game's flow and logic.
  */
-public class GameManager implements ICisternListener
-{
+public class GameManager implements ICisternListener {
     private Map map;
     private List<Team> teams;
     private Plumber activePlumber = null;
@@ -43,16 +43,18 @@ public class GameManager implements ICisternListener
     private SaboteurScorer saboteurScorer = new SaboteurScorer();
     private PlumberScorer plumberScorer = new PlumberScorer();
     private MapWindow mapWindow;
+    private ScheduledExecutorService sandstormScheduler = Executors.newScheduledThreadPool(1);
+    private Random random = new Random();
 
     Scanner scanner = new Scanner(System.in);
+
     /**
      * Displays the key bindings for the game.
      */
-    public void showKeyBindings()
-    {
+    public void showKeyBindings() {
         String message = "                === KEY BINDINGS ===               \n\n\n"
-                       + "In the prototype version, \"the key bindings\" section contains available input commands in the game for testing purposes:\n"
-                       + "Enter anything to return back to the main menu.\n";
+                + "In the prototype version, \"the key bindings\" section contains available input commands in the game for testing purposes:\n"
+                + "Enter anything to return back to the main menu.\n";
 
         System.out.print(message);
         writeToOutputTxt(message);
@@ -63,15 +65,14 @@ public class GameManager implements ICisternListener
     /**
      * Constructs a GameManager instance.
      */
-    public GameManager() 
-    {
+    public GameManager() {
         cleanOutputTxt();
 
         teams = new ArrayList<Team>();
 
         teams.add(new Team(plumberScorer));
         teams.add(new Team(saboteurScorer));
-        
+
         Plumber plumber1 = new Plumber(teams.get(0));
         teams.get(0).assignPlayer(plumber1);
 
@@ -102,8 +103,7 @@ public class GameManager implements ICisternListener
     /**
      * Starts the game.
      */
-    public void startGame() 
-    {
+    public void startGame() {
         map.setPlumberScorer(plumberScorer);
         map.setSaboteurScorer(saboteurScorer);
         map.players.add(teams.get(0).getPlayers().get(0));
@@ -114,7 +114,7 @@ public class GameManager implements ICisternListener
         map.getCells(0, 0).setPlayerOn(true);
         activeSaboteur2.setCurrentCell(map.getCells(7, 1));
         map.getCells(7, 1).setPlayerOn(true);
-    
+
         // Put the plumber on row 1, column 3
         activePlumber.setCurrentCell(map.getCells(0, 3));
         map.getCells(0, 3).setPlayerOn(true);
@@ -122,12 +122,11 @@ public class GameManager implements ICisternListener
         map.getCells(7, 3).setPlayerOn(true);
 
         map.setGameManager(this);
-    
+
         map.initializeMap();
-       
 
         for (Cistern cistern : map.getCisterns()) {
-             cistern.addCisternFullListener(this);
+            cistern.addCisternFullListener(this);
         }
 
         manufactureComponents();
@@ -142,13 +141,17 @@ public class GameManager implements ICisternListener
     }
 
     public void startSandstorms() {
-        Timer sandstormTimer = new Timer("SandstormTimer");
-        sandstormTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                startSandstorm();
-            }
-        }, 1000 * 15, 1000 * 50); 
+        List<Long> sandstormTimes = new ArrayList<>();
+        long previousTime = 0;
+        for (int i = 0; i < 3; i++) {
+            long randomTime = previousTime + random.nextInt(301) + 30;
+            sandstormTimes.add(randomTime);
+            previousTime = randomTime;
+        }
+
+        for (long delay : sandstormTimes) {
+            sandstormScheduler.schedule(this::startSandstorm, delay, TimeUnit.SECONDS);
+        }
     }
 
     /**
@@ -187,8 +190,6 @@ public class GameManager implements ICisternListener
             }
         }
 
-        
-        
     }
 
     private void showSandstormWindow() {
@@ -198,20 +199,21 @@ public class GameManager implements ICisternListener
         frame.add(label);
         frame.setSize(300, 100);
         frame.setUndecorated(true); // Remove window decorations
-    
+
         frame.setLocationRelativeTo(null);
-    
+
         frame.setAlwaysOnTop(true);
         frame.setVisible(true);
-    
+
         Timer timer = new Timer();
         timer.schedule(new TimerTask() {
             @Override
             public void run() {
                 frame.dispose();
             }
-        }, 
-        3000); }
+        },
+                2000);
+    }
 
     private boolean isPumpConnectedToWaterFlowingPipe(Pump pump) {
         Set<Component> visited = new HashSet<>();
@@ -229,7 +231,7 @@ public class GameManager implements ICisternListener
         Pipe outgoingPipe = pump.getOutgoingPipe();
 
         if ((incomingPipe != null && incomingPipe.isWaterFlowing()) ||
-            (outgoingPipe != null && outgoingPipe.isWaterFlowing())) {
+                (outgoingPipe != null && outgoingPipe.isWaterFlowing())) {
             return true;
         }
 
@@ -245,21 +247,25 @@ public class GameManager implements ICisternListener
      public int getPlumberScore(){
         return plumberScorer.getScore();
     }
-    public int getSaboteurScore(){
+
+    public int getSaboteurScore() {
         return saboteurScorer.getScore();
     }
+
     /**
      * Checks if all cisterns are full.
      * 
      * @return true if all cisterns are full, false otherwise
      */
-    public boolean checkIfAllCisternsAreFull() 
-    {
+    public boolean checkIfAllCisternsAreFull() {
         for (Cistern cistern : map.getCisterns()) {
-            if (!cistern.getIsCisternFull()) {return false;}
+            if (!cistern.getIsCisternFull()) {
+                return false;
+            }
         }
         return true;
     }
+
     public void selectMapSize(int size) {
         switch (size) {
             case 8:
@@ -291,29 +297,21 @@ public class GameManager implements ICisternListener
      * 
      * @param message the message to write
      */
-    public static void writeToOutputTxt(String message)
-    {
+    public static void writeToOutputTxt(String message) {
         FileWriter fileWriter = null;
-        try
-        {
+        try {
             fileWriter = new FileWriter("output.txt", true);
             fileWriter.append(message);
-        }
-        catch(Exception exception)
-        {
+        } catch (Exception exception) {
             System.out.println("ERROR!");
             exception.printStackTrace();
             System.out.println();
-        }
-        finally
-        {
-            if (fileWriter != null)
-            {
-                try
-                {
+        } finally {
+            if (fileWriter != null) {
+                try {
                     fileWriter.close();
+                } catch (Exception ex) {
                 }
-                catch (Exception ex) {}
             }
         }
     }
@@ -321,25 +319,19 @@ public class GameManager implements ICisternListener
     /**
      * Cleans the output.txt file.
      */
-    public static void cleanOutputTxt()
-    {
+    public static void cleanOutputTxt() {
         FileWriter fileWriter = null;
-        try
-        {
+        try {
             fileWriter = new FileWriter("output.txt", false);
             fileWriter.write("");
-        }
-        catch(Exception exception)
-        {exception.printStackTrace();}
-        finally
-        {
-            if (fileWriter != null)
-            {
-                try
-                {
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        } finally {
+            if (fileWriter != null) {
+                try {
                     fileWriter.close();
+                } catch (Exception ex) {
                 }
-                catch(Exception ex) {}
             }
         }
     }
@@ -347,15 +339,12 @@ public class GameManager implements ICisternListener
     /**
      * Manufactures components periodically.
      */
-    public void manufactureComponents()
-    {
+    public void manufactureComponents() {
         Timer manufactureTimer = new Timer("ManufactureTimer");
         manufactureTimer.scheduleAtFixedRate(new TimerTask() {
-            public void run()
-            {
+            public void run() {
                 System.out.println();
-                for (Cistern cistern : map.getCisterns())
-                {
+                for (Cistern cistern : map.getCisterns()) {
                     cistern.manufactureComponent();
                 }
             }

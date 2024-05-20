@@ -3,13 +3,15 @@ package GUI;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
+import javax.swing.*;
+import java.awt.*;
 
-import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
 import java.awt.event.MouseEvent;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -36,6 +38,7 @@ public class PlumberController extends KeyAdapter {
     private PlumberView plumberView1;
     private PlumberView plumberView2;
     private Plumber activePlumber;
+    private JPanel mapPanel;
 
     private Pipe selectedPipe = null;
     private static final int CELL_SIZE = 80;
@@ -71,6 +74,7 @@ public class PlumberController extends KeyAdapter {
         // Schedule the task to switch players every 15 seconds
         ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
         scheduler.scheduleAtFixedRate(this::switchPlayers, 15, 15, TimeUnit.SECONDS);
+
     }
 
      /**
@@ -82,7 +86,44 @@ public class PlumberController extends KeyAdapter {
         } else {
             activePlumber = plumberPlayer1;
         }
+        showMessage("Switch!");
+
     }
+    
+    private void showMessage(String message) {
+        JFrame frame = new JFrame();
+        frame.setBounds(100, 100, 660, 755);
+        frame.setLocationRelativeTo(null);
+        JLabel label = new JLabel(message, SwingConstants.CENTER);
+        label.setFont(new Font("Arial", Font.BOLD, 18));
+        label.setForeground(Color.WHITE);
+        label.setBackground(new Color(0, 0, 0, 150)); // Semi-transparent background
+        label.setOpaque(true);
+        label.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+    
+        frame.add(label);
+        frame.setSize(300, 50);
+        frame.setUndecorated(true); // Remove window decorations
+    
+        // Position the window at the bottom-left corner
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+        int x = 10;
+        int y = screenSize.height - frame.getHeight() - 40;
+        frame.setLocation(x, y);
+    
+        frame.setAlwaysOnTop(true);
+        frame.setBackground(new Color(0, 0, 0, 0)); // Set the background to be transparent
+        frame.setVisible(true);
+    
+        // Set a timer to close the window after 2 seconds
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                frame.dispose();
+            }
+        }, 2000);
+    }
+    
 
     /**
      * Handles mouse press events for selecting and connecting pipes.
@@ -175,6 +216,7 @@ public class PlumberController extends KeyAdapter {
                 break;
         }
     }
+    
 
     /**
      * Handles key press events for action-related actions.
