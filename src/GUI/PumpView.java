@@ -2,6 +2,8 @@ package GUI;
 import components.Pipe;
 import components.Pump;
 import enumerations.Direction;
+import system.PumpImageLoader;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -10,34 +12,12 @@ import javax.swing.*;
 
 public class PumpView extends JPanel {
     private Pump pump;
-    private BufferedImage imageNormal;
-    private BufferedImage imageLeaking;
-    private BufferedImage imageBroken;
-    private BufferedImage imageReservoirFull;
-    private BufferedImage imageReservoirFilling;
 
     public PumpView(Pump pump) {
         this.pump = pump;
         // Initialize images for different states
-        initializeImages();
         setPreferredSize(new Dimension(80, 80));
         setBackground(new Color(0, 0, 0, 0));
-    }
-
-    private void initializeImages() {
-        try {
-            imageNormal = loadImage("/resources/pumpImages/pump_normal.png");
-            imageLeaking = loadImage("/resources/pumpImages/pump_leaking.png");
-            imageBroken = loadImage("/resources/pumpImages/pump_broken.png");
-            imageReservoirFull = loadImage("/resources/pumpImages/pump_reservoir_full.png");
-            imageReservoirFilling = loadImage("/resources/pumpImages/pump_reservoir_filling.png");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private BufferedImage loadImage(String path) throws IOException {
-        return ImageIO.read(getClass().getResource(path));
     }
 
     @Override
@@ -47,18 +27,16 @@ public class PumpView extends JPanel {
         int openings = pump.getConnectablePipesNumber();
 
         // Determine the image based on the pump's state
-        BufferedImage imageToDraw = null;
+        BufferedImage imageToDraw = PumpImageLoader.getImageNormal();
 
         if (pump.isLeaking()) {
-            imageToDraw = imageLeaking;
+            imageToDraw = PumpImageLoader.getImageLeaking();
         } else if (pump.isReservoirFull()) {
-            imageToDraw = imageReservoirFull;
+            imageToDraw = PumpImageLoader.getImageReservoirFull();
         } else if (pump.isFilling()) {
-            imageToDraw = imageReservoirFilling;
+            imageToDraw = PumpImageLoader.getImageReservoirFilling();
         } else if (pump.isBroken()) {
-            imageToDraw = imageBroken;
-        } else {
-            imageToDraw = imageNormal;
+            imageToDraw = PumpImageLoader.getImageBroken();
         }
 
         // Draw the pump image

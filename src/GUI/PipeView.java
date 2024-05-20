@@ -2,6 +2,8 @@ package GUI;
 
 import components.Pipe;
 import enumerations.Shapes;
+import system.ImageLoader;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -18,11 +20,6 @@ import javax.swing.JPanel;
  * based on the current state of the pipe model.
  */
 public class PipeView extends JPanel {
-    private Map<Shapes, BufferedImage> pipeImagesNormal;
-    private Map<Shapes, BufferedImage> pipeImagesLeaking;
-    private Map<Shapes, BufferedImage> pipeImagesBroken;
-    private Map<Shapes, BufferedImage> pipeImagesWaterFlowing;
-    private Map<Shapes, BufferedImage> pipeImagesFull;
 
     private Pipe pipeModel;
 
@@ -33,51 +30,13 @@ public class PipeView extends JPanel {
      */
     public PipeView(Pipe pipeModel) {
         this.pipeModel = pipeModel;
-        pipeImagesNormal = new HashMap<>();
-        pipeImagesLeaking = new HashMap<>();
-        pipeImagesBroken = new HashMap<>();
-        pipeImagesWaterFlowing = new HashMap<>();
-        pipeImagesFull = new HashMap<>();
         setPreferredSize(new Dimension(80, 80));
         setBackground(new Color(0, 0, 0, 0));
-        loadImages();
-    }
-
-    /**
-     * Loads the images for each state and shape of the pipe.
-     */
-    private void loadImages() {
-        // Load images for each state and shape
-        try {
-            for (Shapes shape : Shapes.values()) {
-
-
-                pipeImagesNormal.put(shape,
-                            loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + ".png"));
-                pipeImagesLeaking.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_leaking.png"));
-                pipeImagesBroken.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_red.png"));
-                pipeImagesWaterFlowing.put(shape, loadImage("/resources/pipeImages/pipeView_" + shape.name().toLowerCase() + "_filled.png"));
-                pipeImagesFull.put(shape, loadImage("/resources/pipeImages/pipe_" + shape.name().toLowerCase() +"_full.png"));
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * Loads an image from the specified path.
-     *
-     * @param path the path to the image resource
-     * @return the loaded BufferedImage
-     * @throws IOException if an error occurs during reading the image
-     */
-    private BufferedImage loadImage(String path) throws IOException {
-        return ImageIO.read(getClass().getResource(path));
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        //super.paintComponent(g);
+        super.paintComponent(g);
         renderPipe(g);
     }
 
@@ -88,19 +47,18 @@ public class PipeView extends JPanel {
      */
     private void renderPipe(Graphics g) {
         Shapes shape = pipeModel.getShape();
-        BufferedImage imageToDraw = pipeImagesNormal.get(shape);
+        BufferedImage imageToDraw = ImageLoader.getPipeImageNormal(shape);
 
         if (pipeModel.isLeaking()) {
-            imageToDraw = pipeImagesLeaking.get(shape);
+            imageToDraw = ImageLoader.getPipeImageLeaking(shape);
         } else if (pipeModel.isFreeEndLeaking()) {
-            imageToDraw = pipeImagesLeaking.get(shape);
+            imageToDraw = ImageLoader.getPipeImageLeaking(shape);
         } else if (pipeModel.isBroken()) {
-            imageToDraw = pipeImagesBroken.get(shape);
+            imageToDraw = ImageLoader.getPipeImageBroken(shape);
         } else if (pipeModel.isFull()) {
-        imageToDraw = pipeImagesFull.get(shape);
-        }
-        else if (pipeModel.isWaterFlowing()) {
-            imageToDraw = pipeImagesWaterFlowing.get(shape);
+            imageToDraw = ImageLoader.getPipeImageFull(shape);
+        } else if (pipeModel.isWaterFlowing()) {
+            imageToDraw = ImageLoader.getPipeImageWaterFlowing(shape);
         }
 
         if (imageToDraw != null) {
