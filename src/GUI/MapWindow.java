@@ -208,6 +208,7 @@ public class MapWindow {
                 Thread.currentThread().interrupt();
             }
         });
+        timerThread.setDaemon(true);
 
         timerThread.start();
     }
