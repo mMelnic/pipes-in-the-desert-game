@@ -144,7 +144,7 @@ public class GameManager implements ICisternListener {
         List<Long> sandstormTimes = new ArrayList<>();
         long previousTime = 0;
         for (int i = 0; i < 3; i++) {
-            long randomTime = previousTime + random.nextInt(301) + 30;
+            long randomTime = previousTime + random.nextInt(301) + 10;
             sandstormTimes.add(randomTime);
             previousTime = randomTime;
         }

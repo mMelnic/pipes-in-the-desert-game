@@ -183,7 +183,7 @@ public class MapWindow {
      * Starts the game timer.
      */
     public void startTimer() {
-        duration = 20 * 60 * 1000;
+        duration = 20*60 * 1000;
         endTime = System.currentTimeMillis() + duration;
 
         timerRunning.set(true);
