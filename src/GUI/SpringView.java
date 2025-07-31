@@ -11,8 +11,6 @@ import javax.swing.*;
  * It displays the spring image centered within the panel.
  */
 public class SpringView extends JPanel {
-    private Color color;
-    private int size;
     private BufferedImage springImage;
     private Spring spring;
 

@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
-import javax.swing.SwingUtilities;
-
 import system.Cell;
 /**
  * a class Cistern represents cistern in the game, extends class component

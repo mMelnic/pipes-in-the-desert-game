@@ -7,8 +7,6 @@ import components.Spring;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.awt.event.*;
 import javax.imageio.ImageIO;
@@ -34,7 +32,6 @@ public class MapWindow {
     private JLabel timeLabel; 
     private JLabel plumberScoreLabel;
     private JLabel saboteurScoreLabel;
-    private Timer timer;
     private long endTime;
     private long duration;
     private Thread timerThread;

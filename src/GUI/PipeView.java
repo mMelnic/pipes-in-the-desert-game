@@ -8,10 +8,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 /**

@@ -6,9 +6,6 @@ import enumerations.Direction;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.UUID;
-
-import javax.swing.SwingUtilities;
-
 import system.Cell;
 
 /**

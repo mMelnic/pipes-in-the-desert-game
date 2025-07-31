@@ -9,7 +9,6 @@ import components.Pump;
 import interfaces.ICisternListener;
 
 import java.awt.Font;
-import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.HashSet;
