@@ -59,7 +59,7 @@ The game features dynamic water flow simulation, component manufacturing, random
 
 1. **Download the project**:
    ```bash
-   git clone https://github.com/your-username/pipes-in-the-desert-game.git
+   git clone https://github.com/mMelnic/pipes-in-the-desert-game.git
    cd pipes-in-the-desert-game
    ```
 
